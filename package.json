@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./Server/bin/www"
+    "start": "node --harmony ./Server/bin/www",
+    "dev": "nodemon --harmony ./Server/bin/www"
   },
   "dependencies": {
     "body-parser": "~1.10.2",
