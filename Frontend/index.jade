@@ -1,6 +1,9 @@
 doctype html
 html
     head
-        title= title
+        link(rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css")
+        script(src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js")
+        title hello #{title}
     h1= title
     p Welcome to #{title}
+    button(class="btn btn-default")= "test"
