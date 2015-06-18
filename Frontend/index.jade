@@ -6,4 +6,40 @@ html
         script(src="frameworks/angularjs/1.3.14/angular.min.js")
         script(src="js/socketFactory.js")
         script(src="js/controllers/loginController.js")
-    
+    body
+        .container.row.col-md-6.col-md-offset-3.panel.panel-login
+            .panel-heading.row
+                .col-xs-6
+                  a#login-form-link.active(href='#') Login
+                .col-xs-6
+                  a#register-form-link(href='#') Register
+            .panel-body.row
+                .col-lg-12
+                  form#login-form(action='http://phpoll.com/login/process', method='post', role='form', style='display: block;')
+                    .form-group
+                      input#username.form-control(type='text', name='username', tabindex='1', placeholder='Username', value='')
+                    .form-group
+                      input#password.form-control(type='password', name='password', tabindex='2', placeholder='Password')
+                    .form-group.text-center
+                      input#remember(type='checkbox', tabindex='3', name='remember')
+                      label(for='remember')  Remember Me
+                    .form-group.row
+                        .col-sm-6.col-sm-offset-3
+                            input#login-submit.form-control.btn.btn-login(type='submit', name='login-submit', tabindex='4', value='Log In')
+                    .form-group.row
+                        .col-lg-12
+                          .text-center
+                            a.forgot-password(href='http://phpoll.com/recover', tabindex='5') Forgot Password?
+                  form#register-form(method='post', role='form', style='display: none;')
+                    .form-group
+                      input#username.form-control(type='text', name='username', tabindex='1', placeholder='Username', value='')
+                    .form-group
+                      input#email.form-control(type='email', name='email', tabindex='1', placeholder='Email Address', value='')
+                    .form-group
+                      input#password.form-control(type='password', name='password', tabindex='2', placeholder='Password')
+                    .form-group
+                      input#confirm-password.form-control(type='password', name='confirm-password', tabindex='2', placeholder='Confirm Password')
+                    .form-group.row
+                        .col-sm-6.col-sm-offset-3
+                          input#register-submit.form-control.btn.btn-register(type='submit', name='register-submit', tabindex='4', value='Register Now')
+
