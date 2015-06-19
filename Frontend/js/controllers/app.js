@@ -1,5 +1,4 @@
 'use strict';
-console.log("Sup bb");
 
 // Declare app level module which depends on filters, and services
 
