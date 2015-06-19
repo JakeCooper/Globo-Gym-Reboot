@@ -1,13 +1,15 @@
 'use strict';
 
-// Declare app level module which depends on filters, and services
-
-angular.module('myApp', ["ngRoute", "loginController"]).
+var app = angular.module('myApp', ["ngRoute", "loginControllers"]).
 config(function ($routeProvider) {
   $routeProvider.
     when('/', {
-      templateUrl: 'partials/signin'
-        //, controller: 'loginController'
+        templateUrl: 'partials/signin',
+        controller: 'loginController'
+    }).
+    when('/calendar', {
+        templateUrl: 'partials/calendar', 
+        controller: 'loginController'
     }).
     //when('/view2', {
     //  templateUrl: 'partials/partial2',
