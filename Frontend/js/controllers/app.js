@@ -1,18 +1,14 @@
 'use strict';
+console.log("Sup bb");
 
 // Declare app level module which depends on filters, and services
 
-angular.module('myApp', [
-  'myApp.controllers',
-  'myApp.filters',
-  'myApp.services',
-  'myApp.directives'
-]).
-config(function ($routeProvider, $locationProvider) {
+angular.module('myApp', ["ngRoute", "loginController"]).
+config(function ($routeProvider) {
   $routeProvider.
     when('/', {
-      templateUrl: 'partials/signin',
-      controller: 'MyCtrl1'
+      templateUrl: 'partials/signin'
+        //, controller: 'loginController'
     }).
     //when('/view2', {
     //  templateUrl: 'partials/partial2',
@@ -21,5 +17,4 @@ config(function ($routeProvider, $locationProvider) {
     otherwise({
       redirectTo: '/'
     });
-  $locationProvider.html5Mode(true);
 });
