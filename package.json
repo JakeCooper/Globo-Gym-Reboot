@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "node --harmony ./Server/bin/www",
-    "dev": "nodemon --harmony ./Server/bin/www"
+    "dev": "nodemon --harmony --ignore Frontend/ ./Server/bin/www"
   },
   "dependencies": {
     "body-parser": "~1.10.2",
