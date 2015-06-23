@@ -1,6 +1,5 @@
-// Sexy ES6 arrow functions!
-module.exports = (io) => {
-    io.on('connection', (client) => {
+module.exports = function (io) {
+    io.on('connection', function (client) {
         client.emit("sample", { sample: "This is from the server"});
     });
 }
