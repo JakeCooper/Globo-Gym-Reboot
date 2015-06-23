@@ -7,9 +7,9 @@ A sample scheduling program using the MEAN stack.
 git clone http://www.Github.com/JakeCooper/Globo-Gym-Reboot.git
 ```
 
-'''
+```
 npm install
-'''
+```
 
 node_modules should be created successfully, and all the dependencies should be imported.
 
