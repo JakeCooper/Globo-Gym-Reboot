@@ -1,8 +1,15 @@
 doctype html
-html
+html(lang="en", ng-app="myApp")
     head
-        link(rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css")
-        script(src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js")
-        title= title
-    h1= title
-    p Welcome to #{title}
+        meta(charset='utf8')
+        base(href='/')
+        link(rel="stylesheet" href="frameworks/bootstrap/3.3.5/css/bootstrap.min.css")
+        script(src="frameworks/bootstrap/3.3.5/js/bootstrap.min.js")
+        script(src="frameworks/angularjs/1.3.16/angular.min.js")
+        script(src="frameworks/angularjs/1.3.16/angular-route.min.js")
+        script(src="frameworks/socket.io/1.3.5/socket.io.js")
+        script(src="js/controllers/app.js")
+        script(src="js/socketFactory.js")
+        script(src="js/controllers/loginController.js")
+    body
+        div(ng-view)

@@ -12,7 +12,7 @@ var http = require('http');
  * Get port from environment and store in Express.
  */
 
-var port = normalizePort(process.env.PORT || '3000');
+var port = normalizePort(process.env.PORT || '4000');
 app.set('port', port);
 
 /**
@@ -28,6 +28,16 @@ var server = http.createServer(app);
 server.listen(port);
 server.on('error', onError);
 server.on('listening', onListening);
+
+// Sockets are weird... for the socket to be properly bound to the
+// sever, the sockets nedd to be bound to ther server after connection
+// basically this means you cant add in the socket logic until after
+// this point.
+
+var io = require('socket.io')(server);
+// sample of socket logic
+require('../sockets/sample.js')(io);
+
 
 /**
  * Normalize a port into a number, string, or false.
