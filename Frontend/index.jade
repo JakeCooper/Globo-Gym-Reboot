@@ -11,5 +11,8 @@ html(lang="en", ng-app="myApp")
         script(src="js/controllers/app.js")
         script(src="js/socketFactory.js")
         script(src="js/controllers/loginController.js")
+        script(src="js/controllers/navbarControllers.js")
     body
+        div(ng-controller="menuController")
+            my-navbar            
         div(ng-view)
