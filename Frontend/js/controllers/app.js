@@ -10,6 +10,14 @@ var app = angular.module('myApp', [
         templateUrl: 'partials/signin',
         controller: 'loginController'
     }).
+    when('/login', {
+        templateUrl: 'partials/login',
+        controller: 'loginController'
+    }).
+    when('/profile', {
+        templateUrl: 'partials/login',
+        controller: 'loginController'
+    }).
     when('/calendar', {
         templateUrl: 'partials/calendar', 
         controller: 'loginController'
