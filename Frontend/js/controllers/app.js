@@ -10,8 +10,8 @@ var app = angular.module('myApp', [
         templateUrl: 'partials/signin',
         controller: 'loginController'
     }).
-    when('/login', {
-        templateUrl: 'partials/login',
+    when('/signin', {
+        templateUrl: 'partials/signin',
         controller: 'loginController'
     }).
     when('/profile', {
@@ -26,3 +26,6 @@ var app = angular.module('myApp', [
       redirectTo: '/'
     });
 });
+
+
+//

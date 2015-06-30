@@ -19,6 +19,11 @@
     "passport-google-oauth": "^0.2.0",
     "passport-local": "^1.0.0",
     "serve-favicon": "~2.2.0",
-    "socket.io": "^1.3.5"
+    "socket.io": "^1.3.5",   
+    "ejs" : "~0.8.5", 		
+    "passport-facebook" : "~1.0.2", 
+    "connect-flash" : "~0.1.1", 	
+    "bcrypt-nodejs" : "latest",
+    "express-session": "~1.0.0"
   }
 }
