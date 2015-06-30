@@ -5,7 +5,16 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
+var config = require('config');
+var mongoose = require('mongoose');
+var passport = require('passport');
+var LocalStrategy = require('passport-local').Strategy;
+
 var app = express();
+
+require('./database/user.js');
+
+mongoose.connect(config.mongoose.URL);
 
 // view engine setup
 app.set('views', path.join(__dirname, '../Frontend'));
@@ -18,6 +27,8 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, '../Frontend')));
+
+require('./passport/passport.js')(passport, app)
 
 // default to the index page let angular do the routing
 app.get('/', function(req, res, next){
