@@ -1,4 +1,4 @@
-
+var mongoose = require('mongoose');
 var LocalStrategy    = require('passport-local').Strategy;
 var FacebookStrategy = require('passport-facebook').Strategy;
 
@@ -6,9 +6,9 @@ var FacebookStrategy = require('passport-facebook').Strategy;
 var User = mongoose.model('User');
 
 // load the auth variables
-var configAuth = require('./default');
+var configAuth = require('config');
 
-module.exports = function(passport) {
+/*module.exports = function(passport) {
 
     // used to serialize the user for the session
     passport.serializeUser(function(user, done) {
@@ -20,15 +20,15 @@ module.exports = function(passport) {
         User.findById(id, function(err, user) {
             done(err, user);
         });
-    });
-    
+    });*/
+    //this is in the passport section
     // code for login (use('local-login', new LocalStategy))
     // code for signup (use('local-signup', new LocalStategy))
 
     // =========================================================================
     // FACEBOOK ================================================================
     // =========================================================================
-    passport.use(new FacebookStrategy({
+   module.exports = new FacebookStrategy({
 
         // pull in our app id and secret from our auth.js file
         clientID        : configAuth.facebookAuth.clientID,
@@ -78,6 +78,4 @@ module.exports = function(passport) {
             });
         });
 
-    }));
-
-};
+    });

@@ -8,7 +8,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var sessions= require('express-session');
 
-var app = require('connect'); //for sessions
+//var app = require('connect'); //for sessions
 var config = require('config');
 var mongoose = require('mongoose');
 var passport = require('passport');
