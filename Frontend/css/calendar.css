@@ -1,0 +1,11 @@
+.sidebar {
+
+}
+
+.profile-container {
+    margin-left: 20px;
+    margin-top: 20px;
+    position:fixed;
+    /*border: solid 1px black;*/
+}
+
