@@ -6,6 +6,8 @@
     margin-left: 20px;
     margin-top: 20px;
     position:fixed;
+    left:20px;
+    z-index:10;
     /*border: solid 1px black;*/
 }
 
