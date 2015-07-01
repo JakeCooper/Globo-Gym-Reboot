@@ -18,10 +18,11 @@ module.exports = new GoogleStrategy({
             if (!user) {
                 user = new User({
                     name: profile.displayName,
-                    email: "test",//profile.emails[0].value,
-                    username: profile.username,
+                   // email: "test",//profile.emails[0].value,
+                    //username: profile.username, took this out of schema
                     provider: 'google',
-                    google: profile._json
+                   // google: profile._json
+                    //need to add google.id etc. Will do after fb auth is done
                 });
                 user.save(function (err) {
                     if (err) console.log(err);

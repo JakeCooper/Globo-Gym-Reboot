@@ -3,7 +3,7 @@ var mongoose = require('mongoose');
 var UserSchema = new mongoose.Schema({
     //username: { type: String, required: true, index: {unique: true} },
     reservation: { type: Array },
-    name: { type: String},
+    //name: { type: String},
     provider: { type: String },
     info: {},
     google: {
@@ -16,7 +16,14 @@ var UserSchema = new mongoose.Schema({
         id           : String,
         token        : String,
         email        : String,
-        name         : String
+        name         : String,
+        photo        : String
+    },
+    twitter          : {
+        id           : String,
+        token        : String,
+        displayName  : String,
+        username     : String
     },
 });
 
