@@ -1,7 +1,7 @@
 'use strict';
 
-var app = angular.module('myApp', ["ngRoute", "loginControllers"]).
-config(function ($routeProvider) {
+var app = angular.module('myApp', ["ngRoute", "loginControllers"])
+.config(function ($routeProvider, $locationProvider) {
   $routeProvider.
     when('/', {
         templateUrl: 'partials/signin',
@@ -18,4 +18,6 @@ config(function ($routeProvider) {
     otherwise({
       redirectTo: '/'
     });
+
+    $locationProvider.html5Mode(true);
 });
