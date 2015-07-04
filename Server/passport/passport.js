@@ -31,13 +31,15 @@ module.exports = function (passport, app) {
     // persistent login sessions (recommended).
     app.use(passport.initialize());
     app.use(passport.session());
+    
+    
     // routes for google authentication
     app.get('/auth/google',
         passport.authenticate('google', { scope: config.google.loginURL })
     );
 
     app.get('/oauth2callback',
-        passport.authenticate('google', { failureRedirect: '/login' }),
+        passport.authenticate('google', { failureRedirect: '/signin' }),
         function(req, res) {
         // Successful authentication, redirect home.
             res.redirect('/');
@@ -52,14 +54,9 @@ module.exports = function (passport, app) {
     app.get('/auth/facebook/callback',
         passport.authenticate('facebook', {
             successRedirect : '/',
-            failureRedirect : '/login'
+            failureRedirect : '/signin' //testing
         }));
 
-    
-    
-    
-    
-    
     
     //route for logging out
 
