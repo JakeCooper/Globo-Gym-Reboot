@@ -6,7 +6,7 @@ var app = angular.module('myApp', [
     "ui.bootstrap",
     "loginControllers",
     "calendarControllers",
-    "navbarControllers"])
+    "menuControllers"])
 .config(function ($routeProvider, $locationProvider) {
   $routeProvider.
     when('/', {
