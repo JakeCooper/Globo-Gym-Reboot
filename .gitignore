@@ -2,3 +2,4 @@ node_modules/
 *.log
 .idea/
 Globo-Gym-Reboot.iml
+config/default.js
