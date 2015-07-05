@@ -1,8 +1,11 @@
 'use strict';
 
 var app = angular.module('myApp', [
-    "ngRoute", 
+    "ngRoute",
+    "ui.calendar",
+    "ui.bootstrap",
     "loginControllers",
+    "calendarControllers",
     "navbarControllers"])
 .config(function ($routeProvider, $locationProvider) {
   $routeProvider.
@@ -10,17 +13,17 @@ var app = angular.module('myApp', [
         templateUrl: 'partials/signin',
         controller: 'loginController'
     }).
-    when('/signin', {
+    when('/app/signin', {
         templateUrl: 'partials/signin',
         controller: 'loginController'
     }).
-    when('/profile', {
+    when('/app/profile', {
         templateUrl: 'partials/profile',
         controller: 'loginController'
     }).
-    when('/calendar', {
-        templateUrl: 'partials/calendar', 
-        controller: 'loginController'
+    when('/app/calendar', {
+        templateUrl: 'partials/calendar',
+        controller: 'calendarController'
     }).
     otherwise({
       redirectTo: '/'
