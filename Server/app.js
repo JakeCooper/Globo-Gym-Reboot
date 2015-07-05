@@ -44,10 +44,16 @@ app.get('/', function(req, res, next){
     res.render('../Frontend/index');
 });
 
+// default to the index page let angular do the routing
+app.get('/app/*', function(req, res, next){
+    res.render('../Frontend/index');
+});
+
 // render the partials as angular requests them
 app.get('/partials/:filename', function(req, res, next) {
     res.render('../Frontend/partials/' + req.params.filename);
 });
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

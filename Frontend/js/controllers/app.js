@@ -13,15 +13,15 @@ var app = angular.module('myApp', [
         templateUrl: 'partials/signin',
         controller: 'loginController'
     }).
-    when('/signin', {
+    when('/app/signin', {
         templateUrl: 'partials/signin',
         controller: 'loginController'
     }).
-    when('/profile', {
+    when('/app/profile', {
         templateUrl: 'partials/profile',
         controller: 'loginController'
     }).
-    when('/calendar', {
+    when('/app/calendar', {
         templateUrl: 'partials/calendar',
         controller: 'calendarController'
     }).
