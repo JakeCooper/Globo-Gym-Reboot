@@ -1,17 +1,23 @@
+//set up ========================
+
 var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var sessions= require('express-session');
 
+//var app = require('connect'); //for sessions
 var config = require('config');
 var mongoose = require('mongoose');
 var passport = require('passport');
+var flash = require('connect-flash'); //auth
 var LocalStrategy = require('passport-local').Strategy;
 
 var app = express();
 
+//config =========
 require('./database/user.js');
 
 mongoose.connect(config.mongoose.URL);
@@ -28,7 +34,10 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, '../Frontend')));
 
+//app.use(sessions({ secret: 'Seng299' })); // session secret
+
 require('./passport/passport.js')(passport, app)
+app.use(flash()); // use connect-flash for flash messages stored in session
 
 // default to the index page let angular do the routing
 app.get('/', function(req, res, next){
@@ -70,6 +79,5 @@ app.use(function(err, req, res, next) {
         error: {}
     });
 });
-
 
 module.exports = app;

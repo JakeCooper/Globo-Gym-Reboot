@@ -10,12 +10,12 @@ var app = angular.module('myApp', [
         templateUrl: 'partials/signin',
         controller: 'loginController'
     }).
-    when('/login', {
-        templateUrl: 'partials/login',
+    when('/signin', {
+        templateUrl: 'partials/signin',
         controller: 'loginController'
     }).
     when('/profile', {
-        templateUrl: 'partials/login',
+        templateUrl: 'partials/profile',
         controller: 'loginController'
     }).
     when('/calendar', {
@@ -28,3 +28,5 @@ var app = angular.module('myApp', [
 
     $locationProvider.html5Mode(true);
 });
+
+
