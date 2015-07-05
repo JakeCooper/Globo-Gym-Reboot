@@ -1,12 +1,12 @@
-angular.module("navbarControllers", [])
+angular.module("menuControllers", [])
 .controller('menuController', ['$scope',
     function ($scope) {
     }
 ])
-.directive("myNavbar", function(){
+.directive("mySidebar", function(){
     return {
         restrict:"E",
         //scope: {},
-        templateUrl: "partials/navbar"
+        templateUrl: "partials/sidebar"
     };
 });
