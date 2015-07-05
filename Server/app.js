@@ -16,13 +16,11 @@ var flash = require('connect-flash'); //auth
 var LocalStrategy = require('passport-local').Strategy;
 
 var app = express();
-//var app = connect();
 
 //config =========
 require('./database/user.js');
 
 mongoose.connect(config.mongoose.URL);
-
 
 // view engine setup
 app.set('views', path.join(__dirname, '../Frontend'));
@@ -36,19 +34,10 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, '../Frontend')));
 
+//app.use(sessions({ secret: 'Seng299' })); // session secret
+
 require('./passport/passport.js')(passport, app)
-
-
-
-	// required for passport
-	//app.use(express.session({ secret: 'Seng299' })); // session secret
-	app.use(passport.initialize());
-	app.use(passport.session()); // persistent login sessions
-	app.use(flash()); // use connect-flash for flash messages stored in session
-
-
-
-
+app.use(flash()); // use connect-flash for flash messages stored in session
 
 // default to the index page let angular do the routing
 app.get('/', function(req, res, next){
@@ -90,6 +79,5 @@ app.use(function(err, req, res, next) {
         error: {}
     });
 });
-
 
 module.exports = app;

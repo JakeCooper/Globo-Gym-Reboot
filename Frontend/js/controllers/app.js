@@ -7,7 +7,7 @@ var app = angular.module('myApp', [
     "loginControllers",
     "calendarControllers",
     "navbarControllers"])
-.config(function ($routeProvider) {
+.config(function ($routeProvider, $locationProvider) {
   $routeProvider.
     when('/', {
         templateUrl: 'partials/signin',
@@ -28,6 +28,8 @@ var app = angular.module('myApp', [
     otherwise({
       redirectTo: '/'
     });
+
+    $locationProvider.html5Mode(true);
 });
 
 
