@@ -33,11 +33,20 @@ server.on('listening', onListening);
 // sever, the sockets nedd to be bound to ther server after connection
 // basically this means you cant add in the socket logic until after
 // this point.
-
 var io = require('socket.io')(server);
-// sample of socket logic
-require('../sockets/sample.js')(io);
+var passport = require("passport");
+var config = require('config');
 
+// authenticate sockets
+io.use(function (socket, next) {
+    // requires the application to be initialized
+    // this is not stored in the config file
+    config.sessionMiddleware(socket.handshake, {}, next);
+});
+
+// will only continue on if the user is logged in
+io.use(require("../sockets/authorizeSockets.js"));
+(require("../sockets/socketLogic.js")(io));
 
 /**
  * Normalize a port into a number, string, or false.

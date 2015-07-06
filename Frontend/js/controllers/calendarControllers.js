@@ -34,7 +34,7 @@ module.controller('calendarController', ['$scope', '$compile', 'uiCalendarConfig
     $scope.calEventsExt = {
        color: '#f00',
        textColor: 'yellow',
-       events: [ 
+       events: [
           {type:'party',title: 'Lunch',start: new Date(y, m, d, 12, 0),end: new Date(y, m, d, 14, 0),allDay: false},
           {type:'party',title: 'Lunch 2',start: new Date(y, m, d, 12, 0),end: new Date(y, m, d, 14, 0),allDay: false},
           {type:'party',title: 'Click for Google',start: new Date(y, m, 28),end: new Date(y, m, 29),url: 'http://google.com/'}
@@ -92,7 +92,7 @@ module.controller('calendarController', ['$scope', '$compile', 'uiCalendarConfig
     console.log(uiCalendarConfig.calendars)
     };
      /* Render Tooltip */
-    $scope.eventRender = function( event, element, view ) { 
+    $scope.eventRender = function( event, element, view ) {
         element.attr({'tooltip': event.title,
                      'tooltip-append-to-body': true});
         $compile(element)($scope);
