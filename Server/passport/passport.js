@@ -32,10 +32,10 @@ module.exports = function (passport, app) {
     );
 
     app.get('/oauth2callback',
-        passport.authenticate('google', { failureRedirect: '/signin' }),
+        passport.authenticate('google', { failureRedirect: '/app/signin' }),
         function(req, res) {
         // Successful authentication, redirect home.
-            res.redirect('/');
+            res.redirect('/app/calendar');
         }
     );
 
@@ -49,21 +49,15 @@ module.exports = function (passport, app) {
             failureRedirect : '/signin' //testing
         }));
 
-    //route for logging out
+    // route to test if the user is logged in or not
+    app.get('/loggedin', function(req, res) {
+        console.log(req.session);
+        res.send(req.isAuthenticated() ? req.user : '0');
+    });
+
+    // route for logging out
     app.get('/logout', function(req, res){
       req.logout();
       res.redirect('/');
     })
 };
-
-
-// route middleware to make sure a user is logged in
-function isLoggedIn(req, res, next) {
-
-    // if user is authenticated in the session, carry on
-    if (req.isAuthenticated())
-        return next();
-
-    // if they aren't redirect them to the home page
-    res.redirect('/');
-}
