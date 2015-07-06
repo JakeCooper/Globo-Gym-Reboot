@@ -1,5 +1,3 @@
-//set up ========================
-
 var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
@@ -7,12 +5,11 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
-//var app = require('connect'); //for sessions
 var config = require('config');
-var mongoose = require('mongoose');
 var passport = require('passport');
 var flash = require('connect-flash'); //auth
 var LocalStrategy = require('passport-local').Strategy;
+var mongoose = require('mongoose');
 
 var session = require('express-session');
 var MongoStore = require('connect-mongo')(session);
@@ -24,7 +21,7 @@ config.sess.store =  new MongoStore({
 var app = express();
 
 //config =========
-require('./database/user.js');
+require('./database/schemas.js');
 
 mongoose.connect(config.mongoose.URL);
 
@@ -40,8 +37,6 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, '../Frontend')));
 app.use(config.sessionMiddleware);
-
-//app.use(sessions({ secret: 'Seng299' })); // session secret
 
 require('./passport/passport.js')(passport, app)
 app.use(flash()); // use connect-flash for flash messages stored in session

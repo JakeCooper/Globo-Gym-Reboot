@@ -7,12 +7,6 @@ module.controller('calendarController', ['$scope', '$compile', 'uiCalendarConfig
     var m = date.getMonth();
     var y = date.getFullYear();
 
-    /* event source that pulls from google.com */
-    $scope.eventSource = {
-            url: "http://www.google.com/calendar/feeds/usa__en%40holiday.calendar.google.com/public/basic",
-            className: 'gcal-event',           // an option!
-            currentTimezone: 'America/Chicago' // an option!
-    };
     /* event source that contains custom events on the scope */
     $scope.events = [
       {title: 'All Day Event',start: new Date(y, m, 1)},
@@ -88,8 +82,6 @@ module.controller('calendarController', ['$scope', '$compile', 'uiCalendarConfig
       if(uiCalendarConfig.calendars[calendar]){
         uiCalendarConfig.calendars[calendar].fullCalendar('render');
       }
-    console.log(uiCalendarConfig)
-    console.log(uiCalendarConfig.calendars)
     };
      /* Render Tooltip */
     $scope.eventRender = function( event, element, view ) {
@@ -97,46 +89,24 @@ module.controller('calendarController', ['$scope', '$compile', 'uiCalendarConfig
                      'tooltip-append-to-body': true});
         $compile(element)($scope);
     };
-    /* config object */
-    $scope.uiConfig = {
-      calendar:{
-        height: 450,
-        editable: true,
-        header:{
-          left: 'title',
-          center: '',
-          right: 'today prev,next'
-        },
-        eventClick: $scope.alertOnEventClick,
-        eventDrop: $scope.alertOnDrop,
-        eventResize: $scope.alertOnResize,
-        eventRender: $scope.eventRender
-      }
-    };
 
     /* event sources array*/
-    $scope.eventSources = [$scope.events, $scope.eventSource, $scope.eventsF];
+    $scope.eventSources = [$scope.events, $scope.eventsF];
     $scope.eventSources2 = [$scope.calEventsExt, $scope.eventsF, $scope.events];
 
-        $scope.uiConfig = {
-            calendar:{
-                height: "100%",
-                editable: true,
-                header:{
-                    left: 'month basicWeek basicDay agendaWeek agendaDay',
-                    center: 'title',
-                    right: 'today prev,next'
-                },
-                dayClick: $scope.alertEventOnClick,
-                eventDrop: $scope.alertOnDrop,
-                eventResize: $scope.alertOnResize
-           }
-        };
-
-        // When the scope recieves the 'sample' message change
-        // the scope to the recieved message
-        socket.on("sample", function(data){
-            $scope.sample = data.sample;
-        });
+    $scope.uiConfig = {
+        calendar:{
+            height: "100%",
+            editable: false,
+            header:{
+                left: 'month agendaWeek agendaDay',
+                center: 'title',
+                right: 'today prev,next'
+            },
+            dayClick: $scope.alertEventOnClick,
+            eventDrop: $scope.alertOnDrop,
+            eventResize: $scope.alertOnResize
+       }
+    };
     }
 ]);
