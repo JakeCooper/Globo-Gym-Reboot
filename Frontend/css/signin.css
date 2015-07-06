@@ -3,25 +3,22 @@ html {
 }
 
 body{
-background-image: url('../assets/images/blur1.jpg');
+    background-image: url('../assets/images/blur1.jpg');
     background-size: cover;
     position: relative;
-overflow: hidden;
+    overflow: hidden;
     min-height:100%;
 }
 
 div.signin{
-    
-    
     position:absolute;
-    
     height:400px;
     width: 700px;
     top:50%;
     left:50%;    
     margin-top: -200px; 
     margin-left:-350px;
-      z-index:15;
+    z-index:15;
     background-color: #eeeeee;
     border-radius: 8px;
     box-shadow: 0px -5px 8px rgba(0, 0, 0, 0.5);
@@ -32,16 +29,20 @@ div.signin{
 
 span.oakbay{
     font-size:85px;
-     font-family: 'Amatic SC', cursive;
+    font-family: 'Amatic SC', cursive;
 }
 p.login{
-     font-family: 'Amatic SC', cursive;
+    font-family: 'Amatic SC', cursive;
     font-size: 35px;
 }
 
 span.facebook.google{
     font-family: sans-serif;
-    
-     text-shadow: 0px -1px rgba(0, 0, 0, 0.11);
-}   
+    text-shadow: 0px -1px rgba(0, 0, 0, 0.11);
+}
 
+span.facebook, span.google{
+    font-family: sans-serif;
+    text-shadow: 0px -1px rgba(0, 0, 0, 0.11);
+    padding-left:10px;
+}
