@@ -10,5 +10,13 @@ module.controller('loginController', ['$scope', 'socket',
         socket.on("sample", function(data){
             $scope.sample = data.sample;
         });
+
+        $scope.facebookAuth = function(){
+            window.location.href = window.location.origin + "/auth/facebook"
+        }
+
+        $scope.googleAuth = function(){
+            window.location.href = window.location.origin + "/auth/google"
+        }
     }
 ]);

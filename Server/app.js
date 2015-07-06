@@ -1,3 +1,5 @@
+//set up ========================
+
 var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
@@ -5,7 +7,26 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
+//var app = require('connect'); //for sessions
+var config = require('config');
+var mongoose = require('mongoose');
+var passport = require('passport');
+var flash = require('connect-flash'); //auth
+var LocalStrategy = require('passport-local').Strategy;
+
+var session = require('express-session');
+var MongoStore = require('connect-mongo')(session);
+config.sessionMiddleware = session(config.sess);
+config.sess.store =  new MongoStore({
+    url: config.mongoose.URL,
+})
+
 var app = express();
+
+//config =========
+require('./database/user.js');
+
+mongoose.connect(config.mongoose.URL);
 
 // view engine setup
 app.set('views', path.join(__dirname, '../Frontend'));
@@ -18,6 +39,17 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, '../Frontend')));
+app.use(config.sessionMiddleware);
+
+//app.use(sessions({ secret: 'Seng299' })); // session secret
+
+require('./passport/passport.js')(passport, app)
+app.use(flash()); // use connect-flash for flash messages stored in session
+
+app.use(function(req, res, next){
+   //console.log(req.session)
+   next()
+});
 
 // default to the index page let angular do the routing
 app.get('/', function(req, res, next){
@@ -27,6 +59,11 @@ app.get('/', function(req, res, next){
 // render the partials as angular requests them
 app.get('/partials/:filename', function(req, res, next) {
     res.render('../Frontend/partials/' + req.params.filename);
+});
+
+// default to the index page let angular do the routing
+app.get('/app/*', function(req, res, next){
+    res.render('../Frontend/index');
 });
 
 // catch 404 and forward to error handler
@@ -59,6 +96,5 @@ app.use(function(err, req, res, next) {
         error: {}
     });
 });
-
 
 module.exports = app;
