@@ -1,16 +1,12 @@
 var mongoose = require('mongoose');
 
 var UserSchema = new mongoose.Schema({
-    //username: { type: String, required: true, index: {unique: true} },
     reservation: { type: Array },
     //name: { type: String},
     provider: { type: String },
     info: {},
     google: {
-        id           : String,
-        token        : String,
-        email        : String,
-        name         : String
+        // need to put some shit in here once we decide on a structure
     },
     facebook         : {
         id           : String,
@@ -26,5 +22,14 @@ var UserSchema = new mongoose.Schema({
         username     : String
     },
 });
+
+UserSchema.statics = {
+
+    deserializeUser: function (id, callback){
+        this.findOne({ _id: id }, function (err, user) {
+            callback(err, user)
+        })
+    }
+}
 
 module.exports = mongoose.model('User', UserSchema);

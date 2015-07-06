@@ -33,11 +33,7 @@ server.on('listening', onListening);
 // sever, the sockets nedd to be bound to ther server after connection
 // basically this means you cant add in the socket logic until after
 // this point.
-
-var io = require('socket.io')(server);
-// sample of socket logic
-require('../sockets/sample.js')(io);
-
+require('../sockets/sockets.js')(server);
 
 /**
  * Normalize a port into a number, string, or false.
