@@ -4,9 +4,8 @@
                
     p Login or Register with:
                
-    a.btn.btn-primary(href='/auth/facebook')
+    a.btn.btn-primary(ng-click="facebookAuth()")
         span.fa.fa-facebook     Facebook
-    
-    
-    a.btn.btn-danger(href='/auth/google')
+    | &nbsp 
+    a.btn.btn-danger(ng-click="googleAuth()")
         span.fa.fa-google-plus    Google
