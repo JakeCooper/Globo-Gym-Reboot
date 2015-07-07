@@ -3,14 +3,19 @@
 }
 
 .profile-container {
-    margin-left: 20px;
-    margin-top: 20px;
+    margin-left: 10px;
+    margin-top: 10px;
     position:fixed;
-    left:20px;
+    left:0px;
     z-index:10;
     -webkit-transition: opacity 1s;
     opacity: 0.0;
     /*border: solid 1px black;*/
+}
+
+.calendar-container {
+    padding-left:90px;
+    padding-top:25px;
 }
 
 .profile-container > img {
