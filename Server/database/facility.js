@@ -11,7 +11,7 @@ var FacilityReservation = new mongoose.Schema({
 
 FacilityReservation.statics = {
     findSimilarRooms: function (cb) {
-          return this.model('Animal').find({ type: this.type }, cb);
+          return this.model('FacilityReservation').find({ type: this.type }, cb);
     }
 }
 

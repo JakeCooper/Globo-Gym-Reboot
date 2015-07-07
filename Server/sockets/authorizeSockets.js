@@ -22,8 +22,6 @@ module.exports = function(socket, next){
         User.deserializeUser(session.passport.user, function(err, user){
 
             if(!user) return;
-
-            console.log("Socket is logged in user is", user)
             socket.user = user;
             next()
         });

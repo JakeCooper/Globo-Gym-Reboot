@@ -1,5 +1,5 @@
-module.exports = function (socket, next) {
-    socket.emit("sample", { sample: "This is from the server"});
-    console.log("should be next");
-    next();
+module.exports = function (sockets) {
+    sockets.on("connection", function(socket){
+        // put more socket logic in here
+    });
 }

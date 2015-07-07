@@ -42,7 +42,6 @@ require('./passport/passport.js')(passport, app)
 app.use(flash()); // use connect-flash for flash messages stored in session
 
 app.use(function(req, res, next){
-   //console.log(req.session)
    next()
 });
 
