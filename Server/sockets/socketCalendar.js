@@ -5,8 +5,6 @@ module.exports = function (sockets) {
     sockets.on("connection", function(socket){
         socket.on("calendarUpdate", function(data){
             FacilityReservation.find({}, function(err, user){
-                console.log("update")
-                console.log(err, user)
                 socket.emit("calendarUpdate", user);
             })
         });
