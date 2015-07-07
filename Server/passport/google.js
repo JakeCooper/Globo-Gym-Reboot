@@ -8,6 +8,7 @@ module.exports = new GoogleStrategy({
     clientSecret: config.google.clientSecret,
     callbackURL: config.google.callbackURL
     }, function(accessToken, refreshToken, profile, done) {
+        console.log(profile)
 
         var options = {
             'googleid': profile.id
@@ -17,9 +18,8 @@ module.exports = new GoogleStrategy({
             if (err) return done(err);
             if (!user) {
                 user = new User({
-                    photo: profile.image.url,
-                    //email: ,
-                    username: profile.Andrei,
+                    photo: profile.photos[0].value,
+                    username: profile.displayName,
                     googleid: profile.id
                 });
                 user.save(function (err) {
