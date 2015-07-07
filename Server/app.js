@@ -11,19 +11,22 @@ var flash = require('connect-flash'); //auth
 var LocalStrategy = require('passport-local').Strategy;
 var mongoose = require('mongoose');
 
+mongoose.connect(config.mongoose.URL);
+
 var session = require('express-session');
 var MongoStore = require('connect-mongo')(session);
-config.sessionMiddleware = session(config.sess);
+
 config.sess.store =  new MongoStore({
-    url: config.mongoose.URL,
+    mongooseConnection: mongoose.connection
 })
+
+config.sessionMiddleware = session(config.sess);
 
 var app = express();
 
 //config =========
 require('./database/schemas.js');
 
-mongoose.connect(config.mongoose.URL);
 
 // view engine setup
 app.set('views', path.join(__dirname, '../Frontend'));
