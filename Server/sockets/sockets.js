@@ -14,6 +14,7 @@ module.exports = function (server) {
     io.use(require("./authorizeSockets.js"));
     require("./socketCalendar.js")(io.sockets);
     require("./socketLogic.js")(io.sockets);
+    require("./socketProfilePic.js")(io.sockets);
 
     io.on("connection", function(socket){
         // will only continue on if the user is logged in
