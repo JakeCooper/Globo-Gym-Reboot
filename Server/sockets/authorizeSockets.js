@@ -18,9 +18,8 @@ module.exports = function(socket, next){
         ||  "{}");
 
     if(session.passport){
-            //for(item in session){if(session.hasOwnProperty(item)){console.log(item)}}
         User.deserializeUser(session.passport.user, function(err, user){
-
+            console.log(user)
             if(!user) return;
             socket.user = user;
             next()
