@@ -1,4 +1,4 @@
-var module = angular.module("loginControllers", []);
+var module = angular.module("profileControllers", []);
 
 module.controller('profileController', ['$scope', 'socket',
     function ( $scope, socket ) {
