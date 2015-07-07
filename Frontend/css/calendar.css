@@ -8,7 +8,13 @@
     position:fixed;
     left:20px;
     z-index:10;
+    -webkit-transition: opacity 1s;
+    opacity: 0.0;
     /*border: solid 1px black;*/
+}
+
+.profile-container > img {
+    border-radius: 50%;
 }
 
 .search-container {

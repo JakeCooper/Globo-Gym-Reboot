@@ -10,11 +10,11 @@
 
 angular.module('ui.calendar', [])
   .constant('uiCalendarConfig', {calendars: {}})
-  .controller('uiCalendarCtrl', ['$scope', 
-                                 '$timeout', 
+  .controller('uiCalendarCtrl', ['$scope',
+                                 '$timeout',
                                  '$locale', function(
-                                  $scope, 
-                                  $timeout, 
+                                  $scope,
+                                  $timeout,
                                   $locale){
 
       var sources = $scope.eventSources,
@@ -262,7 +262,7 @@ angular.module('ui.calendar', [])
           calendar.fullCalendar(options);
           if(attrs.calendar) {
             uiCalendarConfig.calendars[attrs.calendar] = calendar;
-          }          
+          }
         };
 
         eventSourcesWatcher.onAdded = function(source) {
