@@ -10,25 +10,28 @@ var FacilityReservation = new mongoose.Schema({
     user: {type: String}
 });
 
-FacilityReservation.statics = {
-    rooms: config.mongoose.facility.rooms,
+var rooms = config.mongoose.facility.rooms;
 
-    isValidRoom: function(){
-        for(var i = 0; i < this.rooms.length; i++){
-            var room = this.rooms[i];
-            if(this.roomName == room.roomname && this.type == room.type){
-                
-            }
+FacilityReservation.methods.isValidRoom = function(){
+    for(var i = 0; i < rooms.length; i++){
+        var room = rooms[i];
+        console.log(this.roomName,room.roomName,this.type,room.type);
+        if(this.roomName == room.roomName && this.type == room.type){
+            return true
         }
-    },
-
-    findSimilarRooms: function (cb) {
-          return this.model('FacilityReservation').find({ type: this.type }, cb);
-    },
-
-    findThisRoomsReservations: function (cb) {
-          return this.model('FacilityReservation').find({ roomName: this.roomName }, cb);
     }
+    return false;
+},
+
+FacilityReservation.methods.findSimilarRooms = function (cb) {
+      return this.model('FacilityReservation').find({ type: this.type }, cb);
+},
+
+FacilityReservation.methods.findThisRoomsReservations = function (cb) {
+      return this.model('FacilityReservation').find({ roomName: this.roomName }, cb);
+}
+
+FacilityReservation.statics = {
 };
 
 module.exports = mongoose.model('FacilityReservation', FacilityReservation);
