@@ -1,26 +1,14 @@
 var mongoose = require('mongoose');
 
 var UserSchema = new mongoose.Schema({
-    reservation: { type: Array },
-    //name: { type: String},
-    provider: { type: String },
-    info: {},
-    google: {
-        // need to put some shit in here once we decide on a structure
-    },
-    facebook         : {
-        id           : String,
-        token        : String,
-        email        : String,
-        name         : String,
-        photo        : String
-    },
-    twitter          : {
-        id           : String,
-        token        : String,
-        displayName  : String,
-        username     : String
-    },
+
+    photo: { type:String},
+    email: {type:String},
+    username: {type:String},
+    facebookid:{type:String},
+    googleid:{type:String}
+    
+    
 });
 
 UserSchema.statics = {
