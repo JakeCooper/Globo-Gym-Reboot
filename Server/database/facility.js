@@ -32,10 +32,12 @@ FacilityReservation.methods.saveReservation = function (cb) {
         var options = {
             type: that.type,
             roomName: that.roomName,
-            //start: { $gte: that.start, $lte: that.end },
-            end: { $gte: that.start}  // , $lte: that.end }
+            $or: [
+                { start: { $gte: that.start, $lte: that.end } },
+                { end: { $gte: that.start, $lte: that.end } }
+            ]
         }
-        console.log(options)
+
         that.model("FacilityReservation").findOne(options, function(err, res){
             if(err) return console.err("Could not save to db", err, res);
             if(res) return cb({message: "There is already a reservation with that time"});

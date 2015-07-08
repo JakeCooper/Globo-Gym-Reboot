@@ -11,7 +11,7 @@ module.controller('calendarController', ['$scope', '$compile', 'uiCalendarConfig
             user: "Andrei",
             title: 'TENNIS GAME!!!!',
             start: new Date(),
-            end: new Date("Wed Jul 08 2015 10:42:10 GMT-0700 (PDT)")
+            end: new Date("Wed Jul 08 2015 10:53:10 GMT-0700 (PDT)")
         }
     })
 
