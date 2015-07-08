@@ -5,9 +5,7 @@ module.exports = function (sockets) {
     sockets.on("connection", function(socket){
         socket.on("calendarUpdate", function(data){
             FacilityReservation.find({}, function(err, reservations){
-                console.log(reservations[0]);
                 var res = new FacilityReservation(reservations[0]);
-                console.log(res.isValidRoom())
                 socket.emit("calendarUpdate", reservations);
             })
         });
