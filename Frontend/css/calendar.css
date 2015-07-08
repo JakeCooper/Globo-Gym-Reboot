@@ -26,3 +26,31 @@
     float: right;
 }
 
+/*SIDEBAR-LEFT*/
+
+.profile-button {
+    margin-top:30px !important;
+    margin-left: 25px;
+    width:200px;
+}
+
+.user-name {
+    margin-left : 100px;
+    margin-top : 25px;
+    font-size : 32px;
+}
+
+.reservation-header {
+    margin-left:40px;
+    margin-right:10px;
+    margin-top: 20px;
+    font-size : 24px;
+}
+
+.reservation-button {
+    margin-left:50px;
+    margin-top:25px;
+    width: 150px;
+    height: 50px;
+}
+
