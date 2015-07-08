@@ -5,21 +5,21 @@
         	Start:
         		<div class="timepickStart"ng-controller="timepickerController">
 
-			      <timepicker id="startTime" ng-model="startTime" ng-change="changed()" hour-step="hstep" minute-step="mstep" show-meridian="false"></timepicker>
+			      <timepicker ng-model="startTime" hour-step="hstep" minute-step="mstep" show-meridian="false"></timepicker>
 
 			    </div>
 			End:
 			  <div class="timepickEnd"ng-controller="timepickerController">
 
-			    <timepicker id="endTime" ng-model="endTime" ng-change="changed()" hour-step="hstep" minute-step="mstep" show-meridian="false"></timepicker>
+			    <timepicker ng-model="endTime" hour-step="hstep" minute-step="mstep" show-meridian="false"></timepicker>
 
 			  </div>
-			  Title:
+			  Title of Reservation:
 			  <input ng-model="eventTitle" type="text" id="event_subject" name="event_subject"
 				maxlength="255" style="width:460px;"/>
             
         </div>
         <div class="modal-footer">
-            <button class="btn btn-primary" ng-click="ok()">OK</button>
+            <button class="btn btn-primary" ng-click="ok()">Reserve Facility</button>
 
         </div>

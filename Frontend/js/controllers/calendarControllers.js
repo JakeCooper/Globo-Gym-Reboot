@@ -22,17 +22,23 @@ module.controller('calendarController', ['$scope', '$compile', 'uiCalendarConfig
     };
 
     $scope.eventSources = [$scope.reservations,$scope.events];
-    $scope.$on('pushEvent', function(title, start, end){
+
+    $scope.$root.$on('pushEvent', function(event, title, start, end){
+        var startTime = start;
+        var endTime = end;
         $scope.events.push({
             title: title,
-            start: start,
-            end: end,
+            start: startTime,
+            end: endTime,
         });
     });
 
     /* add custom event*/
     $scope.addEvent = function() {
       $scope.events.push({
+        title: title,
+            start: start,
+            end: end,
         title: 'Coles Test',
         start: new Date(y, m, d, h, 0),
         end: new Date(y, m, d, h, 30),
@@ -50,13 +56,8 @@ module.controller('calendarController', ['$scope', '$compile', 'uiCalendarConfig
                 center: 'title',
                 right: 'today prev,next'
             },
-            dayClick: function(){
-                var modalInstance = $modal.open({
-                  animation: $scope.animationsEnabled,
-                  templateUrl: 'partials/addmodal.html',
-                  controller: 'modalInstanceController',
-                  size: 'sm',
-                });
+            dayClick: function(date){
+                $scope.$root.$broadcast('dayClicked', date);
             },
             eventDrop: $scope.alertOnDrop,
             eventResize: $scope.alertOnResize
@@ -70,28 +71,30 @@ module.controller('modalController', function($scope,$modal){
         var startTime = $scope.startTime;
         var endTime = $scope.endTime;
     };
-    $scope.open = function (size) {
+    $scope.open = function () {
 
         var modalInstance = $modal.open({
           animation: $scope.animationsEnabled,
           templateUrl: 'partials/addmodal.html',
           controller: 'modalInstanceController',
-          size: size,
         });
     };
+     $scope.$root.$on('dayClicked', function(event, date){
+        $scope.$root.$broadcast('getDate', date);
+        var modalInstance = $modal.open({
+          animation: $scope.animationsEnabled,
+          templateUrl: 'partials/addmodal.html',
+          controller: 'modalInstanceController',
+        });
+    });
 
 });
 
 module.controller('modalInstanceController', function($scope, $modalInstance){
-    var startTime =  new Date();
-    var endTime = new Date();
-
 
     $scope.ok = function () {
-        var title = $scope.eventTitle;
-        startTime = $scope.startTime;
-        endTime = $scope.endTime;
-        $scope.$emit('pushEvent', title, startTime, endTime);
+
+        $scope.$root.$broadcast('pushEvent', $scope.eventTitle, $scope.startTime, $scope.endTime);
 
         $modalInstance.close();
 
@@ -100,14 +103,23 @@ module.controller('modalInstanceController', function($scope, $modalInstance){
     $scope.cancel = function () {
         $modalInstance.dismiss('cancel');
     };
+     $scope.$root.$on('closeModal', function(){
+        $modalInstance.close();
+    });
 
 });
 module.controller('timepickerController', function ($scope, $log) {
   $scope.startTime = new Date();
-  $scope.startTime.setMinutes(0);
   $scope.endTime = new Date();
+  $scope.$root.$on('getDate', function(event, date){
+    $scope.startTime = date;
+    $scope.endTime = date;
+  });
+
+  $scope.startTime.setMinutes(0);
   $scope.endTime.setMinutes(0);
   $scope.hstep = 1;
   $scope.mstep = 30;
+
 
 });
