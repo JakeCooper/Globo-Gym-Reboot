@@ -7,6 +7,7 @@ var config = require('config');
 
 var google = require('./google');
 var facebook = require('./facebook');
+var adminlogin = require('./adminlogin');
 
 module.exports = function (passport, app) {
     // serialize sessions
@@ -19,6 +20,7 @@ module.exports = function (passport, app) {
     })
 
     passport.use(google);
+    passport.use(adminlogin);
     passport.use(facebook); //?? will this work tho
 
     app.use(passport.initialize());
@@ -26,6 +28,16 @@ module.exports = function (passport, app) {
 
     // we shoud probably put everything from here down into another folder
 
+    // routes for adming login
+       app.get('/app/adminlogin', passport.authenticate('adminlogin', {
+        successRedirect : '/app/calendar', // redirect to the secure profile section
+        failureRedirect : '/', // redirect back to the signup page if there is an error
+        failureFlash : true // allow flash messages
+    }));
+
+    
+    
+    
     // routes for google authentication
     app.get('/auth/google',
         passport.authenticate('google', { scope: config.google.loginURL })
@@ -45,8 +57,8 @@ module.exports = function (passport, app) {
     // handle the callback after facebook has authenticated the user
     app.get('/auth/facebook/callback',
         passport.authenticate('facebook', {
-            successRedirect : '/',
-            failureRedirect : '/signin' //testing
+            successRedirect : '/app/calendar',
+            failureRedirect : '/' //testing
         }));
 
     // route to test if the user is logged in or not

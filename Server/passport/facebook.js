@@ -1,5 +1,5 @@
 var mongoose = require('mongoose');
-var LocalStrategy    = require('passport-local').Strategy;
+
 var FacebookStrategy = require('passport-facebook').Strategy;
 
 // load up the user model

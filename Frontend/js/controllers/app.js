@@ -19,7 +19,19 @@ var app = angular.module('myApp', [
     }).
     when('/app/profile', {
         templateUrl: 'partials/profile',
-        controller: 'profileController'
+        controller: 'loginController'
+    }).
+    when('/app/about', {
+        templateUrl: 'partials/about',
+        controller: 'loginController'
+    }).
+    when('/app/regpol', {
+        templateUrl: 'partials/regpol',
+        controller: 'loginController'
+    }). 
+    when('/app/admin', {
+        templateUrl: 'partials/admin',
+        controller: 'loginController'
     }).
     when('/app/calendar', {
         templateUrl: 'partials/calendar',

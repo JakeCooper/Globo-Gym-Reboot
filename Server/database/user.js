@@ -6,10 +6,17 @@ var UserSchema = new mongoose.Schema({
     email: {type:String},
     username: {type:String},
     facebookid:{type:String},
-    googleid:{type:String}
+    googleid:{type:String},
+    adminpassword:{type:String}
     
     
 });
+
+
+UserSchema.methods.validPassword = function(password) {
+    return bcrypt.compareSync(password, this.adminpassword);
+};
+
 
 UserSchema.statics = {
 
