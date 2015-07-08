@@ -36,7 +36,7 @@ p.login{
     font-size: 35px;
 }
 
-span.facebook.google{
+span.facebook, span.google{
     font-family: sans-serif;
     text-shadow: 0px -1px rgba(0, 0, 0, 0.11);
 }
@@ -45,4 +45,12 @@ span.facebook, span.google{
     font-family: sans-serif;
     text-shadow: 0px -1px rgba(0, 0, 0, 0.11);
     padding-left:10px;
+}
+
+span.about{
+    position:absolute;
+    top:400px;
+    color:white;  
+    font-size:28px;
+    text-align: center;
 }

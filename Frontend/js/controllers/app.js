@@ -5,6 +5,7 @@ var app = angular.module('myApp', [
     "ui.calendar",
     "ui.bootstrap",
     "loginControllers",
+    "profileControllers",
     "calendarControllers",
     "menuControllers"])
 .config(function ($routeProvider, $locationProvider) {
@@ -19,7 +20,7 @@ var app = angular.module('myApp', [
     }).
     when('/app/profile', {
         templateUrl: 'partials/profile',
-        controller: 'loginController'
+        controller: 'profileController'
     }).
     when('/app/calendar', {
         templateUrl: 'partials/calendar',

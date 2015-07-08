@@ -3,7 +3,7 @@ angular.module("menuControllers", [])
     function ($scope, socket) {
         socket.emit("getProfile");
         socket.on("profileInfo", function(data){
-            $(".profile-container").children("img").attr('src', data["google"]["image"]["url"].replace("sz=50", "sz=75"));
+            $(".profile-container").children("img").attr('src', data.photo.replace("sz=50", "sz=75"));
             $(".profile-container").css("opacity", "1.0");
         });
     }
