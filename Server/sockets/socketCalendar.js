@@ -6,10 +6,21 @@ module.exports = function (sockets) {
         socket.on("calendarUpdate", function(data){
             FacilityReservation.find({}, function(err, reservations){
                 console.log(reservations[0]);
-                res = new FacilityReservation(reservations[0]);
+                var res = new FacilityReservation(reservations[0]);
                 console.log(res.isValidRoom())
                 socket.emit("calendarUpdate", reservations);
             })
         });
+
+        socket.on("saveReservation", function(data){
+            var res = new FacilityReservation(data.res)
+            res.saveReservation(function(response){
+                socket.emit("reservationStatus", {
+                    res: data.res,
+                    message: response.message
+                });
+            });
+        });
+
     });
 }
