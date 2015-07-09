@@ -1,35 +1,23 @@
 var module = angular.module("calendarControllers", []);
 
 module.controller('calendarController', ['$scope', '$compile', 'uiCalendarConfig', 'socket',
-    function ( $scope, $compile, uiCalendarConfig, socket, $modal) {
-    var dateClicked = new Date();
-    var startDate = new Date();
-    var endDate = new Date();
-
-    /* event source that contains custom events on the scope */
-
-    socket.emit("saveReservation", {
-        res: {
-            roomName: "The White Goodman Tennis Room",
-            type: "tennisCourt",
-            user: "Andrei",
-            title: 'TENNIS GAME!!!!',
-            start: new Date("Wed Jul 08 2015 9:30:00 GMT-0700 (PDT)"),
-            end: new Date("Wed Jul 08 2015 10:00:00 GMT-0700 (PDT)")
-        }
-    })
+    function ( $scope, $compile, uiCalendarConfig, socket) {
+    // get profile info
+    socket.emit("getProfile");
+    socket.on("profileInfo", function(data){
+       $scope.username = data.username;
+    });
 
     socket.on("reservationStatus", function(data){
         uiCalendarConfig.calendars["resCalendar"].fullCalendar( 'refetchEvents' )
-        alert(data.message);
+        // alert the user that it worked
     });
-
-    $scope.events = [];
 
     $scope.reservations = {
         events: function (start, end, timezone, callback) {
             socket.emit("calendarUpdate", {})
             socket.on("calendarUpdate", function(data){
+                console.log(data)
                 callback(data);
             })
         },
@@ -37,37 +25,14 @@ module.controller('calendarController', ['$scope', '$compile', 'uiCalendarConfig
         textColor: 'black'
     };
 
-    $scope.eventSources = [$scope.reservations,$scope.events];
-
-    $scope.$root.$on('setTime', function(event, start, end){
-        startDate = new Date(start);
-        endDate = new Date(end);
-    });
-
-    $scope.$root.$on('pushEvent', function(event, title){
-        startDate.setMonth(dateClicked.getMonth());
-        startDate.setDate(dateClicked.getDate());
-        endDate.setMonth(dateClicked.getMonth());
-        endDate.setDate(dateClicked.getDate());
-        console.log('Start date: ' + startDate);
-        $scope.events.push({
-            title: title,
-            start: startDate,
-            end: endDate,
-        });
-    });
-
-    /* add custom event*/
-    $scope.addEvent = function() {
-      $scope.events.push({
-      });
-    };
+    $scope.eventSources = [$scope.reservations];
 
     $scope.uiConfig = {
         calendar:{
-            minTime: "08:00:00",
+            timezone: "local",
+            ignoreTimezone: true,
+            aspectRatio: 1,
             forceEventDuration: true,
-            height: "100%",
             editable: false,
             defaultView: "agendaWeek",
             header:{
@@ -76,45 +41,32 @@ module.controller('calendarController', ['$scope', '$compile', 'uiCalendarConfig
                 right: 'today prev,next'
             },
             dayClick: function(date, jsEvent, view){
-                dateClicked =  new Date(date);
-                console.log('Clicked on: ' + dateClicked.toString());
-                $scope.$root.$broadcast('dayClicked');
+                $scope.dateClicked = new Date(date);
+                console.log('Clicked on: ' + $scope.dateClicked.toString());
+                $scope.$broadcast('dayClicked');
             },
-            eventDrop: $scope.alertOnDrop,
-            eventResize: $scope.alertOnResize
        }
     };
     }
 ]);
+
 module.controller('modalController', function($scope,$modal){
     $scope.animationsEnabled = true;
-    $scope.createEvent = function ($scope) {
-       // var startTime = $scope.startTime;
-       // var endTime = $scope.endTime;
-    };
 
-    $scope.open = function () {
-
-        var modalInstance = $modal.open({
-          animation: $scope.animationsEnabled,
-          templateUrl: 'partials/addmodal',
-          controller: 'modalInstanceController',
-        });
-     };
-
-     $scope.$root.$on('dayClicked', function(){
-        var modalInstance = $modal.open({
-          animation: $scope.animationsEnabled,
-          templateUrl: 'partials/addmodal',
-          controller: 'modalInstanceController',
+    $scope.$on('dayClicked', function(){
+        console.log( $scope.username);
+        $modal.open({
+            animation: $scope.animationsEnabled,
+            scope: $scope,
+            templateUrl: 'partials/addmodal',
+            controller: 'modalInstanceController',
         });
     });
 });
 
-module.controller('modalInstanceController', function($scope, $modalInstance){
-
-    $scope.ok = function () {
-        $scope.$root.$broadcast('pushEvent', $scope.eventTitle);
+module.controller('modalInstanceController', function($scope, socket, $modalInstance){
+    $scope.ok = function() {
+        $scope.$broadcast('saveReservation');
         $modalInstance.close();
     };
 
@@ -123,31 +75,31 @@ module.controller('modalInstanceController', function($scope, $modalInstance){
     };
 });
 
-module.controller('timepickerController', function ($scope, $log) {
-    $scope.startTime = new Date();
-    $scope.endTime = new Date();
+module.controller('timepickerController', function ($scope, socket, $log) {
+    $scope.startTime = new Date($scope.dateClicked.toString());
+    $scope.endTime = new Date($scope.dateClicked.toString());
+
+    $scope.$on('saveReservation', function () {
+        var reservation = {
+            res: {
+                roomName: "The White Goodman Tennis Room",
+                type: "tennisCourt",
+                user: $scope.username,
+                title: $scope.title,
+                start: $scope.startTime,
+                end:  $scope.endTime
+            }
+        }
+        socket.emit("saveReservation", reservation);
+    });
 
     $scope.changed = function () {
         $log.log('Starttime changed to: ' + $scope.startTime);
         $log.log('Endtime changed to: ' + $scope.endTime);
-        $scope.$root.$broadcast('setTime', $scope.startTime, $scope.endTime);
     };
-
-    socket.emit("saveReservation", {
-        res: {
-            roomName: "Me'Shell Jones Tennis Room",
-            type: "tennisCourt",
-            user: "Andrei",
-            title: 'TENNIS GAME!!!!',
-            start: new Date(),
-            end: new Date("Wed Jul 08 2015 10:42:10 GMT-0700 (PDT)")
-        }
-    })
 
     $scope.startTime.setMinutes(0);
     $scope.endTime.setMinutes(30);
     $scope.hstep = 1;
     $scope.mstep = 30;
-
-
 });

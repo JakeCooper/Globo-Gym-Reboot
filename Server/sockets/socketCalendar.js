@@ -13,6 +13,7 @@ module.exports = function (sockets) {
         socket.on("saveReservation", function(data){
             var res = new FacilityReservation(data.res)
             res.saveReservation(function(response){
+                console.log("im back")
                 socket.emit("reservationStatus", {
                     res: data.res,
                     message: response.message

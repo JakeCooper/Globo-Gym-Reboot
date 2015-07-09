@@ -39,7 +39,7 @@ FacilityReservation.methods.getStartHours = function () {
 
 FacilityReservation.methods.getEndHours = function () {
     var end = this.end.getHours() == 0 ? 24 : this.end.getHours();
-    return end + this.end.getMinutes()/30 * 05;
+    return end + this.end.getMinutes()/30 * 0.5;
 }
 
 FacilityReservation.methods.isFacilityOpen = function () {
@@ -63,12 +63,13 @@ FacilityReservation.methods.saveReservation = function (cb) {
                 { start: { $gte: that.start, $lt: that.end } },
                 { end: { $gt: that.start, $lte: that.end } }
             ]
-        }
+        };
 
         that.model("FacilityReservation").findOne(options, function(err, res){
             if(err) return console.err("Could not save to db", err, res);
             if(res) return cb({message: "There is already a reservation with that time"});
-            if(this.isTooLong) return cb({message: "This reservation is too long"});
+            console.log("hey baby")
+            if(that.isTooLong()) return cb({message: "This reservation is too long"});
             //if()
             that.save(function(err){
                 return cb({message: "it has been done"});
