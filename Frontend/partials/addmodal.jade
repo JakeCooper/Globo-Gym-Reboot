@@ -5,10 +5,17 @@
       | Start:
       div
         timepicker(ng-model='startTime', ng-change='changed()', hour-step='hstep', minute-step='mstep', show-meridian='false')
-      | &#x9;&#x9;&#x9;End:
+      | &#x9;&#x9;&#x9;Duration:
       | &#x9;&#x9;&#x9;  
       div
-        timepicker(ng-model='endTime', ng-change='changed()', hour-step='hstep', minute-step='mstep', show-meridian='false')
+        select(ng-model='selectedDuration')
+            option(value='30') 30mins
+            |    
+            option(value='60') 60mins
+            |    
+            option(value='90') 90mins
+            |    
+            option(value='120') 120mins
       | &#x9;&#x9;&#x9;  Title of Reservation:
       | &#x9;&#x9;&#x9;  
       input#event_subject(ng-model='eventTitle', type='text', name='event_subject', maxlength='255', style='width:460px;')

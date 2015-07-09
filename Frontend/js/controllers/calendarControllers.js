@@ -80,6 +80,11 @@ module.controller('timepickerController', function ($scope, socket, $log) {
     $scope.endTime = new Date($scope.dateClicked.toString());
 
     $scope.$on('saveReservation', function () {
+        var hours   = Math.floor($scope.selectedDuration / 60);
+        var minutes = $scope.selectedDuration % 60; 
+        $scope.endTime = new Date($scope.startTime);
+        $scope.endTime.setHours($scope.startTime.getHours()+hours);
+        $scope.endTime.setMinutes($scope.startTime.getMinutes()+minutes);
         var reservation = {
             res: {
                 roomName: "The White Goodman Tennis Room",
@@ -95,11 +100,9 @@ module.controller('timepickerController', function ($scope, socket, $log) {
 
     $scope.changed = function () {
         $log.log('Starttime changed to: ' + $scope.startTime);
-        $log.log('Endtime changed to: ' + $scope.endTime);
     };
-
+    $scope.selectedDuration = 30; 
     $scope.startTime.setMinutes(0);
-    $scope.endTime.setMinutes(30);
     $scope.hstep = 1;
     $scope.mstep = 30;
 });
