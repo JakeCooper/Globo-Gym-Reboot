@@ -31,7 +31,7 @@ module.exports = function (passport, app) {
     // routes for adming login
        app.get('/app/adminlogin', passport.authenticate('adminlogin', {
         successRedirect : '/app/calendar', // redirect to the secure profile section
-        failureRedirect : '/', // redirect back to the signup page if there is an error
+        failureRedirect : '/app/admin', // redirect back to the login page if there is an error
         failureFlash : true // allow flash messages
     }));
 
