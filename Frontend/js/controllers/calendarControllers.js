@@ -85,7 +85,7 @@ module.controller('timepickerController', function ($scope, socket, $log) {
                 roomName: "The White Goodman Tennis Room",
                 type: "tennisCourt",
                 user: $scope.username,
-                title: $scope.title,
+                title: $scope.eventTitle,
                 start: $scope.startTime,
                 end:  $scope.endTime
             }
