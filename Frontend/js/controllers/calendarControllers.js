@@ -2,11 +2,10 @@ var module = angular.module("calendarControllers", []);
 
 module.controller('calendarController', ['$scope', '$compile', 'uiCalendarConfig', 'socket',
     function ( $scope, $compile, uiCalendarConfig, socket, $modal) {
-    var date = new Date();
-    var d = date.getDate();
-    var m = date.getMonth();
-    var y = date.getFullYear();
-    var h = date.getHours();
+    var dateClicked = new Date();
+    var startDate = new Date();
+    var endDate = new Date();
+
     /* event source that contains custom events on the scope */
     socket.emit("calendarUpdate", {})
     $scope.events = [];
@@ -23,25 +22,26 @@ module.controller('calendarController', ['$scope', '$compile', 'uiCalendarConfig
 
     $scope.eventSources = [$scope.reservations,$scope.events];
 
-    $scope.$root.$on('pushEvent', function(event, title, start, end){
-        var startTime = start;
-        var endTime = end;
+    $scope.$root.$on('setTime', function(event, start, end){
+        startDate = new Date(start);
+        endDate = new Date(end);
+    });
+    $scope.$root.$on('pushEvent', function(event, title){
+        startDate.setMonth(dateClicked.getMonth());
+        startDate.setDate(dateClicked.getDate());
+        endDate.setMonth(dateClicked.getMonth());
+        endDate.setDate(dateClicked.getDate());
+        console.log('Start date: ' + startDate);
         $scope.events.push({
             title: title,
-            start: startTime,
-            end: endTime,
+            start: startDate,
+            end: endDate,
         });
     });
 
     /* add custom event*/
     $scope.addEvent = function() {
       $scope.events.push({
-        title: title,
-            start: start,
-            end: end,
-        title: 'Coles Test',
-        start: new Date(y, m, d, h, 0),
-        end: new Date(y, m, d, h, 30),
       });
     };
 
@@ -56,8 +56,10 @@ module.controller('calendarController', ['$scope', '$compile', 'uiCalendarConfig
                 center: 'title',
                 right: 'today prev,next'
             },
-            dayClick: function(date){
-                $scope.$root.$broadcast('dayClicked', date);
+            dayClick: function(date, jsEvent, view){
+                dateClicked =  new Date(date);
+                console.log('Clicked on: ' + dateClicked.toString());
+                $scope.$root.$broadcast('dayClicked');
             },
             eventDrop: $scope.alertOnDrop,
             eventResize: $scope.alertOnResize
@@ -68,8 +70,8 @@ module.controller('calendarController', ['$scope', '$compile', 'uiCalendarConfig
 module.controller('modalController', function($scope,$modal){
     $scope.animationsEnabled = true;
     $scope.createEvent = function ($scope) {
-        var startTime = $scope.startTime;
-        var endTime = $scope.endTime;
+       // var startTime = $scope.startTime;
+       // var endTime = $scope.endTime;
     };
     $scope.open = function () {
 
@@ -79,8 +81,7 @@ module.controller('modalController', function($scope,$modal){
           controller: 'modalInstanceController',
         });
     };
-     $scope.$root.$on('dayClicked', function(event, date){
-        $scope.$root.$broadcast('getDate', date);
+     $scope.$root.$on('dayClicked', function(){
         var modalInstance = $modal.open({
           animation: $scope.animationsEnabled,
           templateUrl: 'partials/addmodal.html',
@@ -93,29 +94,25 @@ module.controller('modalController', function($scope,$modal){
 module.controller('modalInstanceController', function($scope, $modalInstance){
 
     $scope.ok = function () {
-
-        $scope.$root.$broadcast('pushEvent', $scope.eventTitle, $scope.startTime, $scope.endTime);
-
+        $scope.$root.$broadcast('pushEvent', $scope.eventTitle);
         $modalInstance.close();
-
     };
 
     $scope.cancel = function () {
         $modalInstance.dismiss('cancel');
     };
-     $scope.$root.$on('closeModal', function(){
-        $modalInstance.close();
-    });
+
 
 });
 module.controller('timepickerController', function ($scope, $log) {
   $scope.startTime = new Date();
   $scope.endTime = new Date();
-  $scope.$root.$on('getDate', function(event, date){
-    $scope.startTime = date;
-    $scope.endTime = date;
-  });
 
+  $scope.changed = function () {
+    $log.log('Starttime changed to: ' + $scope.startTime);
+    $log.log('Endtime changed to: ' + $scope.endTime);
+    $scope.$root.$broadcast('setTime', $scope.startTime, $scope.endTime);
+  };
   $scope.startTime.setMinutes(0);
   $scope.endTime.setMinutes(0);
   $scope.hstep = 1;

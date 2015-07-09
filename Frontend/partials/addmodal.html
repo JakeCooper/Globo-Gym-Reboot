@@ -3,15 +3,15 @@
         </div>
         <div class="modal-body">
         	Start:
-        		<div class="timepickStart"ng-controller="timepickerController">
+        		<div ng-controller="timepickerController">
 
-			      <timepicker ng-model="startTime" hour-step="hstep" minute-step="mstep" show-meridian="false"></timepicker>
+			      <timepicker ng-model="startTime" ng-change="changed()" hour-step="hstep" minute-step="mstep" show-meridian="false"></timepicker>
 
 			    </div>
 			End:
-			  <div class="timepickEnd"ng-controller="timepickerController">
+			  <div ng-controller="timepickerController">
 
-			    <timepicker ng-model="endTime" hour-step="hstep" minute-step="mstep" show-meridian="false"></timepicker>
+			    <timepicker ng-model="endTime" ng-change="changed()" hour-step="hstep" minute-step="mstep" show-meridian="false"></timepicker>
 
 			  </div>
 			  Title of Reservation:
