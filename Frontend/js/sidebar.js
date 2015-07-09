@@ -20,7 +20,7 @@ function loadLeftContent(){
             'Profile' +
         '</button>' +
         '<div class="reservation-header">' +
-            'My Memes' +
+            'My Reservations' +
         '</div>' +
         '<div class="reservation-container">' +
             '<button class="btn btn-default reservation-button">Da Bench</button>' +
