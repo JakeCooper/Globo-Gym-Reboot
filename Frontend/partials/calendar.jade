@@ -1,4 +1,9 @@
 body
     my-sidebar(ng-controller="menuController")
     .calendar-container
-        .span8.calendar(ui-calendar='uiConfig.calendar', ng-model='eventSources', calendar="resCalendar")
+        .modalHeader(ng-controller='modalController')
+            .modal-title
+                |MODAL
+        button.btn.btn-primary(ng-controller='modalController', type='button', ng-click='open()')
+        | Add Event
+        .span8.calendar(ui-calendar='uiConfig.calendar', ng-model='eventSources')
