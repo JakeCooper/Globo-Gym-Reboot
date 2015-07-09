@@ -29,6 +29,7 @@ module.controller('calendarController', ['$scope', '$compile', 'uiCalendarConfig
 
     $scope.uiConfig = {
         calendar:{
+            minTime: "08:00:00", //starts at 8am
             timezone: "local",
             ignoreTimezone: true,
             aspectRatio: 1,
@@ -85,10 +86,11 @@ module.controller('timepickerController', function ($scope, socket, $log) {
         $scope.endTime = new Date($scope.startTime);
         $scope.endTime.setHours($scope.startTime.getHours()+hours);
         $scope.endTime.setMinutes($scope.startTime.getMinutes()+minutes);
+        console.log('roomname: ' + $scope.selectedRoom);
         var reservation = {
             res: {
-                roomName: "The White Goodman Tennis Room",
-                type: "tennisCourt",
+                roomName: "The White Goodman Tennis Room", //roomName: $scope.selectedRoom,
+                type: "tennisCourt", 
                 user: $scope.username,
                 title: $scope.eventTitle,
                 start: $scope.startTime,
@@ -105,4 +107,18 @@ module.controller('timepickerController', function ($scope, socket, $log) {
     $scope.startTime.setMinutes(0);
     $scope.hstep = 1;
     $scope.mstep = 30;
+});
+
+module.controller('accordianController', function ($scope) {
+
+  $scope.selectedRoom = 'spinning1';
+
+ $scope.tennisItems = [
+     { id: 1, name: 'tennis1' },
+     { id: 2, name: 'tennis2' },
+     { id: 3, name: 'tennis3' },
+     { id: 4, name: 'tennis4' },
+     { id: 5, name: 'tennis5' }
+   ];
+ 
 });
