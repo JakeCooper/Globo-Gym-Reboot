@@ -8,7 +8,6 @@ module.exports = new GoogleStrategy({
     clientSecret: config.google.clientSecret,
     callbackURL: config.google.callbackURL
     }, function(accessToken, refreshToken, profile, done) {
-        console.log(profile)
 
         var options = {
             'googleid': profile.id

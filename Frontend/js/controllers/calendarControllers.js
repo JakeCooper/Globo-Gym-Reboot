@@ -10,12 +10,12 @@ module.controller('calendarController', ['$scope', '$compile', 'uiCalendarConfig
 
     socket.emit("saveReservation", {
         res: {
-            roomName: "Me'Shell Jones Tennis Room",
+            roomName: "The White Goodman Tennis Room",
             type: "tennisCourt",
             user: "Andrei",
             title: 'TENNIS GAME!!!!',
-            start: new Date(),
-            end: new Date("Wed Jul 08 2015 10:42:10 GMT-0700 (PDT)")
+            start: new Date("Wed Jul 08 2015 9:30:00 GMT-0700 (PDT)"),
+            end: new Date("Wed Jul 08 2015 10:00:00 GMT-0700 (PDT)")
         }
     })
 
