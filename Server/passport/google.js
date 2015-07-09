@@ -19,7 +19,7 @@ module.exports = new GoogleStrategy({
             googleid: profile.id
         }
 
-        User.findOneAndUpdate( options, update, function (err, user) {
+        User.findOneAndUpdate( options, update, {upsert: true}, function (err, user) {
             if (err) return done(err);
             return done(err, user);
         });
