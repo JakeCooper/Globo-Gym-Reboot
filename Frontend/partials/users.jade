@@ -1,0 +1,16 @@
+body( ng-controller='adminControllers')
+
+
+h2 Student List:
+  table.table.table-bordered
+      thead
+        tr
+          th First Name
+          |          
+          th Last Name
+      |  
+      tbody
+        tr(ng-repeat='student in main.students')
+          td {{ student.first }}
+          |          
+          td {{ student.last }}

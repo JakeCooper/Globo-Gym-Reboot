@@ -30,10 +30,7 @@ var app = angular.module('myApp', [
         templateUrl: 'partials/regpol',
         controller: 'loginController'
     }). 
-    when('/app/admin', {
-        templateUrl: 'partials/admin',
-        controller: 'loginController'
-    }).
+  
     when('/app/calendar', {
         templateUrl: 'partials/calendar',
         controller: 'calendarController',
@@ -41,9 +38,9 @@ var app = angular.module('myApp', [
             loggedin: checkLoggedin
         }
     }).
-  when('/app/calendaradmin', {
-        templateUrl: 'partials/calendaradmin',
-        controller: 'calendarController',
+  when('/app/users', {
+        templateUrl: 'partials/users',
+        controller: 'adminController',
         resolve:{
             admin: checkadmin
         }
