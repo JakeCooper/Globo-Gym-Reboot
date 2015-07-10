@@ -16,7 +16,9 @@ body
                 accordion(close-others='true')
                     accordion-group(heading='Tennis Courts')
                         div
-                            select(ng-model='selectedRoom' ng-options='item.id as item.name for item in tennisItems')
+                            label(ng-repeat='selectedRoom in tennisItems')
+                                input(type='checkbox', checklist-model='roomName', checklist-value='selectedRoom')
+                                |  {{selectedRoom}}
                     accordion-group(heading='Pool')
                         div
                             select(ng-model='selectedRoom')

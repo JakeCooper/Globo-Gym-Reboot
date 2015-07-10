@@ -1,4 +1,14 @@
 my-sidebar(ng-controller="menuController")
 .calendar-container
-    .span8.calendar(ui-calendar='uiConfig.calendar', ng-model='eventSources', calendar="resCalendar")
+    section(ng-controller='calendarController')
+        .span8
+            tabset
+                tab(select="renderCalender('resCalendar');")
+                    tab-heading
+                        |  Calendar One                             
+                    .calendar(ng-model='eventSources', calendar='resCalendar', ui-calendar='uiConfig.calendar')                      
+                tab(select="renderCalender('myCalendar2');")
+                    tab-heading
+                        |  Calendar Two                          
+                    .calendar(ng-model='eventSources', calendar='myCalendar2', ui-calendar='uiConfig.calendar')
 div(ng-controller="modalController")

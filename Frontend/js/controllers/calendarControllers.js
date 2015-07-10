@@ -48,6 +48,16 @@ module.controller('calendarController', ['$scope', '$compile', 'uiCalendarConfig
             },
        }
     };
+     /* Change View */
+    $scope.changeView = function(view,calendar) {
+      uiCalendarConfig.calendars[calendar].fullCalendar('changeView',view);
+    };
+    //render calendar
+    $scope.renderCalender = function(calendar) {
+      if(uiCalendarConfig.calendars[calendar]){
+        uiCalendarConfig.calendars[calendar].fullCalendar('render');
+      }
+    };
     }
 ]);
 
@@ -86,7 +96,7 @@ module.controller('timepickerController', function ($scope, socket, $log) {
         $scope.endTime = new Date($scope.startTime);
         $scope.endTime.setHours($scope.startTime.getHours()+hours);
         $scope.endTime.setMinutes($scope.startTime.getMinutes()+minutes);
-        console.log('roomname: ' + $scope.selectedRoom);
+        console.log('roomname: ' + $scope.selectedRoom.name);
         var reservation = {
             res: {
                 roomName: "The White Goodman Tennis Room", //roomName: $scope.selectedRoom,
@@ -111,14 +121,14 @@ module.controller('timepickerController', function ($scope, socket, $log) {
 
 module.controller('accordianController', function ($scope) {
 
-  $scope.selectedRoom = 'spinning1';
+  $scope.selectedRoom = 1;
 
  $scope.tennisItems = [
-     { id: 1, name: 'tennis1' },
-     { id: 2, name: 'tennis2' },
-     { id: 3, name: 'tennis3' },
-     { id: 4, name: 'tennis4' },
-     { id: 5, name: 'tennis5' }
+     { name: 'Room 1', id: 'tennis1' },
+     { name: 'Room 2', id: 'tennis2' },
+     { name: 'Room 3', id: 'tennis3' },
+     { name: 'Room 4', id: 'tennis4' },
+     { name: 'Room 5', id: 'tennis5' }
    ];
  
 });
