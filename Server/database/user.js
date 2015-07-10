@@ -7,15 +7,10 @@ var UserSchema = new mongoose.Schema({
     username: {type:String},
     facebookid:{type:String},
     googleid:{type:String},
-    adminpassword:{type:String}
+    isadmin:{type:Boolean}  //if you want admin priv, change to true in the database for the desired account
     
     
 });
-
-
-UserSchema.methods.validPassword = function(password) {
-    return bcrypt.compareSync(password, this.adminpassword);
-};
 
 
 UserSchema.statics = {

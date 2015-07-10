@@ -12,11 +12,11 @@ html
                 
                 span.oakbay          Admin Login
                 .adminlogin
-                    form(action='/app/calendar', method='get')
+                    form(action="/app/admin", method='post')
                         .form-group
                             label Username
-                            input.form-control(type='text', name='email')
+                            input.form-control(type='text', name='username')
                         .form-group
                             label Password
-                            input.form-control(type='text', name='password')
-                        button.btn.btn-success.btn-lg(ng-click="adminAuth()") Login
+                            input.form-control(type='text', name='adminpassword')
+                        button.btn.btn-success.btn-lg(type="submit") Login

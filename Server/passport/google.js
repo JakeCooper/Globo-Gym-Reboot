@@ -20,7 +20,8 @@ module.exports = new GoogleStrategy({
                 user = new User({
                     photo: profile.photos[0].value,
                     username: profile.displayName,
-                    googleid: profile.id
+                    googleid: profile.id,
+                    isadmin: false
                 });
                 user.save(function (err) {
                     if (err) console.log(err);

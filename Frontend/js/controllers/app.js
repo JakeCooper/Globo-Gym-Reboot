@@ -40,6 +40,13 @@ var app = angular.module('myApp', [
             loggedin: checkLoggedin
         }
     }).
+  when('/app/calendaradmin', {
+        templateUrl: 'partials/calendaradmin',
+        controller: 'calendarController',
+        resolve:{
+            admin: checkadmin
+        }
+    }).
     otherwise({
       redirectTo: '/'
     });
@@ -61,6 +68,21 @@ var checkLoggedin = function($q, $timeout, $http, $location, $rootScope){
             $location.url('/app/signin');
         }
     });
+
+    return deferred.promise;
+};
+
+var checkadmin = function($q, $timeout, $http, $location, $rootScope,user){
+    // Initialize a new promise
+    var deferred = $q.defer();
+
+        if (user.isadmin === false) deferred.resolve();
+            // Not Authenticated
+        else {
+            $rootScope.message = 'You must be an admin.';
+            deferred.reject(); 
+            $location.url('/app/signin');
+        }
 
     return deferred.promise;
 };
