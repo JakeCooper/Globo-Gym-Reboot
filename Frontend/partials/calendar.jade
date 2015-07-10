@@ -1,4 +1,13 @@
 my-sidebar(ng-controller="menuController")
 .calendar-container
-    .span8.calendar(ui-calendar='uiConfig.calendar', ng-model='eventSources', calendar="resCalendar")
+    .span8
+        tabset(id="my-tabs")
+            tab(select='renderCalender("{{roomType}}");', ng-repeat="roomType in roomTypes")
+                tab-heading {{ roomType }}
+                div()
+                    label(ng-repeat='room in scope[roomType]')
+                        input(type='checkbox', checklist-model='roomName', checklist-value='selectedRoom')
+                        |  {{room}} &nbsp
+                .calendar(ng-model='eventSources', calendar='{{roomType}}', ui-calendar='uiConfig.calendar' config="uiConfig.calendar")
+
 div(ng-controller="modalController")
