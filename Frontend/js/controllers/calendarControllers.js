@@ -54,6 +54,42 @@ module.controller('calendarController', ['$scope', '$compile', 'uiCalendarConfig
             },
        }
     };
+    //render calendar
+    $scope.renderCalender = function(calendar) {
+      if(uiCalendarConfig.calendars[calendar]){
+        uiCalendarConfig.calendars[calendar].fullCalendar('render');
+      }
+    };
+
+
+ $scope.tennisItems = [
+     { name: 'Room 1', id: 'tennis1' },
+     { name: 'Room 2', id: 'tennis2' },
+     { name: 'Room 3', id: 'tennis3' },
+     { name: 'Room 4', id: 'tennis4' },
+     { name: 'Room 5', id: 'tennis5' }
+   ];
+ 
+$scope.poolItems = [
+     { name: 'Pool 1', id: 'pool1' }
+   ];
+   
+$scope.squashItems = [
+     { name: 'Room 1', id: 'tennis1' },
+     { name: 'Room 2', id: 'tennis2' },
+     { name: 'Room 3', id: 'tennis3' }
+   ];
+    
+$scope.workoutItems = [
+     { name: 'Room 1', id: 'tennis1' },
+     { name: 'Room 2', id: 'tennis2' },
+     { name: 'Room 3', id: 'tennis3' }
+   ];
+   
+$scope.spinningItems = [
+     { name: 'Room 1', id: 'tennis1' },
+     { name: 'Room 2', id: 'tennis2' }
+   ];
     }
 ]);
 
@@ -117,14 +153,14 @@ module.controller('timepickerController', function ($scope, socket, $log) {
 
 module.controller('accordianController', function ($scope) {
 
-  $scope.selectedRoom = 'spinning1';
+  $scope.selectedRoom = 1;
 
  $scope.tennisItems = [
-     { id: 1, name: 'tennis1' },
-     { id: 2, name: 'tennis2' },
-     { id: 3, name: 'tennis3' },
-     { id: 4, name: 'tennis4' },
-     { id: 5, name: 'tennis5' }
+     { name: 'Room 1', id: 'tennis1' },
+     { name: 'Room 2', id: 'tennis2' },
+     { name: 'Room 3', id: 'tennis3' },
+     { name: 'Room 4', id: 'tennis4' },
+     { name: 'Room 5', id: 'tennis5' }
    ];
  
 });
