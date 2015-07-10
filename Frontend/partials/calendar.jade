@@ -1,29 +1,13 @@
 my-sidebar(ng-controller="menuController")
 .calendar-container
     .span8
-        tabset
-            tab(select="renderCalender('resCalendar');")
-                tab-heading
-                    | Tennis  
-                div
-                    label(ng-repeat='selectedRoom in tennisItems')
+        tabset(id="my-tabs")
+            tab(select='renderCalender("{{roomType}}");', ng-repeat="roomType in roomTypes")
+                tab-heading {{ roomType }}
+                div()
+                    label(ng-repeat='room in scope[roomType]')
                         input(type='checkbox', checklist-model='roomName', checklist-value='selectedRoom')
-                        |  {{selectedRoom.name}}                          
-                .calendar(ng-model='eventSources', calendar='resCalendar', ui-calendar='uiConfig.calendar')                      
-            tab(select="renderCalender('poolCalendar');")
-                tab-heading
-                    | Pool                        
-                 .calendar(ng-model='eventSources', calendar='poolCalendar', ui-calendar='uiConfig.calendar')
-            tab(select="renderCalender('squashCalendar');")
-                tab-heading
-                    | Squash                        
-                 .calendar(ng-model='eventSources', calendar='squashCalendar', ui-calendar='uiConfig.calendar')
-            tab(select="renderCalender('workoutCalendar');")
-                tab-heading
-                    | Workout                        
-                 .calendar(ng-model='eventSources', calendar='workoutCalendar', ui-calendar='uiConfig.calendar')
-            tab(select="renderCalender('spinningCalendar');")
-                tab-heading
-                    | Spinning                        
-                 .calendar(ng-model='eventSources', calendar='spinningCalendar', ui-calendar='uiConfig.calendar')
+                        |  {{room}} &nbsp
+                .calendar(ng-model='eventSources', calendar='{{roomType}}', ui-calendar='uiConfig.calendar' config="uiConfig.calendar")
+
 div(ng-controller="modalController")

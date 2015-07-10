@@ -1,7 +1,7 @@
 var module = angular.module("calendarControllers", []);
 
-module.controller('calendarController', ['$scope', '$compile', 'uiCalendarConfig', 'socket',
-    function ( $scope, $compile, uiCalendarConfig, socket) {
+module.controller('calendarController', ['$scope', '$compile', 'uiCalendarConfig', 'socket', '$timeout',
+    function ( $scope, $compile, uiCalendarConfig, socket, $timeout) {
     // get profile info
     socket.emit("getProfile");
     socket.on("profileInfo", function(data){
@@ -11,7 +11,19 @@ module.controller('calendarController', ['$scope', '$compile', 'uiCalendarConfig
     socket.emit("getFacilityInfo");
     socket.on("FacilityInfo", function(data){
         console.log("The Facility", data.facility);
+        var roomTypes = Object.keys(data.facility);
+        $scope.roomTypes = roomTypes;
+        console.log(roomTypes);
+        for(var i = 0; i < roomTypes.length; i++){
+            var roomType = roomTypes[i]
+            var roomNames =Object.keys(data.facility[roomType])
+            console.log(roomNames)
+            $scope[roomType] = roomNames;
+            xxx = $scope
+        }
+        $scope.scope = $scope;
     });
+
 
     socket.on("reservationStatus", function(data){
         uiCalendarConfig.calendars["resCalendar"].fullCalendar( 'refetchEvents' )
@@ -54,44 +66,18 @@ module.controller('calendarController', ['$scope', '$compile', 'uiCalendarConfig
             },
        }
     };
+
     //render calendar
     $scope.renderCalender = function(calendar) {
-      if(uiCalendarConfig.calendars[calendar]){
-        uiCalendarConfig.calendars[calendar].fullCalendar('render');
-      }
+        console.log(uiCalendarConfig);
+        $timeout(function(){
+          if(uiCalendarConfig.calendars[calendar]){
+            uiCalendarConfig.calendars[calendar].fullCalendar('render');
+          }
+        });
     };
 
-
- $scope.tennisItems = [
-     { name: 'Room 1', id: 'tennis1' },
-     { name: 'Room 2', id: 'tennis2' },
-     { name: 'Room 3', id: 'tennis3' },
-     { name: 'Room 4', id: 'tennis4' },
-     { name: 'Room 5', id: 'tennis5' }
-   ];
- 
-$scope.poolItems = [
-     { name: 'Pool 1', id: 'pool1' }
-   ];
-   
-$scope.squashItems = [
-     { name: 'Room 1', id: 'tennis1' },
-     { name: 'Room 2', id: 'tennis2' },
-     { name: 'Room 3', id: 'tennis3' }
-   ];
-    
-$scope.workoutItems = [
-     { name: 'Room 1', id: 'tennis1' },
-     { name: 'Room 2', id: 'tennis2' },
-     { name: 'Room 3', id: 'tennis3' }
-   ];
-   
-$scope.spinningItems = [
-     { name: 'Room 1', id: 'tennis1' },
-     { name: 'Room 2', id: 'tennis2' }
-   ];
-    }
-]);
+}]);
 
 module.controller('modalController', function($scope,$modal){
     $scope.animationsEnabled = true;
@@ -124,7 +110,7 @@ module.controller('timepickerController', function ($scope, socket, $log) {
 
     $scope.$on('saveReservation', function () {
         var hours   = Math.floor($scope.selectedDuration / 60);
-        var minutes = $scope.selectedDuration % 60; 
+        var minutes = $scope.selectedDuration % 60;
         $scope.endTime = new Date($scope.startTime);
         $scope.endTime.setHours($scope.startTime.getHours()+hours);
         $scope.endTime.setMinutes($scope.startTime.getMinutes()+minutes);
@@ -132,7 +118,7 @@ module.controller('timepickerController', function ($scope, socket, $log) {
         var reservation = {
             res: {
                 roomName: "The White Goodman Tennis Room", //roomName: $scope.selectedRoom,
-                type: "tennisCourt", 
+                type: "tennisCourt",
                 user: $scope.username,
                 title: $scope.eventTitle,
                 start: $scope.startTime,
@@ -145,22 +131,8 @@ module.controller('timepickerController', function ($scope, socket, $log) {
     $scope.changed = function () {
         $log.log('Starttime changed to: ' + $scope.startTime);
     };
-    $scope.selectedDuration = 30; 
+    $scope.selectedDuration = 30;
     $scope.startTime.setMinutes(0);
     $scope.hstep = 1;
     $scope.mstep = 30;
-});
-
-module.controller('accordianController', function ($scope) {
-
-  $scope.selectedRoom = 1;
-
- $scope.tennisItems = [
-     { name: 'Room 1', id: 'tennis1' },
-     { name: 'Room 2', id: 'tennis2' },
-     { name: 'Room 3', id: 'tennis3' },
-     { name: 'Room 4', id: 'tennis4' },
-     { name: 'Room 5', id: 'tennis5' }
-   ];
- 
 });
