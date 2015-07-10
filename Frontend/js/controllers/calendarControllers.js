@@ -63,6 +63,27 @@ module.controller('calendarController', ['$scope', '$compile', 'uiCalendarConfig
      { name: 'Room 4', id: 'tennis4' },
      { name: 'Room 5', id: 'tennis5' }
    ];
+ 
+$scope.poolItems = [
+     { name: 'Pool 1', id: 'pool1' }
+   ];
+   
+$scope.squashItems = [
+     { name: 'Room 1', id: 'tennis1' },
+     { name: 'Room 2', id: 'tennis2' },
+     { name: 'Room 3', id: 'tennis3' }
+   ];
+    
+$scope.workoutItems = [
+     { name: 'Room 1', id: 'tennis1' },
+     { name: 'Room 2', id: 'tennis2' },
+     { name: 'Room 3', id: 'tennis3' }
+   ];
+   
+$scope.spinningItems = [
+     { name: 'Room 1', id: 'tennis1' },
+     { name: 'Room 2', id: 'tennis2' }
+   ];
     }
 ]);
 
