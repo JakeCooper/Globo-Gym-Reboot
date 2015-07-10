@@ -8,9 +8,15 @@ module.controller('calendarController', ['$scope', '$compile', 'uiCalendarConfig
        $scope.username = data.username;
     });
 
+    socket.emit("getFacilityInfo");
+    socket.on("FacilityInfo", function(data){
+        console.log("The Facility", data.facility);
+    });
+
     socket.on("reservationStatus", function(data){
         uiCalendarConfig.calendars["resCalendar"].fullCalendar( 'refetchEvents' )
         // alert the user that it worked
+        alert(data.message);
     });
 
     $scope.reservations = {

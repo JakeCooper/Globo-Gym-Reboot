@@ -10,16 +10,47 @@ var FacilityReservation = new mongoose.Schema({
     user: {type: String}
 });
 
+FacilityReservation.methods.saveReservation = function (cb) {
+    var that = this;
+    if(!that.isValidRoom()) return cb({message: "Invalid room"});
+    console.log(that.isTooLong());
+    if(that.isTooLong()) return cb({message: "This reservation is too long"});
+    if(that.isValidHours()) return cb({message: "The Facility is not open during this time"});
+    var options = {
+        type: that.type,
+        roomName: that.roomName,
+        $or: [
+            { start: { $gte: that.start, $lt: that.end } },
+            { end: { $gt: that.start, $lte: that.end } }
+        ]
+    };
+
+    that.model("FacilityReservation").findOne(options, function(err, res){
+        if(err) return console.err("Could not save to db", err, res);
+        if(res) return cb({message: "There is already a reservation with that time"});
+        //if()
+        that.save(function(err){
+            return cb({message: "it has been done"});
+        });
+    });
+};
+
+
 FacilityReservation.methods.isValidRoom = function(){
-    var rooms = this.constructor.rooms;
-    for(var i = 0; i < rooms.length; i++){
-        var room = rooms[i];
-        console.log(this.roomName, room.roomName ,this.type ,room.type);
-        if(this.roomName.trim() == room.roomName && this.type.trim() == room.type){
-            return true
-        }
-    }
-    return false;
+    var roomName = this.roomName;
+    var type = this.type;
+
+    var isValidRoomName = function(room){
+        var rooms = config.mongoose.facility.rooms;
+        return !!rooms[roomName];
+    };
+
+    var isValidType = function(room, type){
+        var typeList = config.mongoose.facility.types;
+        return !!typeList[type] && !!typeList[type][room];
+    };
+
+    return isValidRoomName(roomName) && isValidType(roomName, type);
 };
 
 FacilityReservation.methods.findSimilarRooms = function (cb) {
@@ -27,22 +58,11 @@ FacilityReservation.methods.findSimilarRooms = function (cb) {
 };
 
 FacilityReservation.methods.isTooLong = function () {
-    var startHour = this.getStartHours();
-    var endHour = this.getEndHours();
-    console.log(startHour, endHour)
-    return endHour - startHour > this.constructor.maxLength
+    // 1 h = 3600000 ms
+    return this.end.getTime() - this.start.getTime() > this.constructor.maxLength * 3600000;
 }
 
-FacilityReservation.methods.getStartHours = function () {
-    return this.start.getHours() + (this.start.getMinutes()/30) * 0.5;
-}
-
-FacilityReservation.methods.getEndHours = function () {
-    var end = this.end.getHours() == 0 ? 24 : this.end.getHours();
-    return end + this.end.getMinutes()/30 * 0.5;
-}
-
-FacilityReservation.methods.isFacilityOpen = function () {
+FacilityReservation.methods.isValidHours = function () {
     var open = this.constructor.closeTime;
     var close = this.constructor.openTime;
     // is the day sunday
@@ -50,35 +70,10 @@ FacilityReservation.methods.isFacilityOpen = function () {
         open = this.constructor.sunOpenTime;
         close = this.constructor.sunCloseTime;
     }
-    return this.start.getHours() >= open && this.getEndHours() <= close;
+    var openTime = new Date(this.start.setHours(open));
+    var closeTime = new Date(this.start.setHours(close));
+    return this.start > openTime && this.end < closeTime;
 }
-
-FacilityReservation.methods.saveReservation = function (cb) {
-    var that = this;
-    if(that.isValidRoom()){
-        var options = {
-            type: that.type,
-            roomName: that.roomName,
-            $or: [
-                { start: { $gte: that.start, $lt: that.end } },
-                { end: { $gt: that.start, $lte: that.end } }
-            ]
-        };
-
-        that.model("FacilityReservation").findOne(options, function(err, res){
-            if(err) return console.err("Could not save to db", err, res);
-            if(res) return cb({message: "There is already a reservation with that time"});
-            console.log("hey baby")
-            if(that.isTooLong()) return cb({message: "This reservation is too long"});
-            //if()
-            that.save(function(err){
-                return cb({message: "it has been done"});
-            });
-        });
-    } else {
-        return cb({message: "Invalid room"});
-    }
-};
 
 FacilityReservation.methods.findThisRoomsReservations = function (cb) {
     return this.model('FacilityReservation').find({ roomName: this.roomName }, cb);
