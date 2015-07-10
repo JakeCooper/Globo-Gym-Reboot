@@ -8,6 +8,9 @@ var UserSchema = new mongoose.Schema({
     facebookid:{type:String},
     googleid:{type:String}
     
+    //lockedUntil:{type; date?} 
+    //on create event: check lockedUntil date and if (inFuture == true) -> deny creation
+    //on cancel event: if (timeUntilEvent < 24hrs) -> update lockedUntil to Xhrs from now
     
 });
 

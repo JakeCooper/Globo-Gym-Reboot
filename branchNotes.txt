@@ -1,0 +1,6 @@
+this branch is to implement an event creation lock if an existing event is canceled within 24 hours
+
+current intended changes:
+add a variable to user class for dateUnlock
+add a subroutine in the cancelEvent method that updates dateUnlock if need be - if no cancelEvent function implement one
+add a subroutine in the createEvent method that checks if User is currently allowed to make events

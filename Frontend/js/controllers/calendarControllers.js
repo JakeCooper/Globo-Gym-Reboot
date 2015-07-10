@@ -81,6 +81,9 @@ module.controller('timepickerController', function ($scope, socket, $log) {
     $scope.endTime = new Date($scope.dateClicked.toString());
 
     $scope.$on('saveReservation', function () {
+
+        /*an if clause that checks if the user can currently create events */
+
         var hours   = Math.floor($scope.selectedDuration / 60);
         var minutes = $scope.selectedDuration % 60; 
         $scope.endTime = new Date($scope.startTime);
