@@ -117,8 +117,8 @@ module.controller('timepickerController', function ($scope, socket, $log) {
         console.log('roomname: ' + $scope.selectedRoom);
         var reservation = {
             res: {
-                roomName: "The White Goodman Tennis Room", //roomName: $scope.selectedRoom,
-                type: "tennisCourt",
+                roomName: $scope.selectedRoomname, 
+                type: $scope.selecteRoomtype,
                 user: $scope.username,
                 title: $scope.eventTitle,
                 start: $scope.startTime,
