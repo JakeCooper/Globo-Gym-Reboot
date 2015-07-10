@@ -1,14 +1,29 @@
 my-sidebar(ng-controller="menuController")
 .calendar-container
-    section(ng-controller='calendarController')
-        .span8
-            tabset
-                tab(select="renderCalender('resCalendar');")
-                    tab-heading
-                        |  Calendar One                             
-                    .calendar(ng-model='eventSources', calendar='resCalendar', ui-calendar='uiConfig.calendar')                      
-                tab(select="renderCalender('myCalendar2');")
-                    tab-heading
-                        |  Calendar Two                          
-                    .calendar(ng-model='eventSources', calendar='myCalendar2', ui-calendar='uiConfig.calendar')
+    .span8
+        tabset
+            tab(select="renderCalender('resCalendar');")
+                tab-heading
+                    | Tennis  
+                div
+                    label(ng-repeat='selectedRoom in tennisItems')
+                        input(type='checkbox', checklist-model='roomName', checklist-value='selectedRoom')
+                        |  {{selectedRoom.name}}                          
+                .calendar(ng-model='eventSources', calendar='resCalendar', ui-calendar='uiConfig.calendar')                      
+            tab(select="renderCalender('poolCalendar');")
+                tab-heading
+                    | Pool                        
+                 .calendar(ng-model='eventSources', calendar='poolCalendar', ui-calendar='uiConfig.calendar')
+            tab(select="renderCalender('squashCalendar');")
+                tab-heading
+                    | Squash                        
+                 .calendar(ng-model='eventSources', calendar='squashCalendar', ui-calendar='uiConfig.calendar')
+            tab(select="renderCalender('workoutCalendar');")
+                tab-heading
+                    | Workout                        
+                 .calendar(ng-model='eventSources', calendar='workoutCalendar', ui-calendar='uiConfig.calendar')
+            tab(select="renderCalender('spinningCalendar');")
+                tab-heading
+                    | Spinning                        
+                 .calendar(ng-model='eventSources', calendar='spinningCalendar', ui-calendar='uiConfig.calendar')
 div(ng-controller="modalController")
