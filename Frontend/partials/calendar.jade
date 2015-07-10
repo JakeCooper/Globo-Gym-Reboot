@@ -1,4 +1,4 @@
-body
-    my-sidebar(ng-controller="menuController")
-    .calendar-container
-        .span8.calendar(ui-calendar='uiConfig.calendar', ng-model='eventSources')
+my-sidebar(ng-controller="menuController")
+.calendar-container
+    .span8.calendar(ui-calendar='uiConfig.calendar', ng-model='eventSources', calendar="resCalendar")
+div(ng-controller="modalController")
