@@ -16,6 +16,14 @@
             option(value='90') 90mins
             |    
             option(value='120') 120mins
+      | Facility: 
+      div
+          select(ng-model='selectedRoomtype')
+              option(ng-repeat ='roomType in roomTypes') {{roomType}}
+      | Room name: 
+      div
+          select(ng-model='selectedRoomname')
+              option(ng-repeat ='roomName in scope[selectedRoomtype]') {{roomName}}
       | &#x9;&#x9;&#x9;  Title of Reservation:
       | &#x9;&#x9;&#x9;  
       input#event_subject(ng-model='eventTitle', type='text', name='event_subject', maxlength='255', style='width:460px;')
