@@ -5,8 +5,8 @@ module.exports = function (sockets) {
 
     sockets.on("connection", function(socket){
         socket.on("calendarUpdate", function(data){
-            FacilityReservation.find({}, function(err, reservations){
-                var res = new FacilityReservation(reservations[0]);
+            console.log(data.rooms);
+            FacilityReservation.find({ type: data.type, roomName: { $in:data.rooms }}, function(err, reservations){
                 socket.emit("calendarUpdate", reservations);
             })
         });
@@ -18,7 +18,6 @@ module.exports = function (sockets) {
         socket.on("saveReservation", function(data){
             var res = new FacilityReservation(data.res)
             res.saveReservation(function(response){
-                console.log("im back")
                 socket.emit("reservationStatus", {
                     res: data.res,
                     message: response.message

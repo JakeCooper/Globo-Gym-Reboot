@@ -1,13 +1,13 @@
 my-sidebar(ng-controller="menuController")
 .calendar-container
     .span8
-        tabset(id="my-tabs")
-            tab(select='renderCalender("{{roomType}}");', ng-repeat="roomType in roomTypes")
-                tab-heading {{ roomType }}
+        tabset()
+            tab(select='selectTab("{{roomType.type}}")', ng-repeat="roomType in roomTypes", active="roomType.active")
+                tab-heading {{ roomType.type }}
                 div()
-                    label(ng-repeat='room in scope[roomType]')
-                        input(type='checkbox', checklist-model='roomName', checklist-value='selectedRoom')
+                    label(ng-repeat='room in scope[roomType.type]')
+                        input(type='checkbox', ng-model='roomsSelected[room]', ng-click="update()")
                         |  {{room}} &nbsp
-                .calendar(ng-model='eventSources', calendar='{{roomType}}', ui-calendar='uiConfig.calendar' config="uiConfig.calendar")
+                .calendar(ng-model='eventSources', calendar='{{roomType.type}}', ui-calendar='uiConfig.calendar' config="uiConfig.calendar")
 
 div(ng-controller="modalController")

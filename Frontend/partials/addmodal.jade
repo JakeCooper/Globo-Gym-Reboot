@@ -2,31 +2,32 @@
     h3.modal-title Choose start and end time
     |         
     .modal-body
-      | Start:
-      div
-        timepicker(ng-model='startTime', ng-change='changed()', hour-step='hstep', minute-step='mstep', show-meridian='false')
-      | &#x9;&#x9;&#x9;Duration:
-      | &#x9;&#x9;&#x9;  
-      div
-        select(ng-model='selectedDuration')
-            option(value='30') 30mins
-            |    
-            option(value='60') 60mins
-            |    
-            option(value='90') 90mins
-            |    
-            option(value='120') 120mins
-      | Facility: 
-      div
-          select(ng-model='selectedRoomtype')
-              option(ng-repeat ='roomType in roomTypes') {{roomType}}
-      | Room name: 
-      div
-          select(ng-model='selectedRoomname')
-              option(ng-repeat ='roomName in scope[selectedRoomtype]') {{roomName}}
-      | &#x9;&#x9;&#x9;  Title of Reservation:
-      | &#x9;&#x9;&#x9;  
-      input#event_subject(ng-model='eventTitle', type='text', name='event_subject', maxlength='255', style='width:460px;')
+        form
+          | Start:
+          div
+            timepicker(ng-model='startTime', ng-change='changed()', hour-step='hstep', minute-step='mstep', show-meridian='false')
+          | &#x9;&#x9;&#x9;Duration:
+          | &#x9;&#x9;&#x9;  
+          div
+            select(ng-model='selectedDuration')
+                option(selected value='30') 30mins
+                |    
+                option(value='60') 60mins
+                |    
+                option(value='90') 90mins
+                |    
+                option(value='120') 120mins
+          | Facility: 
+          div
+              select(ng-model='selectedRoomtype', ng-init="getActive()")
+                  option(ng-repeat ='roomType in roomTypes') {{roomType.type}}
+          | Room name: 
+          div
+              select(ng-model='selectedRoomname', ng-init="scope[selectedRoomtype][0]")
+                  option(ng-repeat ='roomName in scope[selectedRoomtype]') {{roomName}}
+          | &#x9;&#x9;&#x9;  Title of Reservation:
+          | &#x9;&#x9;&#x9;  
+          input#event_subject(ng-model='eventTitle', type='text', name='event_subject', maxlength='255', style='width:460px;', placeholder="{{defaultTitle}}")
     |         
     .modal-footer()
       button.btn.btn-primary(ng-click='ok()') Reserve Facility
