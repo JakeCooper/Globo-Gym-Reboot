@@ -13,5 +13,18 @@ $(document).ready(function() {
 });
 
 function loadLeftContent(){
-    return "<h1>Testing</h1>"
+    return  '' +
+        '<div class="sidebar-header"></div>' +
+        '<div class="user-name"> Jake </div> ' +
+        '<button class="btn btn-default profile-button" href="app/profile">' +
+            'Profile' +
+        '</button>' +
+        '<div class="reservation-header">' +
+            'My Reservations' +
+        '</div>' +
+        '<div class="reservation-container">' +
+
+            '<button class="btn btn-default reservation-button">Da Bench</button>' +
+        '</div>'
+
 }

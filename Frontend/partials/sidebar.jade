@@ -6,10 +6,45 @@ head
 body
 
     .profile-container
-        img#left-menu(width="72")
+        img#left-menu(src="../assets/images/defaultProfile.png" width="72")
 
     .cal-week-filter
     .search-container
         p#right-menu search
+        .toggle-facility
+            div(ng-controller='accordianController')
+                accordion(close-others='true')
+                    accordion-group(heading='Tennis Courts')
+                        div
+                            select(ng-model='selectedRoom' ng-options='item.id as item.name for item in tennisItems')
+                    accordion-group(heading='Pool')
+                        div
+                            select(ng-model='selectedRoom')
+                                option(value='pool1') Pool 1
+                                |    
+                    accordion-group(heading='Squash Courts')
+                        div
+                            select(ng-model='selectedRoom')
+                                option(value='squash1') Court 1
+                                |    
+                                option(value='squash2') Court 2
+                                |    
+                                option(value='squash3') Court 3
+                                |    
+                                option(value='squash4') Court 4
+                    accordion-group(heading='Workout Rooms')
+                        div
+                            select(ng-model='selectedRoom')
+                                option(value='workout1') Room 1
+                                |    
+                                option(value='workout2') Room 2
+                                |    
+                                option(value='workout3') Room 3
+                    accordion-group(heading='Spinning Rooms')
+                        div
+                            select(ng-model='selectedRoom')
+                                option(value='spinning1') Room 1
+                                |    
+                                option(value='spinning2') Room 2
     .cal-filter
     .cal-container

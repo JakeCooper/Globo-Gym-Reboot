@@ -5,6 +5,7 @@ var app = angular.module('myApp', [
     "ui.calendar",
     "ui.bootstrap",
     "loginControllers",
+    "profileControllers",
     "calendarControllers",
     "menuControllers"])
 .config(function ($routeProvider, $locationProvider) {
