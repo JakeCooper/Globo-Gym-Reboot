@@ -13,10 +13,8 @@ var FacilityReservation = new mongoose.Schema({
 FacilityReservation.methods.saveReservation = function (cb) {
     var that = this;
     if(!that.isValidRoom()) return cb({message: "Invalid room"});
-    console.log(that.isTooLong());
     if(that.isTooLong()) return cb({message: "This reservation is too long"});
     if(that.isValidHours()) return cb({message: "The Facility is not open during this time"});
-    console.log(this.start, this.end)
     var options = {
         type: that.type,
         roomName: that.roomName,

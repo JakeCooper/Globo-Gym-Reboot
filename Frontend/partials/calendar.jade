@@ -8,6 +8,8 @@ my-sidebar(ng-controller="menuController")
                     label(ng-repeat='room in scope[roomType.type]')
                         input(type='checkbox', ng-model='roomsSelected[room]', ng-click="update()")
                         |  {{room}} &nbsp
+                        span
+                            i.fa.fa-calendar(style="color: {{ colors[room] }}") &nbsp
                 .calendar(ng-model='eventSources', calendar='{{roomType.type}}', ui-calendar='uiConfig.calendar' config="uiConfig.calendar")
 
 div(ng-controller="modalController")
