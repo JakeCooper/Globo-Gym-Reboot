@@ -1,5 +1,7 @@
 my-sidebar(ng-controller="menuController")
+
 .calendar-container
+    input.btn.btn-primary(type='button', value='See User Events', ng-click='seeEvents()')
     .span8
         tabset()
             tab(select='selectTab("{{roomType.type}}")', ng-repeat="roomType in roomTypes", active="roomType.active")
@@ -13,3 +15,4 @@ my-sidebar(ng-controller="menuController")
                 .calendar(ng-model='eventSources', calendar='{{roomType.type}}', ui-calendar='uiConfig.calendar' config="uiConfig.calendar")
 
 div(ng-controller="modalController")
+div(ng-controller="eventModalController")

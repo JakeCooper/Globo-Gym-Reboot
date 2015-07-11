@@ -27,7 +27,9 @@ module.controller('calendarController', ['$scope', '$compile', 'uiCalendarConfig
         }
         $scope.scope = $scope;
     });
-
+    $scope.seeEvents = function(){
+        $scope.$broadcast('seeUserEvents');
+    };
     // for checkboxes
     $scope.roomsSelected = {};
 
@@ -157,4 +159,34 @@ module.controller('timepickerController', function ($scope, socket, $log) {
     $scope.startTime.setMinutes(0);
     $scope.hstep = 1;
     $scope.mstep = 30;
+});
+
+
+
+module.controller('eventModalController', function ($scope, socket, $modal){
+    $scope.animationsEnabled = true;
+    socket.on("userEventsList", function(data){
+           $scope.userEvents = data.response;
+    });
+    $scope.deleteEvent = function(res){
+        socket.emit("deleteEvent", res);
+        socket.emit("getUserEvents",{res: $scope.username});
+    };
+    $scope.$on('seeUserEvents', function(){
+        socket.emit("getUserEvents",{res: $scope.username});
+        
+        $modal.open({
+            animation: $scope.animationsEnabled,
+            scope: $scope,
+            templateUrl: 'partials/eventsmodal',
+            controller: 'eventModalInstanceController',
+        });
+    });
+});
+
+module.controller('eventModalInstanceController', function($scope, socket, $modalInstance){
+
+    $scope.cancel = function () {
+        $modalInstance.dismiss('cancel');
+    };
 });
