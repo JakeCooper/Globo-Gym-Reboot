@@ -15,26 +15,31 @@ module.controller('calendarController', ['$scope', '$compile', 'uiCalendarConfig
         $scope.roomTypes = roomTypes.map(function(thisType){
             return { type: thisType };
         });
+        $scope.colors = {};
 
         console.log(roomTypes);
         for(var i = 0; i < roomTypes.length; i++){
             var roomType = roomTypes[i]
-            var roomNames =Object.keys(data.facility[roomType]);
-            console.log(roomNames)
+
+            var roomNames = Object.keys(data.facility[roomType]);
             $scope[roomType] = roomNames;
+            for(var j = 0; j < roomNames.length; j++){
+                $scope.colors[roomNames[j]] = data.facility[roomType][roomNames[j]].displayColor;
+                console.log($scope.colors)
+            }
         }
         $scope.scope = $scope;
     });
 
     // for checkboxes
     $scope.roomsSelected = {};
-    
+
     $scope.update = function(){
         uiCalendarConfig.calendars[$scope.getActive()].fullCalendar( 'refetchEvents' )
     };
 
     socket.on("reservationStatus", function(data){
-        uiCalendarConfig.calendars[$scope.getActive()].fullCalendar( 'refetchEvents' )
+        $scope.update();
         // alert the user that it worked
         alert(data.message);
     });
@@ -47,7 +52,11 @@ module.controller('calendarController', ['$scope', '$compile', 'uiCalendarConfig
             console.log(selectedRooms)
             socket.emit("calendarUpdate", { type: $scope.getActive(), rooms: selectedRooms });
             socket.on("calendarUpdate", function(data){
-                //console.log(data)
+                console.log(data)
+                for(var i = 0; i < data.length; i++){
+                    console.log($scope.colors)
+                    data[i].color = $scope.colors[data[i].roomName];
+                };
                 callback(data);
             });
         },
@@ -59,14 +68,14 @@ module.controller('calendarController', ['$scope', '$compile', 'uiCalendarConfig
 
     $scope.uiConfig = {
         calendar:{
-            minTime: "08:00:00", //starts at 8am
+            minTime: "8:00:00", //starts at 8am
             timezone: "local",
             ignoreTimezone: true,
             aspectRatio: 1,
             forceEventDuration: true,
             editable: false,
             defaultView: "agendaWeek",
-            header:{
+            header: {
                 left: 'agendaWeek agendaDay',
                 center: 'title',
                 right: 'today prev,next'
@@ -85,19 +94,17 @@ module.controller('calendarController', ['$scope', '$compile', 'uiCalendarConfig
             uiCalendarConfig.calendars[calendar].fullCalendar('render');
         }
     };
-    
+
     $scope.selectTab = function(){
         $timeout(function () {
-                for(var i = 0; i < $scope.roomTypes.length; i++){
-                    $scope.renderCalender($scope.roomTypes[i].type);
-                }
+            $scope.renderCalender($scope.getActive());
         }, 0);
     };
 
     $scope.getActive = function() {
-        return $scope.roomTypes.filter(function(val){ return val.active})[0].type
+        return $scope.roomTypes.filter(function(val){ 
+            return val.active})[0].type
     };
-
 }]);
 
 module.controller('modalController', function($scope,$modal){
@@ -125,7 +132,7 @@ module.controller('modalInstanceController', function($scope, socket, $modalInst
 });
 
 module.controller('timepickerController', function ($scope, socket, $log) {
-    $scope.startTime = new Date($scope.dateClicked.toString());
+    $scope.startTime = new Date($scope.dateClicked);
 
     $scope.$on('saveReservation', function () {
         var hours   = Math.floor($scope.selectedDuration / 60);
@@ -133,6 +140,7 @@ module.controller('timepickerController', function ($scope, socket, $log) {
         $scope.endTime = new Date($scope.startTime);
         $scope.endTime.setHours($scope.startTime.getHours()+hours);
         $scope.endTime.setMinutes($scope.startTime.getMinutes()+minutes);
+        console.log($scope.startTime)
         var reservation = {
             res: {
                 roomName: $scope.selectedRoomname,
@@ -143,7 +151,6 @@ module.controller('timepickerController', function ($scope, socket, $log) {
                 end:  $scope.endTime
             }
         }
-        console.log("event emitted", reservation)
         socket.emit("saveReservation", reservation);
     });
 

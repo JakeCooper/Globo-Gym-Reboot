@@ -16,6 +16,7 @@ FacilityReservation.methods.saveReservation = function (cb) {
     console.log(that.isTooLong());
     if(that.isTooLong()) return cb({message: "This reservation is too long"});
     if(that.isValidHours()) return cb({message: "The Facility is not open during this time"});
+    console.log(this.start, this.end)
     var options = {
         type: that.type,
         roomName: that.roomName,
@@ -70,8 +71,10 @@ FacilityReservation.methods.isValidHours = function () {
         open = this.constructor.sunOpenTime;
         close = this.constructor.sunCloseTime;
     }
-    var openTime = new Date(this.start.setHours(open));
-    var closeTime = new Date(this.start.setHours(close));
+    var openTime = new Date(this.start)
+    openTime.setHours(open);
+    var closeTime = new Date(this.start)
+    closeTime.setHours(close);
     return this.start > openTime && this.end < closeTime;
 }
 
