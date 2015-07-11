@@ -26,7 +26,8 @@ module.exports = new GoogleStrategy({
                     photo: profile.photos[0].value,
                     username: profile.displayName,
                     googleid: profile.id,
-                    isadmin: false
+                    isadmin: false,
+                    isbanned:false
                 });
                 user.save(function (err) {
                     if (err) console.log(err);

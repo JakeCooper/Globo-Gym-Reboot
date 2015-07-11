@@ -7,7 +7,8 @@ var UserSchema = new mongoose.Schema({
     username: {type:String},
     facebookid:{type:String},
     googleid:{type:String},
-    isadmin:{type:Boolean}  //if you want admin priv, change to true in the database for the desired account
+    isadmin:{type:Boolean},
+    isbanned:{type:Boolean}//if you want admin priv, change to true in the database for the desired account
     
     
 });

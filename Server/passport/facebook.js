@@ -73,6 +73,7 @@ var configAuth = require('config');
                     newUser.photo =  profile.photos ? profile.photos[0].value : '/img/faces/unknown-user-pic.jpg'; 
                     newUser.facebookid = profile.id;
                     newUser.isadmin= false
+                    newUser.isbanned=false
                     
                         
                     // save our user to the database

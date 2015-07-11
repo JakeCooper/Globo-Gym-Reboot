@@ -1,23 +1,24 @@
-body(ng-controller='adminControllers as main')
+.users(ng-controller='adminController as main')
   .jumbotron
  
-    
-.form-group
-    label hey loser
-      input.form-control(type='text', ng-model='main.message')
-      h1 {{ main.message }}
+
+    h1 {{main.message}}
     
     h2 Student List:
     table.table.table-bordered
       thead
         tr
-          th First Name
-          |          
-          th Last Name
+          th Username
+          |         
+          th Restricted
+          | 
+          th Admin
       |  
       tbody
-        tr(ng-repeat='student in main.students')
-          td {{ student.first }}
+        tr(ng-repeat='user in main.users')
+          td {{ user.username }}
           |          
-          td {{ student.last }}
+          td {{ user.isadmin }}
+          |          
+          td {{ user.isbanned }}
     

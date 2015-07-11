@@ -8,7 +8,8 @@ var app = angular.module('myApp', [
     "profileControllers",
     "calendarControllers",
     "menuControllers",
-    "adminControllers"])
+    "adminControllers"
+    ])
 .config(function ($routeProvider, $locationProvider) {
   $routeProvider.
     when('/', {
@@ -41,7 +42,7 @@ var app = angular.module('myApp', [
     }).
   when('/app/users', {
         templateUrl: 'partials/users',
-        controller: 'loginController',
+        controller: 'adminController',
     }).
     otherwise({
       redirectTo: '/'
