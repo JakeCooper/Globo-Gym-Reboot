@@ -37,12 +37,7 @@ FacilityReservation.methods.saveReservation = function (cb) {
 
 FacilityReservation.methods.getUserEvents = function(cb){
     that.model("FacilityReservation").find({
-        $or:[
-            {
-                googleid: this.id,
-                facebookid: this.id
-            }
-        ]
+        id: this.id
     }, function(err, res){
         if(err) console.err("No reseervation");
         cb(res);
