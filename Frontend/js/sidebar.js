@@ -2,9 +2,10 @@ $(document).ready(function() {
     $('#left-menu').sidr({
         name: 'sidr-left',
         side: 'left', // By default
-        source: function(){
+        source : '.sidr-left-content'
+        /*source: function(){
             return loadLeftContent();
-        }
+        }*/
     });
     $('#right-menu').sidr({
         name: 'sidr-right',

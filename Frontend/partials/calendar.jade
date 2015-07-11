@@ -1,4 +1,24 @@
 my-sidebar(ng-controller="menuController")
 .calendar-container
-    .span8.calendar(ui-calendar='uiConfig.calendar', ng-model='eventSources', calendar="resCalendar")
+    .span8
+        tabset()
+            tab(select='selectTab("{{roomType.type}}")', ng-repeat="roomType in roomTypes", active="roomType.active")
+                tab-heading {{ roomType.type }}
+                div()
+                    label(ng-repeat='room in scope[roomType.type]')
+                        input(type='checkbox', ng-model='roomsSelected[room]', ng-click="update()")
+                        |  {{room}} &nbsp
+                        span
+                            i.fa.fa-calendar(style="color: {{ colors[room] }}") &nbsp
+                .calendar(ng-model='eventSources', calendar='{{roomType.type}}', ui-calendar='uiConfig.calendar' config="uiConfig.calendar")
+
+quick-profile-controller(ng-controller="menuController")
+.sidr-left-content
+    p Much Content so much content testitng
+    p the limits of the content
+    p is it gonna look like shti?
+
 div(ng-controller="modalController")
+
+
+
