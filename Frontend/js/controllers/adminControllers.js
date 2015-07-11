@@ -1,25 +1,14 @@
-var module = angular.module('adminControllers', ['userServices'])
+var module = angular.module('adminControllers', []);
 
-
-module.service('adminController', function(){
-    this.getAllUsers = function () {
-        return ({
-            {
+module.controller('adminController', ['$scope', 'socket',
+                                     
+    function ( $scope, socket ) {
+        this.message = "seng299";  
+        socket.emit("getUsers");
+        socket.on("usersInfo", function(data){
             
-
-	var vm = this;
-
-vm.processing = true;
-
-	// grab all the users at page load
-	User.all()
-		.success(function(data) {
-
-			// when all the users come back, remove the processing variable
-			vm.processing = false;
-
-			// bind the users that come back to vm.users
-			vm.users = data;
-});
-});
-                  
+            $scope.users=data;
+            
+        });
+    }
+]);
