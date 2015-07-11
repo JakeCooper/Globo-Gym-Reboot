@@ -14,7 +14,15 @@ module.exports = function (sockets) {
             socket.emit("FacilityInfo", { facility: config.mongoose.facility.types });
         });
 
+        socket.on("getUserEvents", function(data){
+            var res = new FacilityReservation(data.res);
+            res.getUserEvents(function(response){
+                socket.emit("userEventsList", response);
+            });
+        });
+
         socket.on("saveReservation", function(data){
+            data.res.id = socket.user.googleid || socket.user.facebookid;
             var res = new FacilityReservation(data.res)
             res.saveReservation(function(response){
                 socket.emit("reservationStatus", {

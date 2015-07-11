@@ -7,8 +7,6 @@ var UserSchema = new mongoose.Schema({
     username: {type:String},
     facebookid:{type:String},
     googleid:{type:String}
-    
-    
 });
 
 UserSchema.statics = {

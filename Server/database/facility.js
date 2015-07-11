@@ -7,7 +7,8 @@ var FacilityReservation = new mongoose.Schema({
     title: {type: String},
     start: {type: Date},
     end: {type: Date},
-    user: {type: String}
+    user: {type: String},
+    id: {type: String}
 });
 
 FacilityReservation.methods.saveReservation = function (cb) {
@@ -34,6 +35,19 @@ FacilityReservation.methods.saveReservation = function (cb) {
     });
 };
 
+FacilityReservation.methods.getUserEvents = function(cb){
+    that.model("FacilityReservation").find({
+        $or:[
+            {
+                googleid: this.id,
+                facebookid: this.id
+            }
+        ]
+    }, function(err, res){
+        if(err) console.err("No reseervation");
+        cb(res);
+    });
+}
 
 FacilityReservation.methods.isValidRoom = function(){
     var roomName = this.roomName;
