@@ -13,7 +13,6 @@ var FacilityReservation = new mongoose.Schema({
 FacilityReservation.methods.saveReservation = function (cb) {
     var that = this;
     if(!that.isValidRoom()) return cb({message: "Invalid room"});
-    console.log(that.isTooLong());
     if(that.isTooLong()) return cb({message: "This reservation is too long"});
     if(that.isValidHours()) return cb({message: "The Facility is not open during this time"});
     var options = {
@@ -30,7 +29,7 @@ FacilityReservation.methods.saveReservation = function (cb) {
         if(res) return cb({message: "There is already a reservation with that time"});
         //if()
         that.save(function(err){
-            return cb({message: "it has been done"});
+            return cb({message: "it has been done", success: true});
         });
     });
 };
@@ -70,8 +69,10 @@ FacilityReservation.methods.isValidHours = function () {
         open = this.constructor.sunOpenTime;
         close = this.constructor.sunCloseTime;
     }
-    var openTime = new Date(this.start.setHours(open));
-    var closeTime = new Date(this.start.setHours(close));
+    var openTime = new Date(this.start)
+    openTime.setHours(open);
+    var closeTime = new Date(this.start)
+    closeTime.setHours(close);
     return this.start > openTime && this.end < closeTime;
 }
 
