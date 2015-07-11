@@ -24,6 +24,9 @@ module.exports = function (sockets) {
                     res: data.res,
                     message: response.message
                 });
+                if(response.success) {
+                    socket.broadcast.emit("calendarHasChanged");
+                }
             });
         });
 

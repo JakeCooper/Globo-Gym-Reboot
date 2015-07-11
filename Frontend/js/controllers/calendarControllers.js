@@ -38,6 +38,9 @@ module.controller('calendarController', ['$scope', '$compile', 'uiCalendarConfig
         uiCalendarConfig.calendars[$scope.getActive()].fullCalendar( 'refetchEvents' )
     };
 
+    socket.on("calendarHasChanged", function(){
+        $scope.update() 
+    });
     socket.on("reservationStatus", function(data){
         $scope.update();
         // alert the user that it worked
