@@ -22,5 +22,3 @@ npm install nodemon -g
 ```
 npm run-script dev
 ```
-
-Read
