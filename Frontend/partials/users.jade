@@ -1,8 +1,14 @@
-body( ng-controller='adminControllers')
-
-
-h2 Student List:
-  table.table.table-bordered
+body(ng-controller='adminControllers as main')
+  .jumbotron
+ 
+    
+.form-group
+    label hey loser
+      input.form-control(type='text', ng-model='main.message')
+      h1 {{ main.message }}
+    
+    h2 Student List:
+    table.table.table-bordered
       thead
         tr
           th First Name
@@ -14,3 +20,4 @@ h2 Student List:
           td {{ student.first }}
           |          
           td {{ student.last }}
+    
