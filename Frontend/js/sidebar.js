@@ -23,7 +23,6 @@ function loadLeftContent(){
             'My Reservations' +
         '</div>' +
         '<div class="reservation-container">' +
-
             '<button class="btn btn-default reservation-button">Da Bench</button>' +
         '</div>'
 
