@@ -9,7 +9,8 @@ body
     .left-sidebar()
         .sidebar-Header
         .user-name {{firstname}}
-        button.btn.btn-default.profile-button(href="app/profile") Profile
+        div(ng-controller='profileModalController')
+            button.btn.btn-default.profile-button(ng-click="openProfile()") Profile
         
         .reservation-header My Reservations
         .content-container

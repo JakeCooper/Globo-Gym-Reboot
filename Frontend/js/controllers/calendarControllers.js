@@ -243,3 +243,42 @@ module.controller('eventModalInstanceController', function($scope, socket, $moda
         $modalInstance.dismiss('cancel');
     };
 });
+
+module.controller('profileModalController', function ($scope, socket, $modal){
+    $scope.animationsEnabled = true;
+    socket.emit("getProfile");
+    socket.on("profileInfo", function(data){
+        var name = data.username.split(" ")
+        if(name.length == 2){
+            $scope.first = name[0]
+            $scope.last = name[1]
+        }
+        else if(name.length == 3){
+            $scope.first = name[0]
+            $scope.username = name[1]
+            $scope.last = name[2]
+        }
+        else{
+            $scope.first = data.username
+        }
+        $scope.photo = data.photo.replace("sz=50", "sz=400")
+    });
+    $scope.openProfile = function(res){
+        $scope.selectedEvent = res;
+        $modal.open({ 
+            animation: $scope.animationsEnabled,
+            scope: $scope,
+            templateUrl: 'partials/profile',
+            controller: 'eventModalInstanceController',
+            size: 'lg'
+        });
+        
+    };
+
+});
+
+module.controller('profileModalInstanceController', function($scope, socket, $modalInstance){
+    $scope.cancel = function () {
+        $modalInstance.dismiss('cancel');
+    };
+});
