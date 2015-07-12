@@ -15,14 +15,15 @@ module.exports = function (sockets) {
         });
 
         socket.on("getUserEvents", function(data){
-            var res = new FacilityReservation(data.res);
-            res.getUserEvents(function(response){
+            var user = {}
+            user.id = socket.user.googleid || socket.user.facebookid;
+            FacilityReservation.getUserEvents(user, function(response){
                 socket.emit("userEventsList", response);
+                console.log(response)
             });
         });
 
         socket.on("saveReservation", function(data){
-            data.res.id = socket.user.googleid || socket.user.facebookid;
             var res = new FacilityReservation(data.res)
             res.saveReservation(function(response){
                 socket.emit("reservationStatus", {

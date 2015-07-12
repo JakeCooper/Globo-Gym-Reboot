@@ -90,10 +90,10 @@ FacilityReservation.statics = {
     sunCloseTime: config.mongoose.sunCloseTime,
     rooms: config.mongoose.facility.rooms,
 
-    getUserEvents: function(cb){
-        console.log(this.id)
+    getUserEvents: function(user, cb){
+        console.log(user.id)
         this.model("FacilityReservation").find({
-            id: this.id
+            id: user.id
         }, function(err, res){
             if(err) console.err("No reseervation");
             cb(res);
