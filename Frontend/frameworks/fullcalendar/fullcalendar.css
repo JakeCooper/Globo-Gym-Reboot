@@ -738,7 +738,7 @@ a.fc-more:hover {
 .fc-time-grid { /* so slats/bg/content/etc positions get scoped within here */
 	position: relative;
 	z-index: 1;
-	height: 0% !important;
+	height: 0% !important; /*override the calendar fucking itself*/
 }
 
 .fc-time-grid {
