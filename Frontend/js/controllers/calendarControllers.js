@@ -6,7 +6,6 @@ module.controller('calendarController', ['$scope', '$compile', 'uiCalendarConfig
     socket.emit("getProfile");
     socket.on("profileInfo", function(data){
        $scope.username = data.username;
-       $scope.$broadcast('seeUserEvents');
     });
 
     socket.emit("getFacilityInfo");
@@ -30,17 +29,20 @@ module.controller('calendarController', ['$scope', '$compile', 'uiCalendarConfig
         $scope.scope = $scope;
     });
     $scope.seeEvents = function(){
-        $scope.$broadcast('seeUserEvents');
+        socket.emit("getUserEvents",{res: $scope.username});
     };
     // for checkboxes
     $scope.roomsSelected = {};
 
     $scope.update = function(){
-        uiCalendarConfig.calendars[$scope.getActive()].fullCalendar( 'refetchEvents' )
+        uiCalendarConfig.calendars[$scope.getActive()].fullCalendar( 'refetchEvents' );
+        $scope.seeEvents();
     };
-
+    socket.on("userEventsList", function(data){
+           $scope.userEvents = data;
+    });
     socket.on("calendarHasChanged", function(){
-        $scope.update()
+        $scope.update();
     });
 
     socket.on("reservationStatus", function(data){
@@ -108,6 +110,14 @@ module.controller('calendarController', ['$scope', '$compile', 'uiCalendarConfig
         $timeout(function () {
             $scope.roomsSelected[$scope[$scope.getActive()][0]] = true;
             $scope.renderCalender($scope.getActive());
+        }, 0);
+    };
+    $scope.userEventsTab = function(){
+        socket.emit("getUserEvents",{res: $scope.username});
+        $timeout(function () {
+            $scope.reservations = $scope.userEvents;
+            //$scope.roomsSelected[$scope[$scope.getActive()][0]] = true;
+            $scope.renderCalender('userEvents');
         }, 0);
     };
 
@@ -179,9 +189,7 @@ module.controller('timepickerController', function ($scope, socket, $log) {
 
 module.controller('eventModalController', function ($scope, socket, $modal){
     $scope.animationsEnabled = true;
-    socket.on("userEventsList", function(data){
-           $scope.userEvents = data;
-    });
+    
     $scope.deleteEvent = function(res){
         $scope.selectedEvent = res;
         $modal.open({ 
@@ -193,10 +201,6 @@ module.controller('eventModalController', function ($scope, socket, $modal){
         
     };
 
-    $scope.$on('seeUserEvents', function(){
-        socket.emit("getUserEvents",{res: $scope.username});
-
-    });
 });
 
 module.controller('eventModalInstanceController', function($scope, socket, $modalInstance){
