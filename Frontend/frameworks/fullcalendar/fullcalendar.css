@@ -738,6 +738,7 @@ a.fc-more:hover {
 .fc-time-grid { /* so slats/bg/content/etc positions get scoped within here */
 	position: relative;
 	z-index: 1;
+	height: 0% !important;
 }
 
 .fc-time-grid {
