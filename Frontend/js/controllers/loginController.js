@@ -16,11 +16,10 @@ module.controller('loginController', ['$scope', 'socket',
         }
        
 
-        };
-
+    
 
         $scope.googleAuth = function(){
             window.location.href = window.location.origin + "/auth/google"
         };
-    
+    }
 ]);
