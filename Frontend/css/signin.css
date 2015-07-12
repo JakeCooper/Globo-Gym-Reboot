@@ -6,7 +6,7 @@ body{
     background-image: url('../assets/images/blur1.jpg');
     background-size: cover;
     position: relative;
-    overflow: hidden;
+    
     min-height:100%;
 }
 

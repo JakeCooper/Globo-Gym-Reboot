@@ -8,5 +8,18 @@ module.controller('adminController', ['$scope', 'socket',
                 $scope.users = data;
               
             })
+     
+           $scope.changeBan= function(user) {
+
+               if(user.isbanned === false){
+                     user.isbanned = true
+                 }
+                else{
+                     user.isbanned = false
+                 }   
+               
+                socket.emit("banUser", user);
+           }
+                 
     }
 ]);
