@@ -1,3 +1,28 @@
+/*Scrollbar*/
+
+::-webkit-scrollbar {
+    width: 7px;
+}
+
+::-webkit-scrollbar-track {
+    border-radius: 7px;
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 7px;
+    background: rgba(136, 136, 136, 0.3);
+}
+
+/*calendar*/
+
+.calendar-container {
+    padding-left:90px;
+    padding-right:50px;
+    padding-top:25px;
+}
+
+/*Sidebar*/
+
 .left-sidebar {
     left:-275px;
     width:250px;
@@ -29,12 +54,6 @@
     /*border: solid 1px black;*/
 }
 
-.calendar-container {
-    padding-left:90px;
-    padding-right:50px;
-    padding-top:25px;
-}
-
 .profile-container > img {
     border-radius: 50%;
 }
@@ -51,7 +70,7 @@
     right:0;
 }
 
-/*SIDEBAR-LEFT*/
+/*sidebar-left*/
 
 .profile-button {
     margin-top:30px !important;
@@ -79,3 +98,4 @@
     height: 50px;
 }
 
+/*Sidebar-right*/
