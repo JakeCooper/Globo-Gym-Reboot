@@ -16,9 +16,6 @@ var app = angular.module('myApp', [
     when('/', {
         templateUrl: 'partials/signin',
         controller: 'loginController',
-        resolve:{
-            loggedin: redirectLoggedIn
-        }
     }).
     when('/app/about', {
         templateUrl: 'partials/about',
@@ -34,7 +31,7 @@ var app = angular.module('myApp', [
     when('/app/regpol', {
         templateUrl: 'partials/regpol',
         controller: 'loginController',
-        
+
     }).
     when('/app/calendar', {
         templateUrl: 'partials/calendar',
@@ -49,7 +46,7 @@ var app = angular.module('myApp', [
         resolve:{
             loggedin: checkAdmin
         }
-        
+
     }).
     otherwise({
       redirectTo: '/'
@@ -57,23 +54,6 @@ var app = angular.module('myApp', [
 
     $locationProvider.html5Mode(true);
 });
-
-var redirectLoggedIn = function($q, $timeout, $http, $location, $rootScope){
-    // Initialize a new promise
-    var deferred = $q.defer();
-    // Make an AJAX call to check if the user is logged in
-    $http.get('/loggedin').success(function(user){
-            // Authenticated
-        if (user == "0") deferred.resolve();
-            // Not Authenticated
-        else {
-            deferred.reject(); 
-            $location.url('/app/calendar');
-        }
-    });
-
-    return deferred.promise;
-};
 
 var checkLoggedin = function($q, $timeout, $http, $location, $rootScope){
     // Initialize a new promise
@@ -85,7 +65,7 @@ var checkLoggedin = function($q, $timeout, $http, $location, $rootScope){
             // Not Authenticated
         else {
             $rootScope.message = 'You need to log in.';
-            deferred.reject(); 
+            deferred.reject();
             $location.url('/app/signin');
         }
     });
@@ -102,10 +82,9 @@ var checkAdmin = function($q, $timeout, $http, $location, $rootScope){
             // Not Authenticated
         else {
             $rootScope.message = 'You must be an admin.';
-            deferred.reject(); 
+            deferred.reject();
             $location.url('/app/signin');
         }
-
+    });
     return deferred.promise;
-});
 };

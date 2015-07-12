@@ -57,7 +57,7 @@ module.controller('calendarController', ['$scope', '$compile', 'uiCalendarConfig
             state = "danger";
             header = "Error!";
         }
-        
+
         var message = $("<div/>")
             .addClass("alert")
             .addClass("alert-" + state)
@@ -170,7 +170,7 @@ module.controller('modalInstanceController', function($scope, socket, $modalInst
         $modalInstance.close();
         $scope.$broadcast('saveReservation');
         $scope.seeEvents();
-        
+
     };
 
     $scope.cancel = function () {
@@ -211,28 +211,25 @@ module.controller('timepickerController', function ($scope, socket, $log) {
 });
 
 
-
 module.controller('eventModalController', function ($scope, socket, $modal){
     $scope.animationsEnabled = true;
-    
+
     $scope.deleteEvent = function(res){
         $scope.selectedEvent = res;
-        $modal.open({ 
+        $modal.open({
             animation: $scope.animationsEnabled,
             scope: $scope,
             templateUrl: 'partials/eventsmodal',
             controller: 'eventModalInstanceController'
         });
-        
     };
-
 });
 
 module.controller('eventModalInstanceController', function($scope, socket, $modalInstance){
     $scope.confirmedDelete = function(res){
         $modalInstance.close();
         socket.emit("deleteEvent", res);
-        
+
         $scope.update();
         $scope.seeEvents();
 
