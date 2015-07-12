@@ -55,30 +55,59 @@ span.facebook, span.google{
        padding-left:10px;
 }
 
-span.about{
+p.about{
     position:absolute;
+    left:50%;
+    margin-left:-150px;
     top:400px;
     color:white;  
+    font-size:20px;
+    text-align: center; 
+}
+
+
+p.diddy{
+    font-size: 15px; 
+}
+
+a.about{
+    
+    text-decoration: none;
+    color:white;
+    font-size: 22px;
+ 
+    padding-bottom: 0px;
+
+}
+
+
+span.about{
+    position:absolute;
+    color:black;  
     font-size:28px;
     text-align: center;
 }
 
-div.adminlogin{
-    text-align: left;
-    margin-left:150px;
-    width:400px;
-}
 
-label{
-    font-size: 25px;
-    font-family: 'Amatic SC', cursive;
-}
 h1.admin, h1.users{
     font-size: 45px;
     padding-top: 0px;
     margin-top: -10px;
     font-family: 'Amatic SC', cursive;
 }
+
+h1.about{
+    font-family: 'Amatic SC', cursive;
+   font-size: 60px;
+    padding-top: 0px;
+    margin-top: -10px; 
+}
+    
+    ul
+{
+    list-style-type: none;
+}
+
 
 th{
  font-family: 'Amatic SC', cursive;
