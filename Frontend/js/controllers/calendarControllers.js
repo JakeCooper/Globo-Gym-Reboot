@@ -180,10 +180,6 @@ module.controller('timepickerController', function ($scope, socket, $log) {
 module.controller('eventModalController', function ($scope, socket, $modal){
     $scope.animationsEnabled = true;
     socket.on("userEventsList", function(data){
-<<<<<<< HEAD
-=======
-           //console.log(data);
->>>>>>> 8121e969bc9c1a9e17f7e122b8a1d737db0b666f
            $scope.userEvents = data;
     });
     $scope.deleteEvent = function(res){
