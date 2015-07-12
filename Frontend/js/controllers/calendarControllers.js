@@ -59,30 +59,7 @@ module.controller('calendarController', ['$scope', '$compile', 'uiCalendarConfig
             state = "danger";
             header = "Error!";
         }
-        alertFactory(state,header, data.message);
-        /*var message = $("<div/>")
-            .addClass("alert")
-            .addClass("alert-" + state)
-            .addClass("fade")
-            .addClass("in")
-            .append(
-            $("<a/>")
-                .addClass("close")
-                .attr("data-dismiss", "alert")
-                .attr("aria-label", "close")
-                .html("&nbsp;&times;"))
-            .append("<strong>" + header + "</strong> " + data.message)
-        $('.alert-container').append(
-            message
-        );
-        window.setTimeout(function(){
-            $(message).css({
-                opacity: 0.0
-            });
-            $(message).one("transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd", function(){
-                message.remove();
-            })
-        }, 10000)*/
+        alertFactory(state, header, data.message);
     });
 
     $scope.reservations = {
@@ -146,9 +123,6 @@ module.controller('calendarController', ['$scope', '$compile', 'uiCalendarConfig
     };
 
     $scope.getActive = function() {
-        if (!$scope.roomTypes) {
-            return
-        }
         return $scope.roomTypes.filter(function(val){
             return val.active})[0].type
     };
@@ -252,8 +226,15 @@ var alertFactory = function(state, header, message){
         .addClass("in")
         .append(
         $("<a/>")
+            .on('click', function(){
+                $(el).css({
+                    opacity: 0.0
+                });
+                $(el).one("transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd", function(){
+                    el.remove();
+                })
+            })
             .addClass("close")
-            .attr("data-dismiss", "alert")
             .attr("aria-label", "close")
             .html("&nbsp;&times;"))
         .append("<strong>" + header + "</strong> " + message)
@@ -268,4 +249,4 @@ var alertFactory = function(state, header, message){
             el.remove();
         })
     }, 10000)
-}
+};
