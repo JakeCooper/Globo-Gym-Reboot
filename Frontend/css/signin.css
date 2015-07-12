@@ -25,6 +25,21 @@ div.signin{
 
 }
 
+div.users{
+    position:absolute;
+    width: 700px;
+    top:30%;
+    left:50%;    
+    margin-top: -200px; 
+    margin-left:-350px;
+    z-index:15;
+    background-color: #eeeeee;
+    border-radius: 8px;
+    box-shadow: 0px -5px 8px rgba(0, 0, 0, 0.5);  
+
+}
+
+
 span.oakbay{
     font-size:85px;
     font-family: 'Amatic SC', cursive;
@@ -58,8 +73,15 @@ label{
     font-size: 25px;
     font-family: 'Amatic SC', cursive;
 }
-h1.admin{
-    font-size: 30px;
+h1.admin, h1.users{
+    font-size: 45px;
     padding-top: 0px;
     margin-top: -10px;
+    font-family: 'Amatic SC', cursive;
+}
+
+th{
+ font-family: 'Amatic SC', cursive;
+  font-size: 30px;
+    text-align: center;
 }

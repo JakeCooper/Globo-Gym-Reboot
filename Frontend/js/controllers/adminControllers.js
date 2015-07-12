@@ -6,7 +6,7 @@ module.controller('adminController', ['$scope', 'socket',
             socket.emit("getUsers");
             socket.on("getUsers", function(data){
                 $scope.users = data;
-                console.log(data)
+              
             })
     }
 ]);
