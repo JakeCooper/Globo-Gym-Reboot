@@ -17,7 +17,7 @@ module.controller('calendarController', ['$scope', '$compile', 'uiCalendarConfig
         $scope.colors = {};
 
         for(var i = 0; i < roomTypes.length; i++){
-            var roomType = roomTypes[i]
+            var roomType = roomTypes[i];
 
             var roomNames = Object.keys(data.facility[roomType]);
             $scope[roomType] = roomNames;
@@ -56,7 +56,7 @@ module.controller('calendarController', ['$scope', '$compile', 'uiCalendarConfig
             socket.on("calendarUpdate", function(data){
                 for(var i = 0; i < data.length; i++){
                     data[i].color = $scope.colors[data[i].roomName];
-                };
+                }
                 callback(data);
             });
         },
@@ -81,7 +81,7 @@ module.controller('calendarController', ['$scope', '$compile', 'uiCalendarConfig
             dayClick: function(date, jsEvent, view){
                 $scope.dateClicked = new Date(date);
                 $scope.$broadcast('dayClicked');
-            },
+            }
        }
     };
 
@@ -113,7 +113,7 @@ module.controller('modalController', function($scope,$modal){
             animation: $scope.animationsEnabled,
             scope: $scope,
             templateUrl: 'partials/addmodal',
-            controller: 'modalInstanceController',
+            controller: 'modalInstanceController'
         });
     });
 });
@@ -147,7 +147,7 @@ module.controller('timepickerController', function ($scope, socket, $log) {
                 start: $scope.startTime,
                 end:  $scope.endTime
             }
-        }
+        };
         socket.emit("saveReservation", reservation);
     });
 
@@ -172,6 +172,7 @@ module.controller('eventModalController', function ($scope, socket, $modal){
     $scope.deleteEvent = function(res){
         socket.emit("deleteEvent", res);
         socket.emit("getUserEvents",{res: $scope.username});
+        $scope.update();
     };
     $scope.$on('seeUserEvents', function(){
         socket.emit("getUserEvents",{res: $scope.username});

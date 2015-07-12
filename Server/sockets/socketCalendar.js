@@ -17,6 +17,7 @@ module.exports = function (sockets) {
         socket.on("getUserEvents", function(data){
             var user = {}
             user.id = socket.user.googleid || socket.user.facebookid;
+            console.log(user)
             FacilityReservation.getUserEvents(user, function(response){
                 socket.emit("userEventsList", response);
             });
@@ -29,6 +30,7 @@ module.exports = function (sockets) {
 
 
         socket.on("saveReservation", function(data){
+            data.res.id = socket.user.googleid || socket.user.facebookid;
             var res = new FacilityReservation(data.res)
             res.saveReservation(function(response){
                 socket.emit("reservationStatus", {
