@@ -46,24 +46,24 @@ module.controller('calendarController', ['$scope', '$compile', 'uiCalendarConfig
     socket.on("reservationStatus", function(data){
         $scope.update();
         // alert the user that it worked
+        var state;
         if (data.success == true){
-            var state = "success";
+            state = "success";
         } else {
-            var state = "danger";
+            state = "danger";
         }
         $('.alert-container').append(
             '<div class="alert alert-' + state + '">' +
                 '<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>' +
                 '<strong>Success!</strong> ' + data.message +
             '</div>');
-        //alert(data.message);
     });
 
     $scope.reservations = {
         events: function (start, end, timezone, callback) {
             var selectedRooms = Object.keys( $scope.roomsSelected ).filter(function(key){
                 return $scope.roomsSelected[key]
-            })
+            });
             socket.emit("calendarUpdate", { type: $scope.getActive(), rooms: selectedRooms });
             socket.on("calendarUpdate", function(data){
                 for(var i = 0; i < data.length; i++){
@@ -71,7 +71,7 @@ module.controller('calendarController', ['$scope', '$compile', 'uiCalendarConfig
                 }
                 callback(data);
             });
-        },
+        }
     };
 
     $scope.eventSources = [$scope.reservations];
@@ -178,7 +178,7 @@ module.controller('timepickerController', function ($scope, socket, $log) {
 module.controller('eventModalController', function ($scope, socket, $modal){
     $scope.animationsEnabled = true;
     socket.on("userEventsList", function(data){
-           console.log(data);
+           //console.log(data);
            $scope.userEvents = data;
     });
     $scope.deleteEvent = function(res){

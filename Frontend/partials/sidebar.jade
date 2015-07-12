@@ -12,6 +12,7 @@ body
         button.btn.btn-default.profile-button(href="app/profile") Profile
         
         .reservation-header My Reservations
+        .content-container
             div(ng-controller='eventModalController')
                 form
                     table.eventsTable
@@ -34,8 +35,7 @@ body
                             td {{event.end | date:"shortTime"}} &nbsp
                             td
                                 input.btn.btn-danger(type='button', value='X', ng-click='deleteEvent(event)')
-        .reservation-container
-            button.btn.btn-default Da Bench
+
 
 
 
