@@ -103,12 +103,14 @@
 .content-container {
     overflow-y:auto;
     overflow-x:hidden;
-    max-height:60%;
+    height:65%;
+    max-height:65%;
+    margin-top:10px;
 }
 
 .reservation-button {
     margin-left:25px;
-    margin-top:25px;
+    margin-bottom:15px;
     width:165px;
     height: 50px;
     border-top-right-radius:0 !important;
@@ -126,7 +128,7 @@
 }
 
 .reservation-delete {
-    margin-top: 25px;
+    margin-bottom: 15px;
     height:50px;
     border-top-left-radius:0 !important;
     border-bottom-left-radius: 0 !important;
