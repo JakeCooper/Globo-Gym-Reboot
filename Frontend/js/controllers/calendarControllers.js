@@ -19,7 +19,7 @@ module.controller('calendarController', ['$scope', '$compile', 'uiCalendarConfig
 
         console.log(roomTypes);
         for(var i = 0; i < roomTypes.length; i++){
-            var roomType = roomTypes[i]
+            var roomType = roomTypes[i];
 
             var roomNames = Object.keys(data.facility[roomType]);
             $scope[roomType] = roomNames;
@@ -51,15 +51,15 @@ module.controller('calendarController', ['$scope', '$compile', 'uiCalendarConfig
         events: function (start, end, timezone, callback) {
             var selectedRooms = Object.keys( $scope.roomsSelected ).filter(function(key){
                 return $scope.roomsSelected[key]
-            })
-            console.log(selectedRooms)
+            });
+            console.log(selectedRooms);
             socket.emit("calendarUpdate", { type: $scope.getActive(), rooms: selectedRooms });
             socket.on("calendarUpdate", function(data){
-                console.log(data)
+                console.log(data);
                 for(var i = 0; i < data.length; i++){
-                    console.log($scope.colors)
+                    console.log($scope.colors);
                     data[i].color = $scope.colors[data[i].roomName];
-                };
+                }
                 callback(data);
             });
         },
@@ -86,7 +86,7 @@ module.controller('calendarController', ['$scope', '$compile', 'uiCalendarConfig
             dayClick: function(date, jsEvent, view){
                 $scope.dateClicked = new Date(date);
                 $scope.$broadcast('dayClicked');
-            },
+            }
        }
     };
 
@@ -118,7 +118,7 @@ module.controller('modalController', function($scope,$modal){
             animation: $scope.animationsEnabled,
             scope: $scope,
             templateUrl: 'partials/addmodal',
-            controller: 'modalInstanceController',
+            controller: 'modalInstanceController'
         });
     });
 });
@@ -143,7 +143,7 @@ module.controller('timepickerController', function ($scope, socket, $log) {
         $scope.endTime = new Date($scope.startTime);
         $scope.endTime.setHours($scope.startTime.getHours()+hours);
         $scope.endTime.setMinutes($scope.startTime.getMinutes()+minutes);
-        console.log($scope.startTime)
+        console.log($scope.startTime);
         var reservation = {
             res: {
                 roomName: $scope.selectedRoomname,
@@ -153,7 +153,7 @@ module.controller('timepickerController', function ($scope, socket, $log) {
                 start: $scope.startTime,
                 end:  $scope.endTime
             }
-        }
+        };
         socket.emit("saveReservation", reservation);
     });
 
