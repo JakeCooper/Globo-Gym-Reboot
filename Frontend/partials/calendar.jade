@@ -1,6 +1,6 @@
 my-sidebar(ng-controller="menuController")
+
 .calendar-container
-    input.btn.btn-primary(type='button', value='See User Events', ng-click='seeEvents()')
     .span8
         tabset()
             tab(select='selectTab("{{roomType.type}}")', ng-repeat="roomType in roomTypes", active="roomType.active")
@@ -8,11 +8,34 @@ my-sidebar(ng-controller="menuController")
                 div()
                     label(ng-repeat='room in scope[roomType.type]')
                         input(type='checkbox', ng-model='roomsSelected[room]', ng-click="update()")
-                        span &nbsp
-                            i.fa.fa-calendar(style="color: {{ colors[room] }}") &nbsp
                         |  {{room}} &nbsp
+                        span
+                            i.fa.fa-calendar(style="color: {{ colors[room] }}") &nbsp
                 .calendar(ng-model='eventSources', calendar='{{roomType.type}}', ui-calendar='uiConfig.calendar' config="uiConfig.calendar")
-
-
+            tab(select='seeEvents()', active="false")
+                tab-heading User's Events
+                div(ng-controller='eventModalController')
+                    form
+                        table.eventsTable
+                            tr
+                                th
+                                    | Room
+                                th
+                                    | Date
+                                th
+                                    | Start
+                                th
+                                    | End
+                                th
+                                    | Delete
+                            | &#x9;
+                            tr(ng-repeat='event in userEvents')
+                                td {{event.roomName}} &nbsp
+                                td {{event.start | date:"fullDate" }} &nbsp
+                                td {{event.start | date:"shortTime"}} &nbsp
+                                td {{event.end | date:"shortTime"}} &nbsp
+                                td
+                                    input.btn.btn-danger(type='button', value='X', ng-click='deleteEvent(event)')
+    
 div(ng-controller="modalController")
 div(ng-controller="eventModalController")
