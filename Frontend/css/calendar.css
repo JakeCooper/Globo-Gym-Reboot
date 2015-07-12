@@ -132,4 +132,12 @@
     border-bottom-left-radius: 0 !important;
 }
 
+.alert {
+    -webkit-transition: opacity 1s ease-in;
+    -moz-transition: opacity 1s ease-in;
+    -o-transition: opacity 1s ease-in;
+    -ms-transition: opacity 1s ease-in;
+    transition: opacity 1s ease-in;
+}
+
 /*Sidebar-right*/
