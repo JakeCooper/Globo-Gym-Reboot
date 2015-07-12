@@ -22,6 +22,12 @@ module.exports = function (sockets) {
             });
         });
 
+        socket.on("deleteEvent", function(res){
+            FacilityReservation.remove({"_id": res._id}, function(err){
+            })
+        });
+
+
         socket.on("saveReservation", function(data){
             var res = new FacilityReservation(data.res)
             res.saveReservation(function(response){
