@@ -14,33 +14,9 @@ my-sidebar(ng-controller="menuController")
                         span
                             i.fa.fa-calendar(style="color: {{ colors[room] }}") &nbsp
                 .calendar(ng-model='eventSources', calendar='{{roomType.type}}', ui-calendar='uiConfig.calendar' config="uiConfig.calendar")
-            tab(select='seeEvents()', active="false")
+            tab(select='seeEvents(); userEventsTab()',active="true")
                 tab-heading User's Events
-                div(ng-controller='eventModalController')
-                    form
-                        table.eventsTable
-                            tr
-                                th
-                                    | Title
-                                th
-                                    | Room
-                                th
-                                    | Date
-                                th
-                                    | Start
-                                th
-                                    | End
-                                th
-                                    | Delete
-                            | &#x9;
-                            tr(ng-repeat='event in userEvents')
-                                td {{event.title}} &nbsp
-                                td {{event.roomName}} &nbsp
-                                td {{event.start | date:"fullDate" }} &nbsp
-                                td {{event.start | date:"shortTime"}} &nbsp
-                                td {{event.end | date:"shortTime"}} &nbsp
-                                td
-                                    input.btn.btn-danger(type='button', value='X', ng-click='deleteEvent(event)')
+                .calendar(ng-model='eventSources', calendar='userEvents', ui-calendar='uiConfig.calendar' config="uiConfig.calendar")
 
 div(ng-controller="modalController")
 div(ng-controller="eventModalController")
