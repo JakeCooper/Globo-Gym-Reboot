@@ -6,6 +6,7 @@ module.controller('calendarController', ['$scope', '$compile', 'uiCalendarConfig
     socket.emit("getProfile");
     socket.on("profileInfo", function(data){
        $scope.username = data.username;
+       $scope.firstname = $scope.username.split(" ")[0];
        $scope.$broadcast('seeUserEvents');
     });
 
@@ -108,6 +109,14 @@ module.controller('calendarController', ['$scope', '$compile', 'uiCalendarConfig
         $timeout(function () {
             $scope.roomsSelected[$scope[$scope.getActive()][0]] = true;
             $scope.renderCalender($scope.getActive());
+        }, 0);
+    };
+    $scope.userEventsTab = function(){
+        socket.emit("getUserEvents",{res: $scope.username});
+        $timeout(function () {
+            $scope.reservations = $scope.userEvents;
+            //$scope.roomsSelected[$scope[$scope.getActive()][0]] = true;
+            $scope.renderCalender('userEvents');
         }, 0);
     };
 
