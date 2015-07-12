@@ -17,7 +17,7 @@ module.exports = new GoogleStrategy({
             if (err) return done(err);
 
             if (!user) {
-                user = new User({
+                var user = new User({
                     photo: profile.photos[0].value,
                     username: profile.displayName,
                     googleid: profile.id,
