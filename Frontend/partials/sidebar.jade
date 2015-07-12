@@ -8,7 +8,12 @@ body
 
     .left-sidebar
         left-sidebar(ng-controller="leftSidebarController")
-            p MEMEIN
+            .sidebar-Header
+            .user-name Jake
+            button.btn.btn-default.profile-button(href="app/profile") Profile
+            .reservation-header My Reservations
+            .reservation-container
+                button.btn.btn-default Da Bench
 
     .search-container
         i.fa.fa-search.fa-2x#right-menu
