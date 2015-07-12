@@ -16,23 +16,24 @@ var app = angular.module('myApp', [
         templateUrl: 'partials/signin',
         controller: 'loginController'
     }).
-    when('/app/signin', {
-        templateUrl: 'partials/signin',
-        controller: 'loginController'
-    }).
-    when('/app/profile', {
-        templateUrl: 'partials/profile',
-        controller: 'loginController'
-    }).
     when('/app/about', {
         templateUrl: 'partials/about',
         controller: 'loginController'
     }).
+    when('/app/profile', {
+        templateUrl: 'partials/profile',
+        controller: 'loginController',
+        resolve:{
+            loggedin: checkLoggedin
+        }
+    }).
     when('/app/regpol', {
         templateUrl: 'partials/regpol',
-        controller: 'loginController'
-    }). 
-  
+        controller: 'loginController',
+        resolve:{
+            loggedin: checkLoggedin
+        }
+    }).
     when('/app/calendar', {
         templateUrl: 'partials/calendar',
         controller: 'calendarController',
@@ -43,6 +44,9 @@ var app = angular.module('myApp', [
     when('/app/users', {
         templateUrl: 'partials/users',
         controller: 'adminController',
+        resolve:{
+            loggedin: checkLoggedin
+        }
     }).
     otherwise({
       redirectTo: '/'
