@@ -8,7 +8,7 @@ module.controller('calendarController', ['$scope', '$compile', 'uiCalendarConfig
        $scope.username = data.username;
        $scope.$broadcast('seeUserEvents');
     });
-    
+
     socket.emit("getFacilityInfo");
     socket.on("FacilityInfo", function(data){
         var roomTypes = Object.keys(data.facility);
@@ -122,8 +122,10 @@ module.controller('modalController', function($scope,$modal){
 
 module.controller('modalInstanceController', function($scope, socket, $modalInstance){
     $scope.ok = function() {
-        $scope.$broadcast('saveReservation');
         $modalInstance.close();
+        $scope.$broadcast('saveReservation');
+        $scope.seeEvents();
+        
     };
 
     $scope.cancel = function () {
@@ -168,14 +170,19 @@ module.controller('timepickerController', function ($scope, socket, $log) {
 module.controller('eventModalController', function ($scope, socket, $modal){
     $scope.animationsEnabled = true;
     socket.on("userEventsList", function(data){
-           console.log(data);
            $scope.userEvents = data;
     });
     $scope.deleteEvent = function(res){
-        socket.emit("deleteEvent", res);
-        socket.emit("getUserEvents",{res: $scope.username});
-        $scope.update();
+        $scope.selectedEvent = res;
+        $modal.open({ 
+            animation: $scope.animationsEnabled,
+            scope: $scope,
+            templateUrl: 'partials/eventsmodal',
+            controller: 'eventModalInstanceController'
+        });
+        
     };
+
     $scope.$on('seeUserEvents', function(){
         socket.emit("getUserEvents",{res: $scope.username});
 
@@ -183,7 +190,14 @@ module.controller('eventModalController', function ($scope, socket, $modal){
 });
 
 module.controller('eventModalInstanceController', function($scope, socket, $modalInstance){
+    $scope.confirmedDelete = function(res){
+        $modalInstance.close();
+        socket.emit("deleteEvent", res);
+        
+        $scope.update();
+        $scope.seeEvents();
 
+    };
     $scope.cancel = function () {
         $modalInstance.dismiss('cancel');
     };
