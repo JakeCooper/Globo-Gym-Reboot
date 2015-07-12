@@ -6,11 +6,8 @@ module.controller('calendarController', ['$scope', '$compile', 'uiCalendarConfig
     socket.emit("getProfile");
     socket.on("profileInfo", function(data){
        $scope.username = data.username;
-<<<<<<< HEAD
        $scope.firstname = $scope.username.split(" ")[0];
        $scope.$broadcast('seeUserEvents');
-=======
->>>>>>> 8822917f6a13d9f6ecb0ea9762df7cf936ca67ba
     });
 
     socket.emit("getFacilityInfo");
