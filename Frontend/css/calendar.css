@@ -1,12 +1,28 @@
-.sidebar {
+.left-sidebar {
+    left:-275px;
+    width:250px;
+    height:100vh;
+    background-color: #F8F8F8;
+    position: fixed;
+    box-shadow:5px 0 10px #999;
+    z-index:5;
+}
 
+.right-sidebar {
+    right:-275px;
+    width:250px;
+    height:100vh;
+    background-color: #F8F8F8;
+    position: fixed;
+    box-shadow:-5px 0 10px #999;
+    z-index:5;
 }
 
 .profile-container {
     margin-left: 10px;
     margin-top: 10px;
     position:fixed;
-    left:0px;
+    left:0;
     z-index:10;
     -webkit-transition: opacity 1s;
     opacity: 0.0;
@@ -15,6 +31,7 @@
 
 .calendar-container {
     padding-left:90px;
+    padding-right:50px;
     padding-top:25px;
 }
 
@@ -24,6 +41,14 @@
 
 .search-container {
     float: right;
+    position:relative;
+}
+
+#right-menu {
+    margin-right:10px;
+    margin-top:10px;
+    position:fixed;
+    right:0;
 }
 
 /*SIDEBAR-LEFT*/
