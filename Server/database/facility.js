@@ -91,7 +91,6 @@ FacilityReservation.statics = {
     rooms: config.mongoose.facility.rooms,
 
     getUserEvents: function(user, cb){
-        console.log(user.id)
         this.model("FacilityReservation").find({
             id: user.id
         }, function(err, res){
