@@ -1,3 +1,5 @@
+.alert-container
+
 my-sidebar(ng-controller="menuController")
 
 .calendar-container
@@ -36,6 +38,6 @@ my-sidebar(ng-controller="menuController")
                                 td {{event.end | date:"shortTime"}} &nbsp
                                 td
                                     input.btn.btn-danger(type='button', value='X', ng-click='deleteEvent(event)')
-    
+
 div(ng-controller="modalController")
 div(ng-controller="eventModalController")

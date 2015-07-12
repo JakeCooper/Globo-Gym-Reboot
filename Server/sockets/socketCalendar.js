@@ -35,7 +35,8 @@ module.exports = function (sockets) {
             res.saveReservation(function(response){
                 socket.emit("reservationStatus", {
                     res: data.res,
-                    message: response.message
+                    message: response.message,
+                    success: response.success
                 });
                 if(response.success) {
                     socket.broadcast.emit("calendarHasChanged");

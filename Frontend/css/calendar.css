@@ -98,4 +98,13 @@
     height: 50px;
 }
 
+.alert-container {
+    float:right;
+    position:fixed;
+    right:0;
+    margin-top:5px;
+    margin-right:20px;
+    z-index:8;
+}
+
 /*Sidebar-right*/

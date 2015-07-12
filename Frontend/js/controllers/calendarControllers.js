@@ -46,7 +46,17 @@ module.controller('calendarController', ['$scope', '$compile', 'uiCalendarConfig
     socket.on("reservationStatus", function(data){
         $scope.update();
         // alert the user that it worked
-        alert(data.message);
+        if (data.success == true){
+            var state = "success";
+        } else {
+            var state = "danger";
+        }
+        $('.alert-container').append(
+            '<div class="alert alert-' + state + '">' +
+                '<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>' +
+                '<strong>Success!</strong> ' + data.message +
+            '</div>');
+        //alert(data.message);
     });
 
     $scope.reservations = {
