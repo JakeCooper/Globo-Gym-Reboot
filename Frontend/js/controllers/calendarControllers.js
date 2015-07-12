@@ -25,6 +25,7 @@ module.controller('calendarController', ['$scope', '$compile', 'uiCalendarConfig
                 $scope.colors[roomNames[j]] = data.facility[roomType][roomNames[j]].displayColor;
             }
         }
+        $scope.roomTypes[0].active = true;
         $scope.scope = $scope;
     });
     $scope.seeEvents = function(){
