@@ -41,9 +41,8 @@ module.exports = new GoogleStrategy({
                      return done(err, user);
                 });
             }
-
+            
             return done(err, user);
-
         });
     }
 );
