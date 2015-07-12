@@ -17,6 +17,15 @@ module.exports = new GoogleStrategy({
             if (err) return done(err);
 
             if (!user) {
+                var user = new User({
+                    photo: profile.photos[0].value,
+                    username: profile.displayName,
+                    googleid: profile.id
+                });
+
+
+
+            if (!user) {
                 user = new User({
                     photo: profile.photos[0].value,
                     username: profile.displayName,
@@ -40,6 +49,9 @@ module.exports = new GoogleStrategy({
                      if (err) return console.log(err);
                      return done(err, user);
                 });
+            }
+
+                return done(err, user);
             }
 
             return done(err, user);
