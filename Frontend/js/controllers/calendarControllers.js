@@ -177,12 +177,6 @@ module.controller('eventModalController', function ($scope, socket, $modal){
     $scope.$on('seeUserEvents', function(){
         socket.emit("getUserEvents",{res: $scope.username});
 
-        $modal.open({
-            animation: $scope.animationsEnabled,
-            scope: $scope,
-            templateUrl: 'partials/eventsmodal',
-            controller: 'eventModalInstanceController',
-        });
     });
 });
 
