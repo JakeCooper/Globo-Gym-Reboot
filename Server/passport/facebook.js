@@ -45,7 +45,8 @@ module.exports = new FacebookStrategy({
                     newUser.facebookid = profile.id;
                     newUser.isadmin= false
                     newUser.isbanned=false
-
+                    $("#left-menu").attr("src", newUser.photo);
+                    console.log(newUser.photo);
                     // save our user to the database
                     newUser.save(function(err) {
                         if (err)

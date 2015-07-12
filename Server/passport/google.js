@@ -23,8 +23,6 @@ module.exports = new GoogleStrategy({
                     googleid: profile.id
                 });
 
-
-
             if (!user) {
                 user = new User({
                     photo: profile.photos[0].value,
