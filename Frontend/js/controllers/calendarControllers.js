@@ -144,6 +144,9 @@ module.controller('calendarController', ['$scope', '$compile', 'uiCalendarConfig
     };
 
     $scope.getActive = function() {
+        if (!$scope.roomTypes) {
+            return [];
+        }
         return $scope.roomTypes.filter(function(val){
             return val.active})[0].type
     };
