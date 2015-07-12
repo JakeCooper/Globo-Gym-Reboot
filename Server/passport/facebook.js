@@ -8,32 +8,12 @@ var User = mongoose.model('User');
 // load the auth variables
 var configAuth = require('config');
 
-/*module.exports = function(passport) {
+module.exports = new FacebookStrategy({
 
-    // used to serialize the user for the session
-    passport.serializeUser(function(user, done) {
-        done(null, user.id);
-    });
-
-    // used to deserialize the user
-    passport.deserializeUser(function(id, done) {
-        User.findById(id, function(err, user) {
-            done(err, user);
-        });
-    });*/
-    //this is in the passport section
-    // code for login (use('local-login', new LocalStategy))
-    // code for signup (use('local-signup', new LocalStategy))
-
-    // =========================================================================
-    // FACEBOOK ================================================================
-    // =========================================================================
-   module.exports = new FacebookStrategy({
-
-        // pull in our app id and secret from our auth.js file
-        clientID        : configAuth.facebookAuth.clientID,
-        clientSecret    : configAuth.facebookAuth.clientSecret,
-        callbackURL     : configAuth.facebookAuth.callbackURL
+    // pull in our app id and secret from our auth.js file
+    clientID        : configAuth.facebookAuth.clientID,
+    clientSecret    : configAuth.facebookAuth.clientSecret,
+    callbackURL     : configAuth.facebookAuth.callbackURL
 
     },
 
@@ -59,23 +39,13 @@ var configAuth = require('config');
                     var newUser            = new User();
 
                     // set all of the facebook information in our user model
-                    //newUser.provider = profile.provider; 
-                    //newUser.facebook.id    = profile.id; // set the users facebook id                   
-                    //newUser.facebook.token = token; // we will save the token that facebook provides to the user                    
-                    //newUser.facebook.name  = profile.name.givenName + ' ' + profile.name.familyName; // look at the passport user profile to see how names are returned
-                    //newUser.facebook.email = profile.emails[0].value; // facebook can return multiple emails so we'll take the first
-                    //newUser.facebook.photo = profile.photos ? profile.photos[0].value : '/img/faces/unknown-user-pic.jpg',
-                    
-                        
-                        
                     newUser.email = profile.emails[0].value;
                     newUser.username = profile.name.givenName + ' ' + profile.name.familyName;   
                     newUser.photo =  profile.photos ? profile.photos[0].value : '/img/faces/unknown-user-pic.jpg'; 
                     newUser.facebookid = profile.id;
                     newUser.isadmin= false
                     newUser.isbanned=false
-                    
-                        
+
                     // save our user to the database
                     newUser.save(function(err) {
                         if (err)
@@ -85,8 +55,7 @@ var configAuth = require('config');
                         return done(null, newUser);
                     });
                 }
-
             });
         });
-
-    });
+    }
+);
