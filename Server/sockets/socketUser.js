@@ -8,9 +8,9 @@ module.exports = function (sockets) {
     sockets.on("connection", function(socket){
           socket.on("getUsers", function(data){
               UsersInfo.find({}, function(err, users){ 
-                var res = new UsersInfo(users[0]);
+                  console.log(users)
                 socket.emit("getUsers", users);
-                  console.log(UsersInfo)
+
             });
         });
     });
