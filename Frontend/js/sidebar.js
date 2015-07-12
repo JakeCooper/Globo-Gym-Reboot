@@ -1,30 +1,23 @@
 $(document).ready(function() {
-    $('#left-menu').sidr({
-        name: 'sidr-left',
-        side: 'left', // By default
-        source : '.sidr-left-content'
-        /*source: function(){
-            return loadLeftContent();
-        }*/
+    $("#left-menu").on('click', function(){
+        if ($('.left-sidebar').css("left") != "0px") {
+            $('.left-sidebar').animate({
+                left : "0px"
+            }, 500);
+        } else {
+            $('.left-sidebar').animate({
+                left : "-275px"
+            }, 500);
+        }
     });
-    $('#right-menu').sidr({
-        name: 'sidr-right',
-        side: 'right' // By default
+    $("#right-menu").on('click', function(){
+        $('.right-sidebar').animate({
+            right : "0px"
+        }, 500);
+    });
+    $('.close-right-sidebar').on('click', function(){
+        $('.right-sidebar').animate({
+            right : "-275px"
+        }, 500);
     });
 });
-
-function loadLeftContent(){
-    return  '' +
-        '<div class="sidebar-header"></div>' +
-        '<div class="user-name"> Jake </div> ' +
-        '<button class="btn btn-default profile-button" href="app/profile">' +
-            'Profile' +
-        '</button>' +
-        '<div class="reservation-header">' +
-            'My Reservations' +
-        '</div>' +
-        '<div class="reservation-container">' +
-            '<button class="btn btn-default reservation-button">Da Bench</button>' +
-        '</div>'
-
-}
