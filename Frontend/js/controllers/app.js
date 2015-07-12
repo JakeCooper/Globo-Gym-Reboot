@@ -8,7 +8,8 @@ var app = angular.module('myApp', [
     "profileControllers",
     "calendarControllers",
     "menuControllers",
-    "adminControllers"
+    "adminControllers",
+    "leftSidebarControllers"
     ])
 .config(function ($routeProvider, $locationProvider) {
   $routeProvider.
@@ -30,9 +31,7 @@ var app = angular.module('myApp', [
     when('/app/regpol', {
         templateUrl: 'partials/regpol',
         controller: 'loginController',
-        resolve:{
-            loggedin: checkLoggedin
-        }
+        
     }).
     when('/app/calendar', {
         templateUrl: 'partials/calendar',
@@ -45,8 +44,9 @@ var app = angular.module('myApp', [
         templateUrl: 'partials/users',
         controller: 'adminController',
         resolve:{
-            loggedin: checkLoggedin
+            loggedin: checkAdmin
         }
+        
     }).
     otherwise({
       redirectTo: '/'
@@ -73,11 +73,12 @@ var checkLoggedin = function($q, $timeout, $http, $location, $rootScope){
     return deferred.promise;
 };
 
-var checkadmin = function($q, $timeout, $http, $location, $rootScope,user){
+var checkAdmin = function($q, $timeout, $http, $location, $rootScope){
     // Initialize a new promise
     var deferred = $q.defer();
 
-        if (user.isadmin === false) deferred.resolve();
+    $http.get('/loggedin').success(function(user){
+        if (user.isadmin === true) deferred.resolve();
             // Not Authenticated
         else {
             $rootScope.message = 'You must be an admin.';
@@ -86,4 +87,5 @@ var checkadmin = function($q, $timeout, $http, $location, $rootScope,user){
         }
 
     return deferred.promise;
+});
 };

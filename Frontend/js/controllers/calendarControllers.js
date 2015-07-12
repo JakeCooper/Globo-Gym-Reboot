@@ -6,8 +6,11 @@ module.controller('calendarController', ['$scope', '$compile', 'uiCalendarConfig
     socket.emit("getProfile");
     socket.on("profileInfo", function(data){
        $scope.username = data.username;
+<<<<<<< HEAD
        $scope.firstname = $scope.username.split(" ")[0];
        $scope.$broadcast('seeUserEvents');
+=======
+>>>>>>> 8822917f6a13d9f6ecb0ea9762df7cf936ca67ba
     });
 
     socket.emit("getFacilityInfo");
@@ -31,33 +34,58 @@ module.controller('calendarController', ['$scope', '$compile', 'uiCalendarConfig
         $scope.scope = $scope;
     });
     $scope.seeEvents = function(){
-        $scope.$broadcast('seeUserEvents');
+        socket.emit("getUserEvents",{res: $scope.username});
     };
     // for checkboxes
     $scope.roomsSelected = {};
 
     $scope.update = function(){
-        uiCalendarConfig.calendars[$scope.getActive()].fullCalendar( 'refetchEvents' )
+        uiCalendarConfig.calendars[$scope.getActive()].fullCalendar( 'refetchEvents' );
+        $scope.seeEvents();
     };
-
+    socket.on("userEventsList", function(data){
+           $scope.userEvents = data;
+    });
     socket.on("calendarHasChanged", function(){
-        $scope.update()
+        $scope.update();
     });
 
     socket.on("reservationStatus", function(data){
         $scope.update();
         // alert the user that it worked
         var state;
+        var header;
         if (data.success == true){
             state = "success";
+            header = "Success!";
         } else {
             state = "danger";
+            header = "Error!";
         }
+        
+        var message = $("<div/>")
+            .addClass("alert")
+            .addClass("alert-" + state)
+            .addClass("fade")
+            .addClass("in")
+            .append(
+            $("<a/>")
+                .addClass("close")
+                .attr("data-dismiss", "alert")
+                .attr("aria-label", "close")
+                .html("&nbsp;&times;"))
+            .append("<strong>" + header + "</strong> " + data.message)
         $('.alert-container').append(
-            '<div class="alert fade in alert-' + state + '">' +
-                '<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>' +
-                '<strong>Success!</strong> ' + data.message +
-            '</div>');
+            message
+        );
+        window.setTimeout(function(){
+            $(message).css({
+                opacity: 0.0
+            });
+            $(message).one("transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd", function(){
+                message.remove();
+            })
+        }, 10000)
     });
 
     $scope.reservations = {
@@ -121,6 +149,9 @@ module.controller('calendarController', ['$scope', '$compile', 'uiCalendarConfig
     };
 
     $scope.getActive = function() {
+        if (!$scope.roomTypes) {
+            return [];
+        }
         return $scope.roomTypes.filter(function(val){
             return val.active})[0].type
     };
@@ -188,9 +219,7 @@ module.controller('timepickerController', function ($scope, socket, $log) {
 
 module.controller('eventModalController', function ($scope, socket, $modal){
     $scope.animationsEnabled = true;
-    socket.on("userEventsList", function(data){
-           $scope.userEvents = data;
-    });
+    
     $scope.deleteEvent = function(res){
         $scope.selectedEvent = res;
         $modal.open({ 
@@ -202,10 +231,6 @@ module.controller('eventModalController', function ($scope, socket, $modal){
         
     };
 
-    $scope.$on('seeUserEvents', function(){
-        socket.emit("getUserEvents",{res: $scope.username});
-
-    });
 });
 
 module.controller('eventModalInstanceController', function($scope, socket, $modalInstance){
