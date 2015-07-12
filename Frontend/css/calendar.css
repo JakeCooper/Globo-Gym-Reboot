@@ -103,7 +103,7 @@
 .content-container {
     overflow-y:auto;
     overflow-x:hidden;
-    max-height:69%;
+    max-height:60%;
 }
 
 .reservation-button {
@@ -138,6 +138,20 @@
     -o-transition: opacity 1s ease-in;
     -ms-transition: opacity 1s ease-in;
     transition: opacity 1s ease-in;
+}
+
+.logout-button {
+    margin-left:90px;
+    margin-top:15px;
+}
+
+a.logout-text {
+    color: #000;
+    text-decoration: none;
+}
+
+a.logout-text {
+    color: #000;
 }
 
 /*Sidebar-right*/
