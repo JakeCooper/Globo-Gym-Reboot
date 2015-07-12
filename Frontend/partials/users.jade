@@ -1,21 +1,14 @@
-.users(ng-controller='adminController as main')
-  .jumbotron
- 
+.jumbotron
 
-    h1 {{main.message}}
-    
-    h2 Student List:
-    table.table.table-bordered
-      thead
-        tr
-          th Username
-          |         
-          th Restricted
-          | 
-          th Admin
-      |  
-      tbody
-        tr(ng-repeat='user in users')
-          td {{ user.username }}
+h1 {{main.message}}
 
-    
+h2 Student List:
+table.table.table-bordered
+  thead
+    tr
+      th Username
+      th Restricted
+      th Admin
+  tbody
+    tr(ng-repeat='user in users')
+      td {{ user.username }}
