@@ -1,0 +1,22 @@
+
+
+html
+    head
+        link(rel="stylesheet" href="../css/signin.css")
+        link(href='http://fonts.googleapis.com/css?family=Amatic+SC' rel='stylesheet' type='text/css')
+    body
+        .jumbotron.text-center.users
+
+            h1.users User List
+
+            table.table.table-bordered
+              thead
+                tr
+                  th Username
+                  th Restricted
+                  th Admin
+              tbody
+                tr(ng-repeat='user in users')
+                  td {{ user.username }}
+                  td {{ user.isbanned }}
+                  td {{ user.isadmin }}

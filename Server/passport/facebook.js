@@ -1,5 +1,5 @@
 var mongoose = require('mongoose');
-var LocalStrategy    = require('passport-local').Strategy;
+
 var FacebookStrategy = require('passport-facebook').Strategy;
 
 // load up the user model
@@ -42,7 +42,9 @@ module.exports = new FacebookStrategy({
                     newUser.email = profile.emails[0].value;
                     newUser.username = profile.name.givenName + ' ' + profile.name.familyName;   
                     newUser.photo =  profile.photos ? profile.photos[0].value : '/img/faces/unknown-user-pic.jpg'; 
-                    newUser.id = profile.id,
+                    newUser.facebookid = profile.id;
+                    newUser.isadmin= false
+                    newUser.isbanned=false
 
                     // save our user to the database
                     newUser.save(function(err) {
