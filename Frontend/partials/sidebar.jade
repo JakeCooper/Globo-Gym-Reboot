@@ -3,7 +3,7 @@ head
     script(src="../js/sidebar.js")
 body
 
-    .profile-container
+    .profile-container(ng-click='seeEvents()')
         img#left-menu(src="../assets/images/defaultProfile.png" width="72")
 
     .left-sidebar(ng-app="leftSidebarController")
@@ -17,6 +17,8 @@ body
                     table.eventsTable
                         tr
                             th
+                                | Title
+                            th
                                 | Room
                             th
                                 | Date
@@ -28,6 +30,7 @@ body
                                 | Delete
                         | &#x9;
                         tr(ng-repeat='event in userEvents')
+                            td {{event.title}} &nbsp
                             td {{event.roomName}} &nbsp
                             td {{event.start | date:"fullDate" }} &nbsp
                             td {{event.start | date:"shortTime"}} &nbsp
