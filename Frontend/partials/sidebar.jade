@@ -14,30 +14,19 @@ body
         .reservation-header My Reservations
         .content-container
             div(ng-controller='eventModalController')
-                form
-                    table.eventsTable
-                        tr
-                            th
-                                | Title
-                            th
-                                | Room
-                            th
-                                | Date
-                            th
-                                | Start
-                            th
-                                | End
-                            th
-                                | Delete
-                        | &#x9;
-                        tr(ng-repeat='event in userEvents')
-                            td {{event.title}} &nbsp
-                            td {{event.roomName}} &nbsp
-                            td {{event.start | date:"fullDate" }} &nbsp
-                            td {{event.start | date:"shortTime"}} &nbsp
-                            td {{event.end | date:"shortTime"}} &nbsp
-                            td
-                                input.btn.btn-danger(type='button', value='X', ng-click='deleteEvent(event)')
+                div(ng-repeat='event in userEvents')
+                    button.btn.btn-default.reservation-button
+                        div.reservation-title {{event.title}}
+                        div.reservation-time {{event.start | date:"shortTime"}} - {{event.end | date:"shortTime"}}
+                    button.btn.btn-danger.reservation-delete(ng-click='deleteEvent(event)') X
+                    //NEED A TRUNCATED TITLE!
+                        //td
+                        //td {{event.roomName}} &nbsp
+                        //td {{event.start | date:"fullDate" }} &nbsp
+                        //td {{event.start | date:"shortTime"}} &nbsp
+                        //td {{event.end | date:"shortTime"}} &nbsp
+                        //td
+                            //input.btn.btn-danger(type='button', value='X', ng-click='deleteEvent(event)')
 
 
 

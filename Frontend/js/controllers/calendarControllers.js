@@ -53,7 +53,7 @@ module.controller('calendarController', ['$scope', '$compile', 'uiCalendarConfig
             state = "danger";
         }
         $('.alert-container').append(
-            '<div class="alert alert-' + state + '">' +
+            '<div class="alert fade in alert-' + state + '">' +
                 '<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>' +
                 '<strong>Success!</strong> ' + data.message +
             '</div>');
