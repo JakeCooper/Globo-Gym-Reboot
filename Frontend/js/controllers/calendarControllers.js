@@ -38,7 +38,7 @@ module.controller('calendarController', ['$scope', '$compile', 'uiCalendarConfig
     };
 
     socket.on("calendarHasChanged", function(){
-        $scope.update() 
+        $scope.update()
     });
 
     socket.on("reservationStatus", function(data){
@@ -100,7 +100,7 @@ module.controller('calendarController', ['$scope', '$compile', 'uiCalendarConfig
     };
 
     $scope.getActive = function() {
-        return $scope.roomTypes.filter(function(val){ 
+        return $scope.roomTypes.filter(function(val){
             return val.active})[0].type
     };
 }]);
@@ -166,7 +166,8 @@ module.controller('timepickerController', function ($scope, socket, $log) {
 module.controller('eventModalController', function ($scope, socket, $modal){
     $scope.animationsEnabled = true;
     socket.on("userEventsList", function(data){
-           $scope.userEvents = data.response;
+           console.log(data);
+           $scope.userEvents = data;
     });
     $scope.deleteEvent = function(res){
         socket.emit("deleteEvent", res);
@@ -174,7 +175,7 @@ module.controller('eventModalController', function ($scope, socket, $modal){
     };
     $scope.$on('seeUserEvents', function(){
         socket.emit("getUserEvents",{res: $scope.username});
-        
+
         $modal.open({
             animation: $scope.animationsEnabled,
             scope: $scope,

@@ -6,19 +6,20 @@
                 tr
                     th
                         | Room
-                    | &#x9;&#x9;
                     th
                         | Date
-                    | &#x9;&#x9;
+                    th
+                        | Start
+                    th
+                        | End
                     th
                         | Delete
-                    | &#x9;&#x9;
                 | &#x9;
                 tr(ng-repeat='event in userEvents')
-                    td {{event.roomName}}
-                    | &#x9;&#x9;
-                    td {{event.startTime}}
-                    | &#x9;&#x9;
+                    td {{event.roomName}} &nbsp
+                    td {{event.start | date:"fullDate" }} &nbsp
+                    td {{event.start | date:"shortTime"}} &nbsp
+                    td {{event.end | date:"shortTime"}} &nbsp
                     input.btn.btn-primary(type='button', value='Delete Event', ng-click='deleteEvent(event)')
     .modal-footer()
       button.btn.btn-danger(ng-click='cancel()') Close

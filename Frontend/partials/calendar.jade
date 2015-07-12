@@ -1,5 +1,4 @@
 my-sidebar(ng-controller="menuController")
-
 .calendar-container
     input.btn.btn-primary(type='button', value='See User Events', ng-click='seeEvents()')
     .span8
@@ -9,9 +8,9 @@ my-sidebar(ng-controller="menuController")
                 div()
                     label(ng-repeat='room in scope[roomType.type]')
                         input(type='checkbox', ng-model='roomsSelected[room]', ng-click="update()")
-                        |  {{room}} &nbsp
-                        span
+                        span &nbsp
                             i.fa.fa-calendar(style="color: {{ colors[room] }}") &nbsp
+                        |  {{room}} &nbsp
                 .calendar(ng-model='eventSources', calendar='{{roomType.type}}', ui-calendar='uiConfig.calendar' config="uiConfig.calendar")
 
 div(ng-controller="modalController")
