@@ -30,7 +30,7 @@ FacilityReservation.methods.saveReservation = function (cb) {
         if(res) return cb({message: "There is already a reservation with that time"});
         //if()
         that.save(function(err){
-            return cb({message: "it has been done", success: true});
+            return cb({message: "Reservation booked", success: true});
         });
     });
 };
