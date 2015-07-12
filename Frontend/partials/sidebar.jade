@@ -6,15 +6,36 @@ body
     .profile-container
         img#left-menu(src="../assets/images/defaultProfile.png" width="72")
 
-    .left-sidebar
-        left-sidebar(ng-controller="leftSidebarController")
-            .sidebar-Header
-            .user-name Jake
-            button.btn.btn-default.profile-button(href="app/profile") Profile
-            .reservation-header My Reservations
-            .reservation-container
-                button.btn.btn-default Da Bench
+    .left-sidebar(ng-app="leftSidebarController")
+        .sidebar-Header
+        .user-name {{username}}
+        button.btn.btn-default.profile-button(href="app/profile") Profile
+        
+        .reservation-header My Reservations
+            div(ng-controller='eventModalController')
+                form
+                    table.eventsTable
+                        tr
+                            th
+                                | Room
+                            th
+                                | Date
+                            th
+                                | Start
+                            th
+                                | End
+                            th
+                                | Delete
+                        | &#x9;
+                        tr(ng-repeat='event in userEvents')
+                            td {{event.roomName}} &nbsp
+                            td {{event.start | date:"fullDate" }} &nbsp
+                            td {{event.start | date:"shortTime"}} &nbsp
+                            td {{event.end | date:"shortTime"}} &nbsp
+                            td
+                                input.btn.btn-danger(type='button', value='X', ng-click='deleteEvent(event)')
+        .reservation-container
+            button.btn.btn-default Da Bench
 
-    .search-container
-        i.fa.fa-search.fa-2x#right-menu
+
 

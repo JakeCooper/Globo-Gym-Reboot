@@ -6,8 +6,9 @@ module.controller('calendarController', ['$scope', '$compile', 'uiCalendarConfig
     socket.emit("getProfile");
     socket.on("profileInfo", function(data){
        $scope.username = data.username;
+       $scope.$broadcast('seeUserEvents');
     });
-
+    
     socket.emit("getFacilityInfo");
     socket.on("FacilityInfo", function(data){
         var roomTypes = Object.keys(data.facility);
