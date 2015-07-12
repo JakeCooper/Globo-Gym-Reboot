@@ -7,24 +7,43 @@ var app = angular.module('myApp', [
     "loginControllers",
     "profileControllers",
     "calendarControllers",
-    "menuControllers"])
+    "menuControllers",
+    "adminControllers"
+    ])
 .config(function ($routeProvider, $locationProvider) {
   $routeProvider.
     when('/', {
         templateUrl: 'partials/signin',
         controller: 'loginController'
     }).
-    when('/app/signin', {
-        templateUrl: 'partials/signin',
+    when('/app/about', {
+        templateUrl: 'partials/about',
         controller: 'loginController'
     }).
     when('/app/profile', {
         templateUrl: 'partials/profile',
-        controller: 'profileController'
+        controller: 'loginController',
+        resolve:{
+            loggedin: checkLoggedin
+        }
+    }).
+    when('/app/regpol', {
+        templateUrl: 'partials/regpol',
+        controller: 'loginController',
+        resolve:{
+            loggedin: checkLoggedin
+        }
     }).
     when('/app/calendar', {
         templateUrl: 'partials/calendar',
         controller: 'calendarController',
+        resolve:{
+            loggedin: checkLoggedin
+        }
+    }).
+    when('/app/users', {
+        templateUrl: 'partials/users',
+        controller: 'adminController',
         resolve:{
             loggedin: checkLoggedin
         }
@@ -50,6 +69,21 @@ var checkLoggedin = function($q, $timeout, $http, $location, $rootScope){
             $location.url('/app/signin');
         }
     });
+
+    return deferred.promise;
+};
+
+var checkadmin = function($q, $timeout, $http, $location, $rootScope,user){
+    // Initialize a new promise
+    var deferred = $q.defer();
+
+        if (user.isadmin === false) deferred.resolve();
+            // Not Authenticated
+        else {
+            $rootScope.message = 'You must be an admin.';
+            deferred.reject(); 
+            $location.url('/app/signin');
+        }
 
     return deferred.promise;
 };

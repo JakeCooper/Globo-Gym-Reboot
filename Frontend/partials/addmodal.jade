@@ -14,11 +14,11 @@
                 option(value='120') 120mins
           | Facility: 
           div
-              select(ng-model='selectedRoomtype', ng-init="getActive()")
+              select(ng-model='selectedRoomtype', ng-init="getActive()", ng-click="changed()")
                   option(ng-repeat ='roomType in roomTypes') {{roomType.type}}
           | Room name: 
           div
-              select(ng-model='selectedRoomname', ng-init="scope[selectedRoomtype][0]")
+              select(ng-model='selectedRoomname', ng-init="scope[selectedRoomtype][0]", ng-click="changed()")
                   option(ng-repeat ='roomName in scope[selectedRoomtype]') {{roomName}}
           | &#x9;&#x9;&#x9;  Title of Reservation:
           | &#x9;&#x9;&#x9;  

@@ -14,12 +14,15 @@ module.exports = function (server) {
     io.use(require("./authorizeSockets.js"));
     require("./socketCalendar.js")(io.sockets);
     require("./socketLogic.js")(io.sockets);
+    require("./socketUser.js")(io.sockets);
     require("./socketProfilePic.js")(io.sockets);
 
     io.on("connection", function(socket){
         // will only continue on if the user is logged in
         // form her on out we should put all the socket logic into separate files
         var mongoose = require('mongoose');
+        
+        
         var FacilityReservation = mongoose.model("FacilityReservation");
     })
 }

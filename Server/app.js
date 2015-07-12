@@ -1,15 +1,17 @@
 var express = require('express');
 var path = require('path');
-var favicon = require('serve-favicon');
+//var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-
+//var jwt        = require('jsonwebtoken');
 var config = require('config');
 var passport = require('passport');
 var flash = require('connect-flash'); //auth
 var LocalStrategy = require('passport-local').Strategy;
 var mongoose = require('mongoose');
+
+
 
 mongoose.connect(config.mongoose.URL);
 
@@ -20,7 +22,10 @@ config.sess.store =  new MongoStore({
     mongooseConnection: mongoose.connection
 })
 
+
+
 config.sessionMiddleware = session(config.sess);
+
 
 var app = express();
 
@@ -42,6 +47,7 @@ app.use(express.static(path.join(__dirname, '../Frontend')));
 app.use(config.sessionMiddleware);
 
 require('./passport/passport.js')(passport, app)
+
 app.use(flash()); // use connect-flash for flash messages stored in session
 
 app.use(function(req, res, next){
@@ -60,8 +66,12 @@ app.get('/partials/:filename', function(req, res, next) {
 
 // default to the index page let angular do the routing
 app.get('/app/*', function(req, res, next){
-    res.render('../Frontend/index');
+    res.render('../Frontend/index');    
 });
+
+
+
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
