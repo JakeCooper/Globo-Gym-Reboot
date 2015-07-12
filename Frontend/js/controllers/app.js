@@ -40,7 +40,7 @@ var app = angular.module('myApp', [
             loggedin: checkLoggedin
         }
     }).
-  when('/app/users', {
+    when('/app/users', {
         templateUrl: 'partials/users',
         controller: 'adminController',
     }).
