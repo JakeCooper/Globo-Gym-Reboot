@@ -8,7 +8,8 @@ var app = angular.module('myApp', [
     "profileControllers",
     "calendarControllers",
     "menuControllers",
-    "adminControllers"
+    "adminControllers",
+    "leftSidebarControllers"
     ])
 .config(function ($routeProvider, $locationProvider) {
   $routeProvider.
