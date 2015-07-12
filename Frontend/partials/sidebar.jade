@@ -6,7 +6,7 @@ body
     .profile-container(ng-click='seeEvents()')
         img#left-menu(src="../assets/images/defaultProfile.png" width="72")
 
-    .left-sidebar(ng-app="leftSidebarController")
+    .left-sidebar()
         .sidebar-Header
         .user-name {{username}}
         button.btn.btn-default.profile-button(href="app/profile") Profile
