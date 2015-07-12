@@ -5,9 +5,7 @@ module.exports = function (sockets) {
 
     sockets.on("connection", function(socket){
         socket.on("calendarUpdate", function(data){
-            console.log(data.rooms);
             FacilityReservation.find({ type: data.type, roomName: { $in:data.rooms }}, function(err, reservations){
-                console.log(reservations)
                 socket.emit("calendarUpdate", reservations);
             })
         });
@@ -16,9 +14,24 @@ module.exports = function (sockets) {
             socket.emit("FacilityInfo", { facility: config.mongoose.facility.types });
         });
 
+        socket.on("getUserEvents", function(data){
+            var user = {}
+            user.id = socket.user.googleid || socket.user.facebookid;
+            console.log(user)
+            FacilityReservation.getUserEvents(user, function(response){
+                socket.emit("userEventsList", response);
+            });
+        });
+
+        socket.on("deleteEvent", function(res){
+            FacilityReservation.remove({"_id": res._id}, function(err){
+            })
+        });
+
+
         socket.on("saveReservation", function(data){
+            data.res.id = socket.user.googleid || socket.user.facebookid;
             var res = new FacilityReservation(data.res)
-            console.log(res.start, res.end)
             res.saveReservation(function(response){
                 socket.emit("reservationStatus", {
                     res: data.res,

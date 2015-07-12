@@ -56,6 +56,7 @@ function minErr(module, ErrorConstructor) {
 
     message = message + '\nhttp://errors.angularjs.org/1.3.16/' +
       (module ? module + '/' : '') + code;
+      console.log(message);
     for (i = 2; i < arguments.length; i++) {
       message = message + (i == 2 ? '?' : '&') + 'p' + (i - 2) + '=' +
         encodeURIComponent(toDebugString(arguments[i]));

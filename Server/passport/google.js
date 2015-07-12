@@ -15,6 +15,7 @@ module.exports = new GoogleStrategy({
 
         User.findOne(options, function (err, user) {
             if (err) return done(err);
+
             if (!user) {
                 var user = new User({
                     photo: profile.photos[0].value,
@@ -22,11 +23,23 @@ module.exports = new GoogleStrategy({
                     googleid: profile.id
                 });
 
+
+
+            if (!user) {
+                user = new User({
+                    photo: profile.photos[0].value,
+                    username: profile.displayName,
+                    googleid: profile.id,
+                    isadmin: false,
+                    isbanned:false
+                });
+
                 user.save(function (err) {
                     if (err) console.log(err);
                     return done(err, user);
                 });
             } else {
+
                 var update = {
                     photo: profile.photos[0].value,
                     username: profile.displayName,
@@ -37,6 +50,12 @@ module.exports = new GoogleStrategy({
                      return done(err, user);
                 });
             }
+
+                return done(err, user);
+            }
+
+            return done(err, user);
+
         });
     }
 );

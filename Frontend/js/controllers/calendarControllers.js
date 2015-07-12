@@ -10,14 +10,12 @@ module.controller('calendarController', ['$scope', '$compile', 'uiCalendarConfig
 
     socket.emit("getFacilityInfo");
     socket.on("FacilityInfo", function(data){
-        console.log("The Facility", data.facility);
         var roomTypes = Object.keys(data.facility);
         $scope.roomTypes = roomTypes.map(function(thisType){
             return { type: thisType };
         });
         $scope.colors = {};
 
-        console.log(roomTypes);
         for(var i = 0; i < roomTypes.length; i++){
             var roomType = roomTypes[i];
 
@@ -25,12 +23,13 @@ module.controller('calendarController', ['$scope', '$compile', 'uiCalendarConfig
             $scope[roomType] = roomNames;
             for(var j = 0; j < roomNames.length; j++){
                 $scope.colors[roomNames[j]] = data.facility[roomType][roomNames[j]].displayColor;
-                console.log($scope.colors)
             }
         }
         $scope.scope = $scope;
     });
-
+    $scope.seeEvents = function(){
+        $scope.$broadcast('seeUserEvents');
+    };
     // for checkboxes
     $scope.roomsSelected = {};
 
@@ -39,8 +38,9 @@ module.controller('calendarController', ['$scope', '$compile', 'uiCalendarConfig
     };
 
     socket.on("calendarHasChanged", function(){
-        $scope.update() 
+        $scope.update()
     });
+
     socket.on("reservationStatus", function(data){
         $scope.update();
         // alert the user that it worked
@@ -51,20 +51,15 @@ module.controller('calendarController', ['$scope', '$compile', 'uiCalendarConfig
         events: function (start, end, timezone, callback) {
             var selectedRooms = Object.keys( $scope.roomsSelected ).filter(function(key){
                 return $scope.roomsSelected[key]
-            });
-            console.log(selectedRooms);
+            })
             socket.emit("calendarUpdate", { type: $scope.getActive(), rooms: selectedRooms });
             socket.on("calendarUpdate", function(data){
-                console.log(data);
                 for(var i = 0; i < data.length; i++){
-                    console.log($scope.colors);
                     data[i].color = $scope.colors[data[i].roomName];
                 }
                 callback(data);
             });
         },
-        color: 'yellow',
-        textColor: 'black'
     };
 
     $scope.eventSources = [$scope.reservations];
@@ -92,7 +87,6 @@ module.controller('calendarController', ['$scope', '$compile', 'uiCalendarConfig
 
     //render calendar
     $scope.renderCalender = function(calendar) {
-        console.log(calendar);
         if(uiCalendarConfig.calendars[calendar]){
             uiCalendarConfig.calendars[calendar].fullCalendar('render');
         }
@@ -100,12 +94,13 @@ module.controller('calendarController', ['$scope', '$compile', 'uiCalendarConfig
 
     $scope.selectTab = function(){
         $timeout(function () {
+            $scope.roomsSelected[$scope[$scope.getActive()][0]] = true;
             $scope.renderCalender($scope.getActive());
         }, 0);
     };
 
     $scope.getActive = function() {
-        return $scope.roomTypes.filter(function(val){ 
+        return $scope.roomTypes.filter(function(val){
             return val.active})[0].type
     };
 }]);
@@ -143,7 +138,6 @@ module.controller('timepickerController', function ($scope, socket, $log) {
         $scope.endTime = new Date($scope.startTime);
         $scope.endTime.setHours($scope.startTime.getHours()+hours);
         $scope.endTime.setMinutes($scope.startTime.getMinutes()+minutes);
-        console.log($scope.startTime);
         var reservation = {
             res: {
                 roomName: $scope.selectedRoomname,
@@ -165,4 +159,36 @@ module.controller('timepickerController', function ($scope, socket, $log) {
     $scope.startTime.setMinutes(0);
     $scope.hstep = 1;
     $scope.mstep = 30;
+});
+
+
+
+module.controller('eventModalController', function ($scope, socket, $modal){
+    $scope.animationsEnabled = true;
+    socket.on("userEventsList", function(data){
+           console.log(data);
+           $scope.userEvents = data;
+    });
+    $scope.deleteEvent = function(res){
+        socket.emit("deleteEvent", res);
+        socket.emit("getUserEvents",{res: $scope.username});
+        $scope.update();
+    };
+    $scope.$on('seeUserEvents', function(){
+        socket.emit("getUserEvents",{res: $scope.username});
+
+        $modal.open({
+            animation: $scope.animationsEnabled,
+            scope: $scope,
+            templateUrl: 'partials/eventsmodal',
+            controller: 'eventModalInstanceController',
+        });
+    });
+});
+
+module.controller('eventModalInstanceController', function($scope, socket, $modalInstance){
+
+    $scope.cancel = function () {
+        $modalInstance.dismiss('cancel');
+    };
 });
