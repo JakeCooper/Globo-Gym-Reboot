@@ -15,7 +15,10 @@ var app = angular.module('myApp', [
   $routeProvider.
     when('/', {
         templateUrl: 'partials/signin',
-        controller: 'loginController'
+        controller: 'loginController',
+        resolve:{
+            loggedin: redirectLoggedIn
+        }
     }).
     when('/app/about', {
         templateUrl: 'partials/about',
@@ -54,6 +57,23 @@ var app = angular.module('myApp', [
 
     $locationProvider.html5Mode(true);
 });
+
+var redirectLoggedIn = function($q, $timeout, $http, $location, $rootScope){
+    // Initialize a new promise
+    var deferred = $q.defer();
+    // Make an AJAX call to check if the user is logged in
+    $http.get('/loggedin').success(function(user){
+            // Authenticated
+        if (user == "0") deferred.resolve();
+            // Not Authenticated
+        else {
+            deferred.reject(); 
+            $location.url('/app/calendar');
+        }
+    });
+
+    return deferred.promise;
+};
 
 var checkLoggedin = function($q, $timeout, $http, $location, $rootScope){
     // Initialize a new promise
