@@ -110,6 +110,14 @@ module.controller('calendarController', ['$scope', '$compile', 'uiCalendarConfig
             $scope.renderCalender($scope.getActive());
         }, 0);
     };
+    $scope.userEventsTab = function(){
+        socket.emit("getUserEvents",{res: $scope.username});
+        $timeout(function () {
+            $scope.reservations = $scope.userEvents;
+            //$scope.roomsSelected[$scope[$scope.getActive()][0]] = true;
+            $scope.renderCalender('userEvents');
+        }, 0);
+    };
 
     $scope.getActive = function() {
         return $scope.roomTypes.filter(function(val){
