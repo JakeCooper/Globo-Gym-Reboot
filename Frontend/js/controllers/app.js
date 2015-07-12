@@ -41,7 +41,7 @@ var app = angular.module('myApp', [
         }
     }).
   when('/app/users', {
-        templateUrl: 'partials/users',
+        templateUrl: 'partials/users.html',
         controller: 'adminController',
     }).
     otherwise({
