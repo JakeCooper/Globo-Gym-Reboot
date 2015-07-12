@@ -1,0 +1,56 @@
+/*body{
+	background-image: url("../assets/images/blur1.jpg");
+	background-color: lightgrey;
+	background-position: top; 
+}*/
+
+.ProfilePage{
+	background-color:white;
+	border-radius: 8px;
+	margin: 100px auto;
+	width: 700px;
+
+}
+
+.LeftCol{
+	width: 275px;
+	text-align: left;
+	margin-left: 10px;
+	margin-right: 10px;
+}
+
+.RightCol{
+	float: right;
+	width: 450px;
+	text-align: left;
+}
+
+.Photo{
+	background-size: 200px, 200px;
+    padding-top: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+	width: 200px;
+	height: 200px;
+}
+
+.ProfileOptions{
+	text-align: center;
+	width: 200px;
+	float: right;
+}
+
+.Info strong
+{
+	display: inline-block;
+	width: 70px;
+}
+
+.Info span{
+	display: inline-block;
+	width: 200px;
+
+}
+.footer{
+	float: right;
+}
