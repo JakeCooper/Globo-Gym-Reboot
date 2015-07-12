@@ -16,6 +16,6 @@ UserSchema.statics = {
             callback(err, user)
         })
     }
-}
+};
 
 module.exports = mongoose.model('User', UserSchema);

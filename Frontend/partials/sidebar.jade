@@ -1,15 +1,23 @@
 head
     link(rel="stylesheet" href="../css/calendar.css")
-    link(rel="stylesheet" href="../css/jquery.sidr.light.css")
-    script(src="../frameworks/Sidr/jquery.sidr.min.js")
     script(src="../js/sidebar.js")
 body
 
     .profile-container
         img#left-menu(src="../assets/images/defaultProfile.png" width="72")
 
-    .cal-week-filter
+    .left-sidebar
+        left-sidebar(ng-controller="leftSidebarController")
+            p MEMEIN
+
     .search-container
-        p#right-menu search
+        i.fa.fa-search.fa-2x#right-menu
+
+    .right-sidebar
+        right-sidebar(ng-controller="rightSidebarController")
+            i.fa.fa-chevron-right.fa-2x.close-right-sidebar
+
+    .cal-week-filter
+
     .cal-filter
     .cal-container
