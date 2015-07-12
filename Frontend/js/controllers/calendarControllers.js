@@ -49,16 +49,38 @@ module.controller('calendarController', ['$scope', '$compile', 'uiCalendarConfig
         $scope.update();
         // alert the user that it worked
         var state;
+        var header;
         if (data.success == true){
             state = "success";
+            header = "Success!";
         } else {
             state = "danger";
+            header = "Error!";
         }
+        
+        var message = $("<div/>")
+            .addClass("alert")
+            .addClass("alert-" + state)
+            .addClass("fade")
+            .addClass("in")
+            .append(
+            $("<a/>")
+                .addClass("close")
+                .attr("data-dismiss", "alert")
+                .attr("aria-label", "close")
+                .html("&nbsp;&times;"))
+            .append("<strong>" + header + "</strong> " + data.message)
         $('.alert-container').append(
-            '<div class="alert fade in alert-' + state + '">' +
-                '<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>' +
-                '<strong>Success!</strong> ' + data.message +
-            '</div>');
+            message
+        );
+        window.setTimeout(function(){
+            $(message).css({
+                opacity: 0.0
+            });
+            $(message).one("transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd", function(){
+                message.remove();
+            })
+        }, 10000)
     });
 
     $scope.reservations = {
