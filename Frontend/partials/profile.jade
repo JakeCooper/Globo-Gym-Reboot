@@ -1,0 +1,50 @@
+head
+    link(rel="stylesheet" type="text/css" href="../css/profile.css")
+body
+    .ProfilePage
+        .RightCol
+            h4
+                strong Your Upcoming Bookings:
+            .Info(ng-controller='eventModalController')
+                table.eventsTable
+                    tr
+                        th
+                            | Title
+                        | &#x9;&#x9;
+                        th
+                            | Room
+                        | &#x9;&#x9;
+                        th
+                            | Date
+                        | &#x9;&#x9;
+                        th
+                            | Start
+                        | &#x9;&#x9;
+                        th
+                            | End
+                        | &#x9;&#x9;
+                        th
+                            | Delete
+                        | &#x9;&#x9;
+                    | &#x9;
+                    tr(ng-repeat='event in userEvents')
+                        td {{event.title}} &nbsp
+                        td {{event.roomName}} &nbsp
+                        td {{event.start | date:"fullDate" }} &nbsp
+                        td {{event.start | date:"shortTime"}} &nbsp
+                        td {{event.end | date:"shortTime"}} &nbsp
+                        td
+                            input.btn.btn-danger(type='button', value='X', ng-click='deleteEvent(event)')
+
+
+        .LeftCol
+            .Photo
+                img(src='{{photo}}', alt='Oops! There should be a picture here', height='200', width='200')
+            .Info
+                h4
+                    span {{first}} {{last}}
+                h5
+                    span {{username}}
+            .ProfileOptions
+        .footer
+            button.btn.btn-danger(ng-click='cancel()') Close
