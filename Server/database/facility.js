@@ -35,14 +35,6 @@ FacilityReservation.methods.saveReservation = function (cb) {
     });
 };
 
-FacilityReservation.methods.getUserEvents = function(cb){
-    that.model("FacilityReservation").find({
-        id: this.id
-    }, function(err, res){
-        if(err) console.err("No reseervation");
-        cb(res);
-    });
-}
 
 FacilityReservation.methods.isValidRoom = function(){
     var roomName = this.roomName;
@@ -97,6 +89,16 @@ FacilityReservation.statics = {
     sunOpenTime: config.mongoose.sunOpenTime,
     sunCloseTime: config.mongoose.sunCloseTime,
     rooms: config.mongoose.facility.rooms,
+
+    getUserEvents: function(cb){
+        console.log(this.id)
+        this.model("FacilityReservation").find({
+            id: this.id
+        }, function(err, res){
+            if(err) console.err("No reseervation");
+            cb(res);
+        });
+    }
 };
 
 module.exports = mongoose.model('FacilityReservation', FacilityReservation);
