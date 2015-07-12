@@ -41,12 +41,10 @@ module.exports = new FacebookStrategy({
                     // set all of the facebook information in our user model
                     newUser.email = profile.emails[0].value;
                     newUser.username = profile.name.givenName + ' ' + profile.name.familyName;   
-                    newUser.photo =  profile.photos ? profile.photos[0].value : '/img/faces/unknown-user-pic.jpg'; 
+                    newUser.photo =  profile.photos ? profile.photos[0].value : '/img/faces/unknown-user-pic.jpg';
                     newUser.facebookid = profile.id;
-                    newUser.isadmin= false
-                    newUser.isbanned=false
-                    $("#left-menu").attr("src", newUser.photo);
-                    console.log(newUser.photo);
+                    newUser.isadmin= false;
+                    newUser.isbanned=false;
                     // save our user to the database
                     newUser.save(function(err) {
                         if (err)
