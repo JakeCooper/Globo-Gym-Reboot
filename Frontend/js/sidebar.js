@@ -10,14 +10,4 @@ $(document).ready(function() {
             }, 500);
         }
     });
-    $("#right-menu").on('click', function(){
-        $('.right-sidebar').animate({
-            right : "0px"
-        }, 500);
-    });
-    $('.close-right-sidebar').on('click', function(){
-        $('.right-sidebar').animate({
-            right : "-275px"
-        }, 500);
-    });
 });
