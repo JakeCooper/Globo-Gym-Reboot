@@ -1,9 +1,11 @@
 .modal-header(ng-controller='eventModalController')
-    h3.modal-title All Users Events
+    h3.modal-title Confirm Cancel Reservation
     .modal-body
         form
             table.eventsTable
                 tr
+                    th
+                        | Type
                     th
                         | Room
                     th
@@ -12,15 +14,12 @@
                         | Start
                     th
                         | End
-                    th
-                        | Delete
-                | &#x9;
-                tr(ng-repeat='event in userEvents')
-                    td {{event.roomName}} &nbsp
-                    td {{event.start | date:"fullDate" }} &nbsp
-                    td {{event.start | date:"shortTime"}} &nbsp
-                    td {{event.end | date:"shortTime"}} &nbsp
-                    td
-                        input.btn.btn-danger(type='button', value='X', ng-click='deleteEvent(event)')
+                tr
+                    th {{selectedEvent.type}} &nbsp
+                    th {{selectedEvent.roomName}} &nbsp
+                    th {{selectedEvent.start | date:"fullDate" }} &nbsp
+                    th {{selectedEvent.start | date:"shortTime"}} &nbsp
+                    th {{selectedEvent.end | date:"shortTime"}} &nbsp
     .modal-footer()
-      button.btn.btn-danger(ng-click='cancel()') Close
+        button.btn.btn-primary(ng-click='confirmedDelete(selectedEvent)') Confirm Delete
+        button.btn.btn-danger(ng-click='cancel()') Close

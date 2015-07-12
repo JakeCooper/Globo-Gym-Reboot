@@ -91,13 +91,6 @@
     font-size : 24px;
 }
 
-.reservation-button {
-    margin-left:50px;
-    margin-top:25px;
-    width: 150px;
-    height: 50px;
-}
-
 .alert-container {
     float:right;
     position:fixed;
@@ -110,7 +103,33 @@
 .content-container {
     overflow-y:auto;
     overflow-x:hidden;
-    max-height:50%;
+    max-height:69%;
+}
+
+.reservation-button {
+    margin-left:25px;
+    margin-top:25px;
+    width:165px;
+    height: 50px;
+    border-top-right-radius:0 !important;
+    border-bottom-right-radius: 0 !important;
+}
+
+.reservation-title {
+    margin-left:-110px;
+}
+
+.reservation-time {
+    font-size:8px;
+    float:left;
+    margin-left:2px;
+}
+
+.reservation-delete {
+    margin-top: 25px;
+    height:50px;
+    border-top-left-radius:0 !important;
+    border-bottom-left-radius: 0 !important;
 }
 
 /*Sidebar-right*/

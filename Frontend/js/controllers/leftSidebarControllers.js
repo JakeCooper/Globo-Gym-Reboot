@@ -5,8 +5,7 @@ module.controller('leftSidebarController', function($scope, socket){
     socket.on("profileInfo", function(data){
 
        $scope.username = data.username;
-       console.log($scope.username);
-       console.log($scope.firstName);
+
     });
 
 });
