@@ -46,13 +46,10 @@ module.exports = function (sockets) {
                 if(err) return console.err(err);
                 if(start.getTime() - now.getTime() < config.mongoose.minCancelTime * config.time.hourInMilliseconds){
                     User.findOne({_id:socket.user._id}, function(err, user){
-                        console.log(user)
                         user.isbanned = true;
-                        console.log(new Date(now.getTime() + config.mongoose.banTime * config.time.hourInMilliseconds))
                         user.bannedUntil = new Date(now.getTime() + config.mongoose.banTime * config.time.hourInMilliseconds);
                         user.save(function(err){
                             if(err) return console.err(err);
-                                User.findOne({_id:socket.user._id}, function(err, user){console.log(user)})
                             socket.emit("reservationStatus", {
                                 message: "You are now Banned from booking for " + config.mongoose.banTime + " hours",
                             });
