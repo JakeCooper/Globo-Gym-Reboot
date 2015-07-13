@@ -16,9 +16,6 @@ my-sidebar(ng-controller="menuController")
                         span
                             i.fa.fa-calendar(style="color: {{ colors[room] }}") &nbsp
                 .calendar(ng-model='eventSources', calendar='{{roomType.type}}', ui-calendar='uiConfig.calendar' config="uiConfig.calendar")
-            tab(select='seeEvents(); userEventsTab()',active="true")
-                tab-heading User's Events
-                .calendar(ng-model='eventSources', calendar='userEvents', ui-calendar='uiConfig.calendar' config="uiConfig.calendar")
 
 div(ng-controller="modalController")
 div(ng-controller="eventModalController")
