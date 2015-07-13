@@ -42,45 +42,49 @@ module.exports = function (sockets) {
         socket.on("deleteEvent", function(res){
             var now = new Date();
             var start = new Date(res.start);
-            console.log((start.getTime() - now.getTime())/config.time.hourInMilliseconds);
             FacilityReservation.remove({"_id": res._id}, function(err){
                 if(err) return console.err(err);
                 if(start.getTime() - now.getTime() < config.mongoose.minCancelTime * config.time.hourInMilliseconds){
-                        User.findOne({_id:socket.user.id}, function(err, user){
-                            user.isbanned = true;
-                            user.bannedUntil = new Date(now.getTime() + config.mongoose.banTime * config.time.hourInMilliseconds);
-                            user.save();
+                    User.findOne({_id:socket.user._id}, function(err, user){
+                        console.log(user)
+                        user.isbanned = true;
+                        console.log(new Date(now.getTime() + config.mongoose.banTime * config.time.hourInMilliseconds))
+                        user.bannedUntil = new Date(now.getTime() + config.mongoose.banTime * config.time.hourInMilliseconds);
+                        user.save(function(err){
+                            if(err) return console.err(err);
+                                User.findOne({_id:socket.user._id}, function(err, user){console.log(user)})
                             socket.emit("reservationStatus", {
                                 message: "You are now Banned from booking for " + config.mongoose.banTime + " hours",
                             });
+                            return;
                         });
+                    });
                 }
                 socket.emit("reservationStatus", {
                     message: "Reservation was removed Successfully",
                     success: true
                 });
-                return;
             })
         });
 
         socket.on("saveReservation", function(data){
-            if(socket.user.isbanned){
-                if(socket.user.bannedUntil < new Date()){
-                    // remove the ban if the ban time has passed
-                    User.findOne({_id:socket.user.id}, function(err, user){
-                        user.isbanned = false;
-                        user.bannedUntil = null;
-                        user.save();
-                    });
-                }else{
-                    socket.emit("reservationStatus", {
-                        res: data.res,
-                        message: "You are banned from making reservations",
-                        success: false
-                    });
+            User.findOne({_id:socket.user._id}, function(err, user){
+                if(user.isbanned){
+                    if(new Date(user.bannedUntil) < new Date()){
+                        // remove the ban if the ban time has passed
+                            user.isbanned = false;
+                            user.bannedUntil = null;
+                            user.save();
+                    }else{
+                        socket.emit("reservationStatus", {
+                            res: data.res,
+                            message: "You are banned from making reservations",
+                            success: false
+                        });
+                        return;
+                    }
                 }
-            }else{
-                data.res.id = socket.user.googleid || socket.user.facebookid;
+                data.res.id = user.googleid || user.facebookid;
                 FacilityReservation.count({id:data.res.id}, function(err, count){
                     if(count >= config.mongoose.maxReservations){
                         socket.emit("reservationStatus", {
@@ -88,20 +92,36 @@ module.exports = function (sockets) {
                             success: false
                         });
                     }else{
-                        var res = new FacilityReservation(data.res);
-                        res.saveReservation(function(response){
-                            socket.emit("reservationStatus", {
-                                res: data.res,
-                                message: response.message,
-                                success: response.success
-                            });
-                            if(response.success) {
-                                socket.broadcast.emit("calendarHasChanged");
+                        FacilityReservation.findOne({
+                            id:data.res.id,
+                            $or: [
+                                { start: { $gte: new Date(data.res.start), $lt: new Date(data.res.end) } },
+                                { end: { $gt: new Date(data.res.start), $lte: new Date(data.res.end) } }
+                            ]
+                        }, function(err, doc){
+                            if (err) return console.err(err);
+                            if (doc) {
+                                socket.emit("reservationStatus", {
+                                    message: "You already have a reservation at this time",
+                                    success: false
+                                });
+                            }else{
+                                var res = new FacilityReservation(data.res);
+                                res.saveReservation(function(response){
+                                    socket.emit("reservationStatus", {
+                                        res: data.res,
+                                        message: response.message,
+                                        success: response.success
+                                    });
+                                    if(response.success) {
+                                        socket.broadcast.emit("calendarHasChanged");
+                                    }
+                                });
                             }
                         });
                     }
-                })
-            }
+                });
+            });
         });
     });
 };
