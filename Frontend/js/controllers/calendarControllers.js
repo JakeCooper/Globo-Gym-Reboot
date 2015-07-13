@@ -89,6 +89,7 @@ module.controller('calendarController', ['$scope', '$compile', 'uiCalendarConfig
             minTime: "8:00:00", //starts at 8am
             timezone: "local",
             ignoreTimezone: true,
+            slotEventOverlap: false,
             aspectRatio: 1,
             forceEventDuration: true,
             editable: false,
@@ -213,7 +214,6 @@ module.controller('eventModalInstanceController', function($scope, socket, $moda
     $scope.confirmedDelete = function(res){
         $modalInstance.close();
         socket.emit("deleteEvent", res);
-        alertFactory("success", "Success!", "Booking successfully deleted");
         $scope.update();
         $scope.seeEvents();
 

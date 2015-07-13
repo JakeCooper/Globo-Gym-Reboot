@@ -1,6 +1,7 @@
 module.exports = function (sockets) {
     var mongoose = require('mongoose');
     var FacilityReservation = mongoose.model("FacilityReservation");
+    var User = mongoose.model("User");
     var config = require('config');
 
     sockets.on("connection", function(socket){
@@ -23,24 +24,67 @@ module.exports = function (sockets) {
         });
 
         socket.on("deleteEvent", function(res){
+            var now = new Date();
+            var start = new Date(res.start);
+            console.log(start.getTime());
+            console.log(start.getTime() - now.getTime() > config.mongoose.minCancelTime* 3600000);
+            if(start.getTime() - now.getTime() > config.mongoose.minCancelTime* 3600000){
+                    User.findOne({_id:socket.user.id}, function(err, user){
+                        user.isbanned = true;
+                        user.bannedUntil = new Date(now.getTime() + config.mongoose.banTime * 3600000);
+                        user.save();
+                    });
+            }
             FacilityReservation.remove({"_id": res._id}, function(err){
+                    if(err) return console.err(err);
+                    socket.emit("reservationStatus", {
+                        message: "Reservation was removed Successfully",
+                        success: true
+                    });
+                    return;
             })
         });
 
-
         socket.on("saveReservation", function(data){
-            data.res.id = socket.user.googleid || socket.user.facebookid;
-            var res = new FacilityReservation(data.res);
-            res.saveReservation(function(response){
-                socket.emit("reservationStatus", {
-                    res: data.res,
-                    message: response.message,
-                    success: response.success
-                });
-                if(response.success) {
-                    socket.broadcast.emit("calendarHasChanged");
+            if(socket.user.isbanned){
+                if(socket.user.bannedUntil < new Date()){
+                    // remove the ban if the ban time has passed
+                    User.findOne({_id:socket.user.id}, function(err, user){
+                        user.isbanned = false;
+                        user.bannedUntil = null;
+                        user.save();
+                    });
+                }else{
+                    socket.emit("reservationStatus", {
+                        res: data.res,
+                        message: "You are banned from making reservations",
+                        success: false
+                    });
+                    return;
                 }
-            });
+            }
+            data.res.id = socket.user.googleid || socket.user.facebookid;
+            FacilityReservation.count({id:data.res.id}, function(err, count){
+                console.log("count  ", count)
+                if(count > config.mongoose.maxReservations){
+                    socket.emit("reservationStatus", {
+                        message: "You have too many reservations",
+                        success: false
+                    });
+                }else{
+                    var res = new FacilityReservation(data.res);
+                    res.saveReservation(function(response){
+                        socket.emit("reservationStatus", {
+                            res: data.res,
+                            message: response.message,
+                            success: response.success
+                        });
+                        if(response.success) {
+                            socket.broadcast.emit("calendarHasChanged");
+                        }
+                    });
+                }
+            })
         });
 
     });
