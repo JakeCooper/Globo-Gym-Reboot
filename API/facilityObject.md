@@ -14,7 +14,7 @@ var rooms = [
     {
         name: "Example Room",
         type: "Type of room",
-        color: ":"
+        color: "yellow"
     }
     ...
 ]
@@ -32,7 +32,7 @@ var Facility = {
     },
     "Type of room":{
         "Example Room": {
-            color: "blue"
+            color: "yellow"
         }
     }
 }
