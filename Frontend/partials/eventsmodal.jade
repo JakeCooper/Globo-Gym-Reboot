@@ -20,6 +20,9 @@
                     th {{selectedEvent.start | date:"fullDate" }} &nbsp
                     th {{selectedEvent.start | date:"shortTime"}} &nbsp
                     th {{selectedEvent.end | date:"shortTime"}} &nbsp
+        | &nbsp
+        .alert.alert-danger(role="alert", ng-show="reservationMessage")
+            | {{ reservationMessage }}
     .modal-footer()
         button.btn.btn-primary(ng-click='confirmedDelete(selectedEvent)') Confirm Delete
         button.btn.btn-danger(ng-click='cancel()') Close
