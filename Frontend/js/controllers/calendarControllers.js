@@ -156,7 +156,7 @@ module.controller('modalInstanceController', function($scope, socket, $modalInst
         $modalInstance.close();
         $scope.$broadcast('saveReservation');
         $scope.seeEvents();
-        
+
     };
 
     $scope.cancel = function () {
@@ -187,7 +187,6 @@ module.controller('timepickerController', function ($scope, socket, $log) {
     });
 
     $scope.changed = function () {
-        $log.log('Starttime changed to: ' + $scope.startTime);
         $scope.defaultTitle = $scope.username + " booking for " + $scope.selectedRoomname;
     };
     $scope.selectedDuration = 30;
@@ -200,21 +199,26 @@ module.controller('timepickerController', function ($scope, socket, $log) {
 
 module.controller('eventModalController', function ($scope, socket, $modal){
     $scope.animationsEnabled = true;
-    
+
     $scope.deleteEvent = function(res){
         $scope.selectedEvent = res;
-        $modal.open({ 
+        $modal.open({
             animation: $scope.animationsEnabled,
             scope: $scope,
             templateUrl: 'partials/eventsmodal',
             controller: 'eventModalInstanceController'
         });
-        
+
     };
 
 });
 
 module.controller('eventModalInstanceController', function($scope, socket, $modalInstance){
+    var now = new Date();
+    var start = new Date($scope.selectedEvent.start);
+    if((start.getTime() - now.getTime()) < 24 * 3600000){
+        $scope.reservationMessage = "Warning, this booking starts in less than 24 hours. Deleting it will result in a 48 hour ban";
+    }
     $scope.confirmedDelete = function(res){
         $modalInstance.close();
         socket.emit("deleteEvent", res);
@@ -288,14 +292,14 @@ module.controller('profileModalController', function ($scope, socket, $modal){
     });
     $scope.openProfile = function(res){
         $scope.selectedEvent = res;
-        $modal.open({ 
+        $modal.open({
             animation: $scope.animationsEnabled,
             scope: $scope,
             templateUrl: 'partials/profile',
             controller: 'eventModalInstanceController',
             size: 'lg'
         });
-        
+
     };
 
 });
