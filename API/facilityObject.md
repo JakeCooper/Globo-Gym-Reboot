@@ -14,8 +14,8 @@ var rooms = [
     {
         name: "Example Room",
         type: "Type of room",
-        color: ":"
-    }
+        color: "yellow"
+    },
     ...
 ]
 
@@ -23,7 +23,7 @@ var rooms = [
 
 Using this list it generates an object 
 
-```
+``` javascript
 var Facility = {
     type: {
         name:{
@@ -32,7 +32,7 @@ var Facility = {
     },
     "Type of room":{
         "Example Room": {
-            color: "blue"
+            color: "yellow"
         }
     }
 }
