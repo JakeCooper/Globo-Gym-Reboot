@@ -8,6 +8,9 @@ html
         .jumbotron.text-center.users
 
             h1.users User List
+            a.btn.btn-success(href="/app/calendar") View Calendar
+            &nbsp
+            a.btn.btn-primary(href="/app/reservations") View All Reservations
 
             table.table.table-bordered
               thead
@@ -15,8 +18,11 @@ html
                   th Username
                   th Restricted
                   th Admin
+                  th Change Restricted Status
               tbody
                 tr(ng-repeat='user in users')
                   td {{ user.username }}
                   td {{ user.isbanned }}
                   td {{ user.isadmin }}
+                  td 
+                    a.btn.btn-danger(ng-click="changeBan(user)") Ban/Unban
