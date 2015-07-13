@@ -19,11 +19,13 @@ html
                   th Username
                   th Restricted
                   th Admin
+                  th Banned Until
                   th Change Restricted Status
               tbody
                 tr(ng-repeat='user in users')
                   td {{ user.username }}
                   td {{ user.isbanned }}
                   td {{ user.isadmin }}
+                  td {{ user.bannedUntil | date: mediumDate }}
                   td 
                     a.btn.btn-danger(ng-click="changeBan(user)") Ban/Unban
