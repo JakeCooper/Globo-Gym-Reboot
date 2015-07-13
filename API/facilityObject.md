@@ -15,7 +15,7 @@ var rooms = [
         name: "Example Room",
         type: "Type of room",
         color: "yellow"
-    }
+    },
     ...
 ]
 
