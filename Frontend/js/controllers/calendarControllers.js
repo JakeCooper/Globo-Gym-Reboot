@@ -213,7 +213,6 @@ module.controller('eventModalInstanceController', function($scope, socket, $moda
     $scope.confirmedDelete = function(res){
         $modalInstance.close();
         socket.emit("deleteEvent", res);
-        alertFactory("success", "Success!", "Booking successfully deleted");
         $scope.update();
         $scope.seeEvents();
 

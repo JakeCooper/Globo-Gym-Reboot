@@ -8,12 +8,12 @@ var UserSchema = new mongoose.Schema({
     facebookid:{type:String},
     googleid:{type:String},
     isadmin:{type:Boolean}, //if you want admin priv, change to true in the database for the desired account
-    isbanned:{type:Boolean}
+    isbanned:{type:Boolean},
+    bannedUntil: {type: Date}
 });
 
 
 UserSchema.statics = {
-
     deserializeUser: function (id, callback){
         this.findOne({ _id: id }, function (err, user) {
             callback(err, user)
