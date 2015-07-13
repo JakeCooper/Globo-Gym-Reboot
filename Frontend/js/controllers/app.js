@@ -47,6 +47,14 @@ var app = angular.module('myApp', [
         }
         
     }).
+   when('/app/reservations', {
+        templateUrl: 'partials/reservations',
+        controller: 'adminController',
+        resolve:{
+            loggedin: checkAdmin
+        }
+        
+    }).
     otherwise({
       redirectTo: '/'
     });

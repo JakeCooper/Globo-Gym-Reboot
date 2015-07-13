@@ -8,6 +8,22 @@ module.controller('adminController', ['$scope', 'socket',
                 $scope.users = data;
               
             })
+            
+            socket.emit("getReservations");
+            socket.on("getReservations", function(data){
+                $scope.reservations = data.sort(function(a, b) {
+               a = new Date(a.start);
+               b = new Date(b.start);
+               return b>a ? -1 : b<a ? 1 : 0;
+           });
+              
+            })
+            
+            
+            $scope.deleteReservation = function(reservation){
+                socket.emit("deleteEvent", reservation);
+                 socket.emit("getReservations");
+            }
      
            $scope.changeBan= function(user) {
 

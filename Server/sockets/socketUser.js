@@ -3,6 +3,7 @@ module.exports = function (sockets) {
     var mongoose = require('mongoose');
     var UsersInfo = mongoose.model("User");
     var config = require('config')
+    var FacilityReservation = mongoose.model("FacilityReservation");
     
     //console.log(mongoose.model("FacilityReservation")) 
     sockets.on("connection", function(socket){
@@ -14,10 +15,23 @@ module.exports = function (sockets) {
             });
         });
         
+        
+          socket.on("getReservations", function(data){
+              FacilityReservation.find({}, function(err, reservations){ 
+              var theReservations = reservations
+                socket.emit("getReservations", reservations);
+
+            });
+        });
+        
+    
+        
+        
+      
         socket.on("banUser", function(user){
            
             UsersInfo.findOne({_id:user._id},function(err, doc){
-                console.log(doc)
+     
                 doc.isbanned = user.isbanned
                 doc.save()
                               
