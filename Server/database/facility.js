@@ -80,8 +80,10 @@ FacilityReservation.methods.isValidHours = function () {
     }
     var openTime = new Date(this.start)
     openTime.setHours(open);
+    openTime.setMinutes(0);
     var closeTime = new Date(this.start)
     closeTime.setHours(close);
+    closeTime.setMinutes(0);
     return this.start >= openTime && this.end <= closeTime;
 }
 
