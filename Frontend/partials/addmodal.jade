@@ -12,17 +12,17 @@
                 option(value='60') 60mins
                 option(value='90') 90mins
                 option(value='120') 120mins
-          | Facility: 
+          | Facility:
           div
               select(ng-model='selectedRoomtype', ng-init="getActive()", ng-click="changed()")
                   option(ng-repeat ='roomType in roomTypes') {{roomType.type}}
-          | Room name: 
+          | Room name:
           div
               select(ng-model='selectedRoomname', ng-init="scope[selectedRoomtype][0]", ng-click="changed()")
                   option(ng-repeat ='roomName in scope[selectedRoomtype]') {{roomName}}
           | &#x9;&#x9;&#x9;  Title of Reservation:
-          | &#x9;&#x9;&#x9;  
-          input#event_subject(ng-model='eventTitle', type='text', name='event_subject', maxlength='255', style='width:460px;', placeholder="{{defaultTitle}}")
+          | &#x9;&#x9;&#x9;
+          input.form-control#event_subject(ng-model='eventTitle', type='text', name='event_subject', maxlength='255', style='width:460px;', placeholder="{{defaultTitle}}")
     .modal-footer()
       button.btn.btn-primary(ng-click='ok()') Reserve Facility
       button.btn.btn-danger(ng-click='cancel()') Cancel

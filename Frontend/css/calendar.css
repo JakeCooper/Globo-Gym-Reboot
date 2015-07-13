@@ -58,8 +58,10 @@
     left:0;
     z-index:10;
     -webkit-transition: opacity 1s;
+    -moz-transition: opacity 1s;
+    -o-transition: opacity 1s;
+    -ms-transition: opacity 1s;
     opacity: 0.0;
-    /*border: solid 1px black;*/
 }
 
 .profile-container > img {

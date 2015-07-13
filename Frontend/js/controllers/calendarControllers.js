@@ -136,6 +136,10 @@ module.controller('calendarController', ['$scope', '$compile', 'uiCalendarConfig
         return $scope.roomTypes.filter(function(val){
             return val.active})[0].type
     };
+
+    $scope.logout = function(){
+        window.location.href = window.location.origin + "/logout"
+    };
 }]);
 
 module.controller('modalController', function($scope,$modal){
@@ -214,10 +218,12 @@ module.controller('eventModalController', function ($scope, socket, $modal){
 });
 
 module.controller('eventModalInstanceController', function($scope, socket, $modalInstance){
-    var now = new Date();
-    var start = new Date($scope.selectedEvent.start);
-    if((start.getTime() - now.getTime()) < 24 * 3600000){
-        $scope.reservationMessage = "Warning, this booking starts in less than 24 hours. Deleting it will result in a 48 hour ban";
+    if($scope.selectedEvent){
+        var now = new Date();
+        var start = new Date($scope.selectedEvent.start);
+        if((start.getTime() - now.getTime()) < 24 * 3600000){
+            $scope.reservationMessage = "Warning, this booking starts in less than 24 hours. Deleting it will result in a 48 hour ban";
+        }
     }
     $scope.confirmedDelete = function(res){
         $modalInstance.close();
