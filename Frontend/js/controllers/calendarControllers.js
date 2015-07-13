@@ -8,6 +8,10 @@ module.controller('calendarController', ['$scope', '$compile', 'uiCalendarConfig
        $scope.username = data.username;
        $scope.firstname = $scope.username.split(" ")[0];
        $scope.hideAdminButtons = !data.isadmin;
+       if(data.isadmin){
+           $(".content-container").css("height", "60%").css("max-height", "60%");
+       }
+
        $scope.$broadcast('seeUserEvents');
     });
 
@@ -299,5 +303,29 @@ module.controller('profileModalController', function ($scope, socket, $modal){
 module.controller('profileModalInstanceController', function($scope, socket, $modalInstance){
     $scope.cancel = function () {
         $modalInstance.dismiss('cancel');
+    };
+});
+
+module.controller('moreInfoController', function($scope){
+    $scope.expand = function () {
+        $(document).on('click', function(event) {
+            var $fullInfoel = $(event.target).parentsUntil(".reservation-wrapper").parent().children(".moreInfo-container");
+            if ($fullInfoel.css("display") == "none") {
+
+                $fullInfoel.css("display", "block");
+                var trueHeight = $fullInfoel.css("height", "auto").css("height");
+                $fullInfoel.css("height", "0px");
+                $fullInfoel.stop().animate({
+                    height: trueHeight
+                }, 500)
+            } else {
+                $fullInfoel.stop().animate({
+                    height: "0px"
+                }, 500, function(){
+                    $fullInfoel.css("display", "none");
+                });
+            }
+            $(document).off('click');
+        });
     };
 });

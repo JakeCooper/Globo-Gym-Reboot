@@ -91,6 +91,10 @@
     font-size : 24px;
 }
 
+.admin-buttons {
+    margin-left:15px;
+}
+
 .alert-container {
     float:right;
     position:fixed;
@@ -105,12 +109,13 @@
     overflow-x:hidden;
     height:65%;
     max-height:65%;
+    margin-bottom:10px;
     margin-top:10px;
 }
 
 .reservation-button {
     margin-left:17.5px;
-    margin-bottom:15px;
+    margin-top:15px;
     width:175px;
     height: 50px;
     border-top-right-radius:0 !important;
@@ -124,10 +129,27 @@
 }
 
 .reservation-delete {
-    margin-bottom: 15px;
+    margin-top: 15px;
     height:50px;
     border-top-left-radius:0 !important;
     border-bottom-left-radius: 0 !important;
+}
+
+
+.reservation-full {
+    width:210px;
+    border-bottom-right-radius:5px;
+    border-bottom-left-radius:5px;
+    background-color:#fff;
+    border:1px solid #CCC;
+    margin-left:17.5px;
+    padding:10px;
+    font-size:12px;
+}
+
+.moreInfo-container {
+    display:none;
+    height:0;
 }
 
 .alert {
@@ -140,7 +162,7 @@
 
 .logout-button {
     margin-left:90px;
-    margin-top:15px;
+    margin-top:10px;
 }
 
 a.logout-text {
@@ -151,5 +173,3 @@ a.logout-text {
 a.logout-text {
     color: #000;
 }
-
-/*Sidebar-right*/
