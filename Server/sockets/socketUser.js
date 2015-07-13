@@ -23,7 +23,8 @@ module.exports = function (sockets) {
 
         socket.on("banUser", function(user){
             UsersInfo.findOne({_id:user._id},function(err, doc){
-                doc.isbanned = user.isbanned
+                doc.isbanned = user.isbanned;
+                doc.bannedUntil = new Date("2055-07-15T10:08:27.619Z")
                 if(!user.isbanned){
                     doc.bannedUntil = null;
                 }
@@ -32,7 +33,6 @@ module.exports = function (sockets) {
                     UsersInfo.find({}, function(err, users){
                         var theUsers = users
                         socket.emit("getUsers", users);
-
                     });
                 })
             })
