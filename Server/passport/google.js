@@ -20,15 +20,6 @@ module.exports = new GoogleStrategy({
                 var user = new User({
                     photo: profile.photos[0].value,
                     username: profile.displayName,
-                    googleid: profile.id
-                });
-
-
-
-            if (!user) {
-                user = new User({
-                    photo: profile.photos[0].value,
-                    username: profile.displayName,
                     googleid: profile.id,
                     isadmin: false,
                     isbanned:false
@@ -50,12 +41,8 @@ module.exports = new GoogleStrategy({
                      return done(err, user);
                 });
             }
-
-                return done(err, user);
-            }
-
+            
             return done(err, user);
-
         });
     }
 );

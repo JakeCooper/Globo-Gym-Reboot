@@ -1,7 +1,7 @@
 module.exports = function (sockets) {
     var mongoose = require('mongoose');
     var FacilityReservation = mongoose.model("FacilityReservation");
-    var config = require('config')
+    var config = require('config');
 
     sockets.on("connection", function(socket){
         socket.on("calendarUpdate", function(data){
@@ -15,7 +15,7 @@ module.exports = function (sockets) {
         });
 
         socket.on("getUserEvents", function(data){
-            var user = {}
+            var user = {};
             user.id = socket.user.googleid || socket.user.facebookid;
             FacilityReservation.getUserEvents(user, function(response){
                 socket.emit("userEventsList", response);
@@ -30,7 +30,7 @@ module.exports = function (sockets) {
 
         socket.on("saveReservation", function(data){
             data.res.id = socket.user.googleid || socket.user.facebookid;
-            var res = new FacilityReservation(data.res)
+            var res = new FacilityReservation(data.res);
             res.saveReservation(function(response){
                 socket.emit("reservationStatus", {
                     res: data.res,
