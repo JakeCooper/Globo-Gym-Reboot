@@ -25,10 +25,18 @@ body
                         button.btn.btn-danger.reservation-delete(ng-click='deleteEvent(event)') X
                         .moreInfo-container
                             div.reservation-full
-                                div.reservation-full-title Title : {{event.title}}
-                                div.reservation-full-date Date : {{event.start | date:"fullDate" }}
-                                div.reservation-full-time Time : {{event.start | date:"shortTime"}}-{{event.end | date:"shortTime"}}
-                                div.reservation-full-room Room : {{event.type}}
+                                div.reservation-full-title
+                                    strong Title
+                                    span : {{event.title}}
+                                div.reservation-full-date
+                                    strong Date
+                                    span : {{event.start | date:"fullDate" }}
+                                div.reservation-full-time
+                                    strong Time
+                                    span : {{event.start | date:"shortTime"}}-{{event.end | date:"shortTime"}}
+                                div.reservation-full-room
+                                    strong Room
+                                    span : {{event.type}}
         .admin-buttons(ng-hide="hideAdminButtons")
             a(href='app/users/')
                 button.btn.btn-default User List

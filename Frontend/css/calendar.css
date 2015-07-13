@@ -133,9 +133,13 @@
 
 .reservation-full {
     width:210px;
+    border-bottom-right-radius:5px;
+    border-bottom-left-radius:5px;
     background-color:#fff;
     border:1px solid #CCC;
     margin-left:17.5px;
+    padding:10px;
+    font-size:12px;
 }
 
 .moreInfo-container {
