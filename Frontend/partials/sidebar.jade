@@ -1,9 +1,8 @@
-title
 
 head
     link(rel="stylesheet" href="../css/calendar.css")
     script(src="../js/sidebar.js")
-    
+
 body
 
     .profile-container(ng-click='seeEvents()')
@@ -20,8 +19,8 @@ body
             div(ng-controller='eventModalController')
                 div(ng-repeat='event in userEvents')
                     button.btn.btn-default.reservation-button
-                        div.reservation-title {{event.title}}
-                        div.reservation-time {{event.start | date:"shortTime"}} - {{event.end | date:"shortTime"}}
+                        div.reservation-title {{event.title | limitTo:20}}
+                        div.reservation-time {{event.start | date:"fullDate" }}&nbsp{{event.start | date:"shortTime"}}-{{event.end | date:"shortTime"}}
                     button.btn.btn-danger.reservation-delete(ng-click='deleteEvent(event)') X
         .admin-buttons(ng-hide="hideAdminButtons")
             a(href='app/users/')

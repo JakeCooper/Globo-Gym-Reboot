@@ -109,22 +109,18 @@
 }
 
 .reservation-button {
-    margin-left:25px;
+    margin-left:17.5px;
     margin-bottom:15px;
-    width:165px;
+    width:175px;
     height: 50px;
     border-top-right-radius:0 !important;
     border-bottom-right-radius: 0 !important;
 }
 
-.reservation-title {
-    margin-left:-110px;
-}
-
 .reservation-time {
     font-size:8px;
     float:left;
-    margin-left:2px;
+
 }
 
 .reservation-delete {
