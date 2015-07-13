@@ -274,6 +274,13 @@ module.controller('profileModalController', function ($scope, socket, $modal){
             $scope.first = data.username
         }
         $scope.photo = data.photo.replace("sz=50", "sz=400")
+		//this is cheesy as heck i am so sorry
+		if(data.facebookid > 10)
+			$scope.edit = "https://www.facebook.com/settings"
+		else if(data.googleid > 10)
+			$scope.edit = "https://myaccount.google.com/privacy"
+		else
+			$scope.edit = "#"
     });
     $scope.openProfile = function(res){
         $scope.selectedEvent = res;
