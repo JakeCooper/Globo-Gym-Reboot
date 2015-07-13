@@ -18,10 +18,17 @@ body
         .content-container
             div(ng-controller='eventModalController')
                 div(ng-repeat='event in userEvents')
-                    button.btn.btn-default.reservation-button
-                        div.reservation-title {{event.type}}
-                        div.reservation-time {{event.start | date:"fullDate" }}&nbsp{{event.start | date:"shortTime"}}-{{event.end | date:"shortTime"}}
-                    button.btn.btn-danger.reservation-delete(ng-click='deleteEvent(event)') X
+                    div.reservation-wrapper(ng-controller="moreInfoController")
+                        button.btn.btn-default.reservation-button(ng-click="expand(this)")
+                            div.reservation-title {{event.type}}
+                            div.reservation-time {{event.start | date:"fullDate" }}&nbsp{{event.start | date:"shortTime"}}-{{event.end | date:"shortTime"}}
+                        button.btn.btn-danger.reservation-delete(ng-click='deleteEvent(event)') X
+                        .moreInfo-container
+                            div.reservation-full
+                                div.reservation-full-title Title : {{event.title}}
+                                div.reservation-full-date Date : {{event.start | date:"fullDate" }}
+                                div.reservation-full-time Time : {{event.start | date:"shortTime"}}-{{event.end | date:"shortTime"}}
+                                div.reservation-full-room Room : {{event.type}}
         .admin-buttons(ng-hide="hideAdminButtons")
             a(href='app/users/')
                 button.btn.btn-default User List
@@ -29,14 +36,6 @@ body
                 button.btn.btn-default Reservation List
         button.btn.btn-default.logout-button
             a.logout-text(href="/logout/") Logout
-                    //NEED A TRUNCATED TITLE!
-                        //td
-                        //td {{event.roomName}} &nbsp
-                        //td {{event.start | date:"fullDate" }} &nbsp
-                        //td {{event.start | date:"shortTime"}} &nbsp
-                        //td {{event.end | date:"shortTime"}} &nbsp
-                        //td
-                            //input.btn.btn-danger(type='button', value='X', ng-click='deleteEvent(event)')
 
 
 

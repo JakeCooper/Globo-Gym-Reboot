@@ -301,3 +301,28 @@ module.controller('profileModalInstanceController', function($scope, socket, $mo
         $modalInstance.dismiss('cancel');
     };
 });
+
+module.controller('moreInfoController', function($scope){
+    $scope.expand = function () {
+        $(document).on('click', function(event) {
+            /*var $mainInfoel = $(event.target).parentsUntil(".reservation-wrapper").parent();*/
+            var $fullInfoel = $(event.target).parentsUntil(".reservation-wrapper").parent().children(".moreInfo-container");
+            if ($fullInfoel.css("display") == "none") {
+
+                $fullInfoel.css("display", "block");
+                var trueHeight = $fullInfoel.css("height", "auto").css("height");
+                $fullInfoel.css("height", "0px");
+                $fullInfoel.animate({
+                    height: trueHeight
+                }, 500)
+            } else {
+                $fullInfoel.animate({
+                    height: "0px"
+                }, 500, function(){
+                    $fullInfoel.css("display", "none");
+                });
+            }
+            $(document).off('click');
+        });
+    };
+});
