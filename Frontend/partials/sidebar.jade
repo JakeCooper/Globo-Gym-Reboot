@@ -18,7 +18,7 @@ body
             div(ng-controller='eventModalController')
                 div(ng-repeat='event in userEvents')
                     button.btn.btn-default.reservation-button
-                        div.reservation-title {{event.title | limitTo:20}}
+                        div.reservation-title {{event.type}}
                         div.reservation-time {{event.start | date:"fullDate" }}&nbsp{{event.start | date:"shortTime"}}-{{event.end | date:"shortTime"}}
                     button.btn.btn-danger.reservation-delete(ng-click='deleteEvent(event)') X
         .admin-buttons(ng-hide="hideAdminButtons")
