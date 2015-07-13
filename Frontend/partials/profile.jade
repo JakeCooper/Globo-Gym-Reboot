@@ -44,10 +44,10 @@ body
                 h4
                     span {{first}} {{last}}
                 h5
-                    span {{username}}
+                    span {{username}} 
             .ProfileOptions
         .footer
-            a.btn.btn-primary(href='https://myaccount.google.com/privacy?utm_source=OGB#personalinfo') Edit Profile 
+            a.btn.btn-primary(href='{{edit}}') Edit Profile 
             |&nbsp
             a.btn.btn-danger(ng-click='cancel()') Close
             

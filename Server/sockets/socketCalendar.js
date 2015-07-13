@@ -26,22 +26,26 @@ module.exports = function (sockets) {
         socket.on("deleteEvent", function(res){
             var now = new Date();
             var start = new Date(res.start);
-            console.log(start.getTime());
-            console.log(start.getTime() - now.getTime() > config.mongoose.minCancelTime* 3600000);
-            if(start.getTime() - now.getTime() > config.mongoose.minCancelTime* 3600000){
-                    User.findOne({_id:socket.user.id}, function(err, user){
-                        user.isbanned = true;
-                        user.bannedUntil = new Date(now.getTime() + config.mongoose.banTime * 3600000);
-                        user.save();
-                    });
-            }
+            console.log((start.getTime() - now.getTime())/3600000);
+            console.log(start.getTime() - now.getTime() > config.mongoose.minCancelTime * 3600000);
             FacilityReservation.remove({"_id": res._id}, function(err){
-                    if(err) return console.err(err);
-                    socket.emit("reservationStatus", {
-                        message: "Reservation was removed Successfully",
-                        success: true
-                    });
-                    return;
+                if(err) return console.err(err);
+                var bannedMessage = ""
+                if(start.getTime() - now.getTime() < config.mongoose.minCancelTime* 3600000){
+                        User.findOne({_id:socket.user.id}, function(err, user){
+                            user.isbanned = true;
+                            user.bannedUntil = new Date(now.getTime() + config.mongoose.banTime * 3600000);
+                            user.save();
+                            socket.emit("reservationStatus", {
+                                message: "You are now Banned from booking for " + config.mongoose.banTime + " hours",
+                            });
+                        });
+                }
+                socket.emit("reservationStatus", {
+                    message: "Reservation was removed Successfully",
+                    success: true
+                });
+                return;
             })
         });
 
