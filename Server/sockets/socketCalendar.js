@@ -43,10 +43,8 @@ module.exports = function (sockets) {
             var now = new Date();
             var start = new Date(res.start);
             console.log((start.getTime() - now.getTime())/config.time.hourInMilliseconds);
-            console.log(start.getTime() - now.getTime() > config.mongoose.minCancelTime * config.time.hourInMilliseconds);
             FacilityReservation.remove({"_id": res._id}, function(err){
                 if(err) return console.err(err);
-                var bannedMessage = ""
                 if(start.getTime() - now.getTime() < config.mongoose.minCancelTime * config.time.hourInMilliseconds){
                         User.findOne({_id:socket.user.id}, function(err, user){
                             user.isbanned = true;
@@ -80,30 +78,30 @@ module.exports = function (sockets) {
                         message: "You are banned from making reservations",
                         success: false
                     });
-                    return;
                 }
-            }
-            data.res.id = socket.user.googleid || socket.user.facebookid;
-            FacilityReservation.count({id:data.res.id}, function(err, count){
-                if(count >= config.mongoose.maxReservations){
-                    socket.emit("reservationStatus", {
-                        message: "You have too many reservations",
-                        success: false
-                    });
-                }else{
-                    var res = new FacilityReservation(data.res);
-                    res.saveReservation(function(response){
+            }else{
+                data.res.id = socket.user.googleid || socket.user.facebookid;
+                FacilityReservation.count({id:data.res.id}, function(err, count){
+                    if(count >= config.mongoose.maxReservations){
                         socket.emit("reservationStatus", {
-                            res: data.res,
-                            message: response.message,
-                            success: response.success
+                            message: "You have too many reservations",
+                            success: false
                         });
-                        if(response.success) {
-                            socket.broadcast.emit("calendarHasChanged");
-                        }
-                    });
-                }
-            })
+                    }else{
+                        var res = new FacilityReservation(data.res);
+                        res.saveReservation(function(response){
+                            socket.emit("reservationStatus", {
+                                res: data.res,
+                                message: response.message,
+                                success: response.success
+                            });
+                            if(response.success) {
+                                socket.broadcast.emit("calendarHasChanged");
+                            }
+                        });
+                    }
+                })
+            }
         });
     });
-}
+};
