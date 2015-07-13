@@ -7,6 +7,7 @@ module.controller('calendarController', ['$scope', '$compile', 'uiCalendarConfig
     socket.on("profileInfo", function(data){
        $scope.username = data.username;
        $scope.firstname = $scope.username.split(" ")[0];
+       $scope.hideAdminButtons = !$scope.username.isadmin;
        $scope.$broadcast('seeUserEvents');
     });
 

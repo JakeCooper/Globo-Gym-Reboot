@@ -21,6 +21,11 @@ body
                         div.reservation-title {{event.title | limitTo:20}}
                         div.reservation-time {{event.start | date:"fullDate" }}&nbsp{{event.start | date:"shortTime"}}-{{event.end | date:"shortTime"}}
                     button.btn.btn-danger.reservation-delete(ng-click='deleteEvent(event)') X
+        .admin-buttons(ng-hide="hideAdminButtons")
+            a(href='app/users/')
+                button.btn.btn-default User List
+            a(href='app/reservations/')
+                button.btn.btn-default Reservation List
         button.btn.btn-default.logout-button
             a.logout-text(href="/logout/") Logout
                     //NEED A TRUNCATED TITLE!
