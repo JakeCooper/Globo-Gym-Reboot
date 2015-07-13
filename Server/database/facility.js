@@ -30,6 +30,7 @@ FacilityReservation.methods.saveReservation = function (cb) {
     }, function(err, res){
         // validate that the reservation if any of the following fail the message will be sent to the callback
         if(err)                     return console.err("Could not save to db", err, res);
+        if(that.isInThePast())      return cb({message: "This reservation is in the past"});
         if(!that.isValidRoom())     return cb({message: "Invalid room"});
         if(that.isTooLong())        return cb({message: "This reservation is too long"});
         if(!that.isValidHours())    return cb({message: "The Facility is not open during this time"});
@@ -65,6 +66,12 @@ FacilityReservation.methods.isValidRoom = function(){
 // checks if rervation is too long
 FacilityReservation.methods.isTooLong = function () {
     return this.end.getTime() - this.start.getTime() > config.mongoose.maxLength * config.time.hourInMilliseconds;
+}
+
+// checks if the date is in the past
+FacilityReservation.methods.isInThePast = function () {
+    var now = new Date();
+    return this.start < now || this.end <= now;
 }
 
 // validates hours of the new reservation
