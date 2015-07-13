@@ -1,3 +1,4 @@
+// outlines the logic for the calendar page
 module.exports = function (sockets) {
     var mongoose = require('mongoose');
     var FacilityReservation = mongoose.model("FacilityReservation");
@@ -6,11 +7,25 @@ module.exports = function (sockets) {
 
     sockets.on("connection", function(socket){
         socket.on("calendarUpdate", function(data){
+            // data = {
+            //  rooms: [
+            //      roomname1: String, // name of room to search for
+            //      roomname2: String, // name of room to search for
+            //      ...
+            //  ]
+            //  type: String // Type of room that is being searched for
+            // }
             FacilityReservation.find({ type: data.type, roomName: { $in:data.rooms }}, function(err, reservations){
                 socket.emit("calendarUpdate", reservations);
+                // reservations = [ // list of facility reservations
+                //  event1: FacilityReservation, // see API/facilityReservation.md
+                //  event2: FacilityReservation,
+                //  ...
+                // ]
             })
         });
 
+        // return the facility object see API/facilityObject
         socket.on("getFacilityInfo", function(){
             socket.emit("FacilityInfo", { facility: config.mongoose.facility.types });
         });
@@ -18,6 +33,7 @@ module.exports = function (sockets) {
         socket.on("getUserEvents", function(data){
             var user = {};
             user.id = socket.user.googleid || socket.user.facebookid;
+            // defined in Facility Reservation
             FacilityReservation.getUserEvents(user, function(response){
                 socket.emit("userEventsList", response);
             });
