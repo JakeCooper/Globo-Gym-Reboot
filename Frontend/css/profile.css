@@ -7,8 +7,9 @@
 .ProfilePage{
 	background-color:white;
 	border-radius: 8px;
-	margin: 100px auto;
+	margin: 30px auto;
 	width: 700px;
+	
 
 }
 
@@ -22,7 +23,10 @@
 .RightCol{
 	float: right;
 	width: 450px;
+	height: 300px;
+	overflow: auto;
 	text-align: left;
+	
 }
 
 .Photo{
