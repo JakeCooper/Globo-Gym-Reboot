@@ -7,6 +7,7 @@ module.controller('calendarController', ['$scope', '$compile', 'uiCalendarConfig
     socket.on("profileInfo", function(data){
        $scope.username = data.username;
        $scope.firstname = $scope.username.split(" ")[0];
+       $scope.hideAdminButtons = !data.isadmin;
        $scope.$broadcast('seeUserEvents');
     });
 
@@ -41,7 +42,11 @@ module.controller('calendarController', ['$scope', '$compile', 'uiCalendarConfig
         $scope.seeEvents();
     };
     socket.on("userEventsList", function(data){
-           $scope.userEvents = data;
+           $scope.userEvents = data.sort(function(a, b) {
+               a = new Date(a.start);
+               b = new Date(b.start);
+               return b>a ? -1 : b<a ? 1 : 0;
+           });
     });
     socket.on("calendarHasChanged", function(){
         $scope.update();
