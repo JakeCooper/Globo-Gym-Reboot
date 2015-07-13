@@ -312,11 +312,11 @@ module.controller('moreInfoController', function($scope){
                 $fullInfoel.css("display", "block");
                 var trueHeight = $fullInfoel.css("height", "auto").css("height");
                 $fullInfoel.css("height", "0px");
-                $fullInfoel.animate({
+                $fullInfoel.stop().animate({
                     height: trueHeight
                 }, 500)
             } else {
-                $fullInfoel.animate({
+                $fullInfoel.stop().animate({
                     height: "0px"
                 }, 500, function(){
                     $fullInfoel.css("display", "none");
