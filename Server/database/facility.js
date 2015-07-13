@@ -13,10 +13,10 @@ var FacilityReservation = new mongoose.Schema({
 });
 
 // Saves a reservtion, before a save the times are checked to be valid
-// parameters, 
+// parameters,
 //  callback({  // function
 //     message: String,
-//     success: Boolean, 
+//     success: Boolean,
 //  })
 FacilityReservation.methods.saveReservation = function (cb) {
     var that = this;
@@ -62,8 +62,8 @@ FacilityReservation.methods.isValidRoom = function(){
     return isValidRoomName(roomName) && isValidType(roomName, type);
 };
 
+// checks if rervation is too long
 FacilityReservation.methods.isTooLong = function () {
-    // 1 h = 3600000 ms
     return this.end.getTime() - this.start.getTime() > config.mongoose.maxLength * config.time.hourInMilliseconds;
 }
 

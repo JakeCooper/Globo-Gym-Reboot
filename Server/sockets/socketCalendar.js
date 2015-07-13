@@ -85,8 +85,7 @@ module.exports = function (sockets) {
             }
             data.res.id = socket.user.googleid || socket.user.facebookid;
             FacilityReservation.count({id:data.res.id}, function(err, count){
-                console.log("count  ", count)
-                if(count > config.mongoose.maxReservations){
+                if(count >= config.mongoose.maxReservations){
                     socket.emit("reservationStatus", {
                         message: "You have too many reservations",
                         success: false
@@ -106,6 +105,5 @@ module.exports = function (sockets) {
                 }
             })
         });
-
     });
 }
