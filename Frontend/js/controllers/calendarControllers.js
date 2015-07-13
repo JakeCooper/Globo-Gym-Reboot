@@ -89,6 +89,7 @@ module.controller('calendarController', ['$scope', '$compile', 'uiCalendarConfig
             minTime: "8:00:00", //starts at 8am
             timezone: "local",
             ignoreTimezone: true,
+            slotEventOverlap: false,
             aspectRatio: 1,
             forceEventDuration: true,
             editable: false,
