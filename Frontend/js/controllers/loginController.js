@@ -14,9 +14,6 @@ module.controller('loginController', ['$scope', 'socket',
         $scope.facebookAuth = function(){
             window.location.href = window.location.origin + "/auth/facebook"
         }
-       
-
-    
 
         $scope.googleAuth = function(){
             window.location.href = window.location.origin + "/auth/google"

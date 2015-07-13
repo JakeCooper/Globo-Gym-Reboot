@@ -136,6 +136,10 @@ module.controller('calendarController', ['$scope', '$compile', 'uiCalendarConfig
         return $scope.roomTypes.filter(function(val){
             return val.active})[0].type
     };
+
+    $scope.logout = function(){
+        window.location.href = window.location.origin + "/logout"
+    };
 }]);
 
 module.controller('modalController', function($scope,$modal){
