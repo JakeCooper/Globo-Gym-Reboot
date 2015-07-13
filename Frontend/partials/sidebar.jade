@@ -36,7 +36,7 @@ body
                                     span : {{event.start | date:"shortTime"}}-{{event.end | date:"shortTime"}}
                                 div.reservation-full-room
                                     strong Room
-                                    span : {{event.type}}
+                                    span : {{event.roomName}}
         .admin-buttons(ng-hide="hideAdminButtons")
             a(href='app/users/')
                 button.btn.btn-default User List
