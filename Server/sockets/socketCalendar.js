@@ -17,7 +17,6 @@ module.exports = function (sockets) {
         socket.on("getUserEvents", function(data){
             var user = {}
             user.id = socket.user.googleid || socket.user.facebookid;
-            console.log(user)
             FacilityReservation.getUserEvents(user, function(response){
                 socket.emit("userEventsList", response);
             });
