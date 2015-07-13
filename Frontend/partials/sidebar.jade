@@ -6,10 +6,11 @@ body
     .profile-container(ng-click='seeEvents()')
         img#left-menu(src="../assets/images/defaultProfile.png" width="72")
 
-    .left-sidebar(ng-app="leftSidebarController")
+    .left-sidebar()
         .sidebar-Header
-        .user-name {{username}}
-        button.btn.btn-default.profile-button(href="app/profile") Profile
+        .user-name {{firstname}}
+        div(ng-controller='profileModalController')
+            button.btn.btn-default.profile-button(ng-click="openProfile()") Profile
         
         .reservation-header My Reservations
         .content-container
@@ -19,6 +20,8 @@ body
                         div.reservation-title {{event.title}}
                         div.reservation-time {{event.start | date:"shortTime"}} - {{event.end | date:"shortTime"}}
                     button.btn.btn-danger.reservation-delete(ng-click='deleteEvent(event)') X
+        button.btn.btn-default.logout-button
+            a.logout-text(href="/logout/") Logout
                     //NEED A TRUNCATED TITLE!
                         //td
                         //td {{event.roomName}} &nbsp

@@ -103,12 +103,14 @@
 .content-container {
     overflow-y:auto;
     overflow-x:hidden;
-    max-height:69%;
+    height:65%;
+    max-height:65%;
+    margin-top:10px;
 }
 
 .reservation-button {
     margin-left:25px;
-    margin-top:25px;
+    margin-bottom:15px;
     width:165px;
     height: 50px;
     border-top-right-radius:0 !important;
@@ -126,10 +128,32 @@
 }
 
 .reservation-delete {
-    margin-top: 25px;
+    margin-bottom: 15px;
     height:50px;
     border-top-left-radius:0 !important;
     border-bottom-left-radius: 0 !important;
+}
+
+.alert {
+    -webkit-transition: opacity 1s ease-in;
+    -moz-transition: opacity 1s ease-in;
+    -o-transition: opacity 1s ease-in;
+    -ms-transition: opacity 1s ease-in;
+    transition: opacity 1s ease-in;
+}
+
+.logout-button {
+    margin-left:90px;
+    margin-top:15px;
+}
+
+a.logout-text {
+    color: #000;
+    text-decoration: none;
+}
+
+a.logout-text {
+    color: #000;
 }
 
 /*Sidebar-right*/

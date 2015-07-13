@@ -6,6 +6,8 @@ module.controller('calendarController', ['$scope', '$compile', 'uiCalendarConfig
     socket.emit("getProfile");
     socket.on("profileInfo", function(data){
        $scope.username = data.username;
+       $scope.firstname = $scope.username.split(" ")[0];
+       $scope.$broadcast('seeUserEvents');
     });
 
     socket.emit("getFacilityInfo");
@@ -49,16 +51,15 @@ module.controller('calendarController', ['$scope', '$compile', 'uiCalendarConfig
         $scope.update();
         // alert the user that it worked
         var state;
+        var header;
         if (data.success == true){
             state = "success";
+            header = "Success!";
         } else {
             state = "danger";
+            header = "Error!";
         }
-        $('.alert-container').append(
-            '<div class="alert fade in alert-' + state + '">' +
-                '<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>' +
-                '<strong>Success!</strong> ' + data.message +
-            '</div>');
+        alertFactory(state, header, data.message);
     });
 
     $scope.reservations = {
@@ -207,11 +208,83 @@ module.controller('eventModalInstanceController', function($scope, socket, $moda
     $scope.confirmedDelete = function(res){
         $modalInstance.close();
         socket.emit("deleteEvent", res);
-        
+        alertFactory("success", "Success!", "Booking successfully deleted");
         $scope.update();
         $scope.seeEvents();
 
     };
+    $scope.cancel = function () {
+        $modalInstance.dismiss('cancel');
+    };
+});
+
+var alertFactory = function(state, header, message){
+    var el = $("<div/>")
+        .addClass("alert")
+        .addClass("alert-" + state)
+        .addClass("fade")
+        .addClass("in")
+        .append(
+        $("<a/>")
+            .on('click', function(){
+                $(el).css({
+                    opacity: 0.0
+                });
+                $(el).one("transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd", function(){
+                    el.remove();
+                })
+            })
+            .addClass("close")
+            .attr("aria-label", "close")
+            .html("&nbsp;&times;"))
+        .append("<strong>" + header + "</strong> " + message)
+    $('.alert-container').append(
+        el
+    );
+    window.setTimeout(function(){
+        $(el).css({
+            opacity: 0.0
+        });
+        $(el).one("transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd", function(){
+            el.remove();
+        })
+    }, 10000)
+};
+
+module.controller('profileModalController', function ($scope, socket, $modal){
+    $scope.animationsEnabled = true;
+    socket.emit("getProfile");
+    socket.on("profileInfo", function(data){
+        var name = data.username.split(" ")
+        if(name.length == 2){
+            $scope.first = name[0]
+            $scope.last = name[1]
+        }
+        else if(name.length == 3){
+            $scope.first = name[0]
+            $scope.username = name[1]
+            $scope.last = name[2]
+        }
+        else{
+            $scope.first = data.username
+        }
+        $scope.photo = data.photo.replace("sz=50", "sz=400")
+    });
+    $scope.openProfile = function(res){
+        $scope.selectedEvent = res;
+        $modal.open({ 
+            animation: $scope.animationsEnabled,
+            scope: $scope,
+            templateUrl: 'partials/profile',
+            controller: 'eventModalInstanceController',
+            size: 'lg'
+        });
+        
+    };
+
+});
+
+module.controller('profileModalInstanceController', function($scope, socket, $modalInstance){
     $scope.cancel = function () {
         $modalInstance.dismiss('cancel');
     };
