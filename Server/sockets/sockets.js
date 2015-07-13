@@ -1,28 +1,34 @@
+// Sockets handle asnynous data transfer they are used heaviliy in this project
+// The socket uses passports api to attach a user to each incoming socket
+// this user is accessable using socket.user
+// handles the importing of all the socket logic, see socketLogic.js for a template
+//
 module.exports = function (server) {
-    var passport = require("passport");
     var config = require('config');
-    var io = require("socket.io")(server)
+    // attach sockets to the server
+    var io = require("socket.io")(server);
+
+    // get the session information from mongo
+    var mongoose = require('mongoose');;
+    var session = require('express-session');
+    var MongoStore = require('connect-mongo')(session);
+
+    var sess = config.sess;
+    // store sessions in mongoose instead of memory
+    sess.store =  new MongoStore({
+        mongooseConnection: mongoose.connection
+    })
+    var sessionMiddleware = session(config.sess);
 
     // authenticate sockets
     io.use(function (socket, next) {
-        // requires the application to be initialized
-        // this is not stored in the config file
-        // XXX needs to be changed before we go into production
-        config.sessionMiddleware(socket.handshake, {}, next);
+        sessionMiddleware(socket.handshake, {}, next);
     });
 
     io.use(require("./authorizeSockets.js"));
     require("./socketCalendar.js")(io.sockets);
-    require("./socketLogic.js")(io.sockets);
     require("./socketUser.js")(io.sockets);
     require("./socketProfilePic.js")(io.sockets);
-
-    io.on("connection", function(socket){
-        // will only continue on if the user is logged in
-        // form her on out we should put all the socket logic into separate files
-        var mongoose = require('mongoose');
-        
-        
-        var FacilityReservation = mongoose.model("FacilityReservation");
-    })
+    // This is how you add a new socket file
+    //require("./socketLogic.js")(io.sockets);
 }

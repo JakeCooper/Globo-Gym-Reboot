@@ -89,6 +89,7 @@ module.controller('calendarController', ['$scope', '$compile', 'uiCalendarConfig
             minTime: "8:00:00", //starts at 8am
             timezone: "local",
             ignoreTimezone: true,
+            slotEventOverlap: false,
             aspectRatio: 1,
             forceEventDuration: true,
             editable: false,
@@ -213,7 +214,6 @@ module.controller('eventModalInstanceController', function($scope, socket, $moda
     $scope.confirmedDelete = function(res){
         $modalInstance.close();
         socket.emit("deleteEvent", res);
-        alertFactory("success", "Success!", "Booking successfully deleted");
         $scope.update();
         $scope.seeEvents();
 
@@ -274,6 +274,13 @@ module.controller('profileModalController', function ($scope, socket, $modal){
             $scope.first = data.username
         }
         $scope.photo = data.photo.replace("sz=50", "sz=400")
+		//this is cheesy as heck i am so sorry
+		if(data.facebookid > 10)
+			$scope.edit = "https://www.facebook.com/settings"
+		else if(data.googleid > 10)
+			$scope.edit = "https://myaccount.google.com/privacy"
+		else
+			$scope.edit = "#"
     });
     $scope.openProfile = function(res){
         $scope.selectedEvent = res;
