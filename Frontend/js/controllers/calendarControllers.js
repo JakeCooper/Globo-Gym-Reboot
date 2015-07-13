@@ -8,6 +8,10 @@ module.controller('calendarController', ['$scope', '$compile', 'uiCalendarConfig
        $scope.username = data.username;
        $scope.firstname = $scope.username.split(" ")[0];
        $scope.hideAdminButtons = !data.isadmin;
+       if(data.isadmin){
+           $(".content-container").css("height", "60%").css("max-height", "60%");
+       }
+
        $scope.$broadcast('seeUserEvents');
     });
 
@@ -305,7 +309,6 @@ module.controller('profileModalInstanceController', function($scope, socket, $mo
 module.controller('moreInfoController', function($scope){
     $scope.expand = function () {
         $(document).on('click', function(event) {
-            /*var $mainInfoel = $(event.target).parentsUntil(".reservation-wrapper").parent();*/
             var $fullInfoel = $(event.target).parentsUntil(".reservation-wrapper").parent().children(".moreInfo-container");
             if ($fullInfoel.css("display") == "none") {
 
