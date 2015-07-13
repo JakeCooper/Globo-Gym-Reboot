@@ -18,10 +18,8 @@ module.controller('adminController', ['$scope', 'socket',
 
         })
 
-
         $scope.deleteReservation = function(reservation){
-            socket.emit("deleteEvent", reservation);
-            socket.emit("getReservations");
+            socket.emit("adminRemove", reservation);
         }
 
         $scope.changeBan= function(user) {
