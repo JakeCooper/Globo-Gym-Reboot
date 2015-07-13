@@ -1,6 +1,7 @@
 var mongoose = require('mongoose');
 var config = require('config');
 
+// see API/FacilityReservaton.md
 var FacilityReservation = new mongoose.Schema({
     roomName: {type: String},
     type: {type: String},
@@ -11,31 +12,39 @@ var FacilityReservation = new mongoose.Schema({
     id: {type: String}
 });
 
+// Saves a reservtion, before a save the times are checked to be valid
+// parameters,
+//  callback({  // function
+//     message: String,
+//     success: Boolean,
+//  })
 FacilityReservation.methods.saveReservation = function (cb) {
     var that = this;
-    if(!that.isValidRoom()) return cb({message: "Invalid room"});
-    if(that.isTooLong()) return cb({message: "This reservation is too long"});
-    if(!that.isValidHours()) return cb({message: "The Facility is not open during this time"});
-    var options = {
+    that.model("FacilityReservation").findOne({
         type: that.type,
         roomName: that.roomName,
         $or: [
             { start: { $gte: that.start, $lt: that.end } },
             { end: { $gt: that.start, $lte: that.end } }
         ]
-    };
-
-    that.model("FacilityReservation").findOne(options, function(err, res){
-        if(err) return console.err("Could not save to db", err, res);
-        if(res) return cb({message: "There is already a reservation with that time"});
-        //if()
+    }, function(err, res){
+        // validate that the reservation if any of the following fail the message will be sent to the callback
+        if(err)                     return console.err("Could not save to db", err, res);
+        if(!that.isValidRoom())     return cb({message: "Invalid room"});
+        if(that.isTooLong())        return cb({message: "This reservation is too long"});
+        if(!that.isValidHours())    return cb({message: "The Facility is not open during this time"});
+        if(res)                     return cb({message: "There is already a reservation with that time"});
         that.save(function(err){
             return cb({message: "Reservation booked", success: true});
         });
     });
 };
 
+// ==== Facility Reservation Authentication
+// methods are attached to instances of a schema
+// these methods are used to authenticate the facility schema is valid
 
+// test the room and the type to make sure the reservation is valid
 FacilityReservation.methods.isValidRoom = function(){
     var roomName = this.roomName;
     var type = this.type;
@@ -53,44 +62,40 @@ FacilityReservation.methods.isValidRoom = function(){
     return isValidRoomName(roomName) && isValidType(roomName, type);
 };
 
-FacilityReservation.methods.findSimilarRooms = function (cb) {
-    return this.model('FacilityReservation').find({ type: this.type }, cb);
-};
-
+// checks if rervation is too long
 FacilityReservation.methods.isTooLong = function () {
-    // 1 h = 3600000 ms
-    return this.end.getTime() - this.start.getTime() > this.constructor.maxLength * 3600000;
+    return this.end.getTime() - this.start.getTime() > config.mongoose.maxLength * config.time.hourInMilliseconds;
 }
 
+// validates hours of the new reservation
 FacilityReservation.methods.isValidHours = function () {
-    var open = this.constructor.openTime;
-    var close = this.constructor.closeTime;
+    // open and close are integers corresponding to the hour of the day the
+    // facility opens and closes i.e. 8:00 would be 8am
+    var open = config.mongoose.openTime;
+    var close = config.mongoose.closeTime;
     // is the day sunday
     if(this.start.getDay() == 0){
-        open = this.constructor.sunOpenTime;
-        close = this.constructor.sunCloseTime;
+        open = config.mongoose.sunOpenTime;
+        close = config.mongoose.sunCloseTime;
     }
     var openTime = new Date(this.start)
     openTime.setHours(open);
     var closeTime = new Date(this.start)
     closeTime.setHours(close);
-    console.log(openTime <= this.start, closeTime, this.end)
     return this.start >= openTime && this.end <= closeTime;
 }
 
-FacilityReservation.methods.findThisRoomsReservations = function (cb) {
-    return this.model('FacilityReservation').find({ roomName: this.roomName }, cb);
-};
-
+// ======== Static methods
+// Static methods are attached to the schema and do not need an instance of the schemas to function
 FacilityReservation.statics = {
-    maxLength: config.mongoose.maxLength,
-    minCancelTime: config.mongoose.minCancelTime,
-    openTime: config.mongoose.openTime,
-    closeTime: config.mongoose.closeTime,
-    sunOpenTime: config.mongoose.sunOpenTime,
-    sunCloseTime: config.mongoose.sunCloseTime,
-    rooms: config.mongoose.facility.rooms,
-
+    // given a users id, find all of thieir reservations in the database
+    // parameters
+    //      user
+    //
+    //      callback([ // function
+    //          reservation, FacilityReservation // list of FacilityReservations
+    //          ...
+    //      ])
     getUserEvents: function(user, cb){
         this.model("FacilityReservation").find({
             id: user.id

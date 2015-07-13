@@ -13,7 +13,7 @@ body
         .user-name {{firstname}}
         div(ng-controller='profileModalController')
             button.btn.btn-default.profile-button(ng-click="openProfile()") Profile
-        
+
         .reservation-header My Reservations
         .content-container
             div(ng-controller='eventModalController')
@@ -43,8 +43,4 @@ body
             a(href='app/reservations/') &nbsp
                 button.btn.btn-default Reservation List
         button.btn.btn-default.logout-button
-            a.logout-text(href="/logout/") Logout
-
-
-
-
+            a.logout-text(ng-click="logout()") Logout
