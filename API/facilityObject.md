@@ -23,7 +23,7 @@ var rooms = [
 
 Using this list it generates an object 
 
-```
+``` javascript
 var Facility = {
     type: {
         name:{
