@@ -26,6 +26,6 @@ html
                   td {{ user.username }}
                   td {{ user.isbanned }}
                   td {{ user.isadmin }}
-                  td {{ user.bannedUntil | date: mediumDate }}
+                  td {{ user.bannedUntil | date: "medium" }}
                   td 
                     a.btn.btn-danger(ng-click="changeBan(user)") Ban/Unban
