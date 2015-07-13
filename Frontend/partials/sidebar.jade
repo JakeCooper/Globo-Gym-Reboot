@@ -1,6 +1,9 @@
+title
+
 head
     link(rel="stylesheet" href="../css/calendar.css")
     script(src="../js/sidebar.js")
+    
 body
 
     .profile-container(ng-click='seeEvents()')
@@ -23,7 +26,7 @@ body
         .admin-buttons(ng-hide="hideAdminButtons")
             a(href='app/users/')
                 button.btn.btn-default User List
-            a(href='app/reservations/')
+            a(href='app/reservations/') &nbsp
                 button.btn.btn-default Reservation List
         button.btn.btn-default.logout-button
             a.logout-text(href="/logout/") Logout
