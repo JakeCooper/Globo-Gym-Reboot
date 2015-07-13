@@ -42,7 +42,6 @@ module.exports = function (sockets) {
         socket.on("deleteEvent", function(res){
             var now = new Date();
             var start = new Date(res.start);
-            console.log(socket.user)
             FacilityReservation.remove({"_id": res._id}, function(err){
                 if(err) return console.err(err);
                 if(start.getTime() - now.getTime() < config.mongoose.minCancelTime * config.time.hourInMilliseconds){
@@ -103,7 +102,7 @@ module.exports = function (sockets) {
                             if (err) return console.err(err);
                             if (doc) {
                                 socket.emit("reservationStatus", {
-                                    message: "You already have a reservation at this time in another room",
+                                    message: "You already have a reservation at this time",
                                     success: false
                                 });
                             }else{
