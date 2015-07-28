@@ -8,12 +8,14 @@
         // send and recieve data on the socket
         return {
             on: function (eventName, callback) {
-                socket.on(eventName, function () {  
-                    var args = arguments;
-                    $rootScope.$apply(function () {
-                        callback.apply(socket, args);
+                if(!socket._callbacks[eventName]){;
+                    socket.on(eventName, function () {  
+                        var args = arguments;
+                        $rootScope.$apply(function () {
+                            callback.apply(socket, args);
+                        });
                     });
-                });
+                }
             },
             emit: function (eventName, data, callback) {
                 socket.emit(eventName, data, function () {
