@@ -9,7 +9,8 @@
         return {
             on: function (eventName, callback) {
                 // if there is already a listener, remove it
-                if(socket._callbacks[eventName] && socket._callbacks[eventName] == "profileInfo" ){;
+                console.log(socket._callbacks[eventName], eventName) 
+                if(socket._callbacks[eventName] && eventName != "profileInfo"){;
                     delete socket._callbacks[eventName];
                 }
                 socket.on(eventName, function () {
