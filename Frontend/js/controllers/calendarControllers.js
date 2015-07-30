@@ -98,7 +98,6 @@ module.controller('calendarController', ['$scope', '$compile', 'uiCalendarConfig
 //                data.push({
 //                    start: startBlock,
 //                    end: endBlock,
-//                    title: closedTitle,
 //                    color: 'red',
 //                    rendering: 'background'
 //                })
@@ -110,11 +109,10 @@ module.controller('calendarController', ['$scope', '$compile', 'uiCalendarConfig
 //                data.push({
 //                    start: startBlock,
 //                    end: endBlock,
-//                    title: closedTitle,
 //                    color: 'red',
 //                    rendering: 'background'
 //                })
-//
+
                 callback(data);
             });
         }

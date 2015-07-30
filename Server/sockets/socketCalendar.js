@@ -53,6 +53,8 @@ module.exports = function (sockets) {
                             socket.emit("reservationStatus", {
                                 message: "You are now Banned from booking for " + config.mongoose.banTime + " hours",
                             });
+
+                            socket.emit("profileInfo", user);
                             return;
                         });
                     });
