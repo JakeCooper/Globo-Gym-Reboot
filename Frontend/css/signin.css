@@ -4,6 +4,7 @@ html {
 
 body{
     background-image: url('../assets/images/blur1.jpg');
+    background-attachment: fixed;
     background-size: cover;
     position: relative;
     min-height:100%;
