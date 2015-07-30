@@ -44,6 +44,7 @@ module.exports = function (sockets) {
             var start = new Date(res.start);
             FacilityReservation.remove({"_id": res._id}, function(err){
                 if(err) return console.err(err);
+                socket.broadcast.emit("calendarHasChanged");
                 if(start.getTime() - now.getTime() < config.mongoose.minCancelTime * config.time.hourInMilliseconds){
                     User.findOne({_id:socket.user._id}, function(err, user){
                         user.isbanned = true;
@@ -53,7 +54,6 @@ module.exports = function (sockets) {
                             socket.emit("reservationStatus", {
                                 message: "You are now Banned from booking for " + config.mongoose.banTime + " hours",
                             });
-
                             socket.emit("profileInfo", user);
                             return;
                         });
