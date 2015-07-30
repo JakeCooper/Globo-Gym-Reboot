@@ -31,7 +31,7 @@
       .banned-text(ng-hide="hideBannedText")
           .alert.alert-danger(role="alert")
               div.banned-text-content
-                p You are currently banned until {{bannedUntil}}.
+                  p You are currently banned until {{bannedUntil | date:'EEEE, MMMM MM, h:mm' }}.
       button.btn.btn-primary(ng-click='ok()', ng-disabled="{{!hideBannedText}}") Reserve Facility
       button.btn.btn-danger(ng-click='cancel()') Cancel
 
