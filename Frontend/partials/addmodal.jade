@@ -30,7 +30,8 @@
     .modal-footer()
       .banned-text(ng-hide="hideBannedText")
           .alert.alert-danger(role="alert")
-              div.banned-text-content You are currently banned. You will not be able to make reservations
+              div.banned-text-content
+                p You are currently banned until {{bannedUntil}}.
       button.btn.btn-primary(ng-click='ok()', ng-disabled="{{!hideBannedText}}") Reserve Facility
       button.btn.btn-danger(ng-click='cancel()') Cancel
 
