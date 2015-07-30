@@ -8,6 +8,7 @@ module.controller('calendarController', ['$scope', '$compile', 'uiCalendarConfig
        $scope.username = data.username;
        $scope.firstname = $scope.username.split(" ")[0];
        $scope.hideAdminButtons = !data.isadmin;
+       $scope.hideBannedText = !data.isbanned;
        if(data.isadmin){
            $(".content-container").css("height", "60%").css("max-height", "60%");
        }
@@ -81,6 +82,38 @@ module.controller('calendarController', ['$scope', '$compile', 'uiCalendarConfig
                 for(var i = 0; i < data.length; i++){
                     data[i].color = $scope.colors[data[i].roomName];
                 }
+//                var saturday = new Date(end);
+//                var sunday = new Date(saturday.setDate(saturday.getDate() - saturday.getDay()));
+//
+//                // block off sunday
+//                // the calendar starts at 8 am
+//                // note that this is a very cheap hack and this should all be done on the server
+//                var closedTitle = "Facility is Closed"
+//                sunday.setHours(8)
+//                var startBlock = new Date(sunday);
+//                sunday.setHours(10)
+//                var endBlock = new Date(sunday);
+//
+//                data.push({
+//                    start: startBlock,
+//                    end: endBlock,
+//                    title: closedTitle,
+//                    color: 'red',
+//                    rendering: 'background'
+//                })
+//
+//                sunday.setHours(20)
+//                startBlock = new Date(sunday);
+//                sunday.setHours(24)
+//                endBlock = new Date(sunday);
+//                data.push({
+//                    start: startBlock,
+//                    end: endBlock,
+//                    title: closedTitle,
+//                    color: 'red',
+//                    rendering: 'background'
+//                })
+//
                 callback(data);
             });
         }
@@ -90,6 +123,7 @@ module.controller('calendarController', ['$scope', '$compile', 'uiCalendarConfig
 
     $scope.uiConfig = {
         calendar:{
+            allDaySlot: false,
             minTime: "8:00:00", //starts at 8am
             timezone: "local",
             ignoreTimezone: true,
@@ -160,12 +194,16 @@ module.controller('modalInstanceController', function($scope, socket, $modalInst
         $modalInstance.close();
         $scope.$broadcast('saveReservation');
         $scope.seeEvents();
-
+        $scope.isDisabled = !data.isbanned;
     };
 
     $scope.cancel = function () {
         $modalInstance.dismiss('cancel');
     };
+
+    $scope.isDisabled = function () {
+        return !data.isbanned;
+    }
 });
 
 module.controller('timepickerController', function ($scope, socket, $log) {

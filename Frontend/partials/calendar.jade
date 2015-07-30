@@ -10,7 +10,7 @@ my-sidebar(ng-controller="menuController")
             tab(select='selectTab("{{roomType.type}}")', ng-repeat="roomType in roomTypes", active="roomType.active")
                 tab-heading {{ roomType.type }}
                 div()
-                    label(ng-repeat='room in scope[roomType.type]')
+                    label.room-name(ng-repeat='room in scope[roomType.type]')
                         input(type='checkbox', ng-model='roomsSelected[room]', ng-click="update()")
                         |  {{room}} &nbsp
                         span
