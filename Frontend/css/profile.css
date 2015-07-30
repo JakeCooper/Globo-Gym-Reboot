@@ -54,3 +54,16 @@
 .footer{
 	float: right;
 }
+
+.user-name {
+	margin-left:10px;
+	margin-top:10px;
+}
+
+.ProfileOptions {
+	margin-left:20px;
+}
+
+table.eventsTable td, table.eventsTable th  {
+	padding: 5px;
+}

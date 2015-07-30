@@ -39,14 +39,13 @@ body
 
         .LeftCol
             .Photo
-                img(src='{{photo}}', alt='Oops! There should be a picture here', height='200', width='200')
+                img(src='{{photo}}', alt='Oops! There should be a picture here', height='200', width='200', style="border-radius: 50%;")
             .Info
                 h4
-                    span {{first}} {{last}}
-                h5
-                    span {{username}} 
+                    span.user-name {{first}} {{last}}
+
             .ProfileOptions
-            a.btn.btn-primary(href='{{edit}}') Edit Profile 
-            |&nbsp
-            a.btn.btn-danger(ng-click='cancel()') Close
+                a.btn.btn-primary(href='{{edit}}') Edit Profile
+                |&nbsp
+                a.btn.btn-danger(ng-click='cancel()') Close
             
