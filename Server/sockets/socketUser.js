@@ -27,10 +27,10 @@ module.exports = function (sockets) {
                 if(user.isadmin){
                     FacilityReservation.remove({"_id": res._id}, function(err){
                         if(err) return console.err(err);
+                        socket.broadcast.emit("calendarHasChanged");
                         FacilityReservation.find({}, function(err, reservations){
                             var theReservations = reservations;
                             socket.emit("getReservations", reservations);
-                            socket.broadcast.emit("calendarHasChanged");
                         });
                     })
                 }
