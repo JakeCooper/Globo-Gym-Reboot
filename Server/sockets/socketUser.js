@@ -24,13 +24,13 @@ module.exports = function (sockets) {
         socket.on("adminRemove", function(res){
             UsersInfo.findOne({_id:socket.user._id}, function(err, user){
                 if(err) return console.err(err);
-                console.log(user);
                 if(user.isadmin){
                     FacilityReservation.remove({"_id": res._id}, function(err){
                         if(err) return console.err(err);
                         FacilityReservation.find({}, function(err, reservations){
                             var theReservations = reservations;
                             socket.emit("getReservations", reservations);
+                            socket.broadcast.emit("calendarHasChanged");
                         });
                     })
                 }
