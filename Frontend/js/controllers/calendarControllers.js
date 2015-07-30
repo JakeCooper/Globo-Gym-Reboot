@@ -8,6 +8,8 @@ module.controller('calendarController', ['$scope', '$compile', 'uiCalendarConfig
        $scope.username = data.username;
        $scope.firstname = $scope.username.split(" ")[0];
        $scope.hideAdminButtons = !data.isadmin;
+       $scope.hideBannedText = !data.isbanned;
+       $scope.bannedUntil = data.bannedUntil;
        if(data.isadmin){
            $(".content-container").css("height", "60%").css("max-height", "60%");
        }
@@ -191,12 +193,16 @@ module.controller('modalInstanceController', function($scope, socket, $modalInst
         $modalInstance.close();
         $scope.$broadcast('saveReservation');
         $scope.seeEvents();
-
+        $scope.isDisabled = !data.isbanned;
     };
 
     $scope.cancel = function () {
         $modalInstance.dismiss('cancel');
     };
+
+    $scope.isDisabled = function () {
+        return !data.isbanned;
+    }
 });
 
 module.controller('timepickerController', function ($scope, socket, $log) {

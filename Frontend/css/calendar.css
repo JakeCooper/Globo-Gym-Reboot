@@ -13,6 +13,13 @@
     background: rgba(136, 136, 136, 0.3);
 }
 
+body {
+    background-image: url('../assets/images/blur1.jpg');
+    background-attachment: fixed;
+    background-size: cover;
+    position: relative;
+    min-height:100%;
+}
 /*calendar*/
 
 #left-menu:hover {
@@ -182,4 +189,68 @@ a.logout-text {
 
 a.logout-text {
     color: #000;
+}
+
+h3.modal-title {
+    text-align:center;
+    font-family: 'Roboto', sans-serif;
+}
+
+.span8 {
+    background-color: #FFF;
+    padding:25px;
+    border-radius:25px;
+    margin-bottom:25px;
+}
+
+.room-name {
+    padding:5px;
+}
+
+.time-selector {
+    float:left;
+}
+
+.reservation-element {
+    margin-left:135px;
+    margin-top:5px;
+    margin-bottom:5px;
+    padding-left:50px;
+}
+
+.timer-title {
+    float:left;
+    margin-top:40px;
+    margin-right:10px;
+}
+
+.reservation-name {
+    margin-top:20px;
+}
+
+.reservation-facility {
+    padding-top:15px;
+}
+
+.select-facility {
+    width:285px;
+    margin-left:20px;
+}
+
+.select-room {
+    width:251px;
+    margin-left:20px;
+}
+
+.select-duration {
+    width:275px;
+    margin-left:20px;
+}
+
+.banned-text-content {
+    padding-right:60px;
+}
+
+.banned-text-content > p {
+    margin-bottom: 0px !important /*overright Bootstrap*/
 }

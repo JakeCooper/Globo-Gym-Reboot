@@ -4,9 +4,9 @@ html {
 
 body{
     background-image: url('../assets/images/blur1.jpg');
+    background-attachment: fixed;
     background-size: cover;
     position: relative;
-    
     min-height:100%;
 }
 
@@ -42,13 +42,16 @@ div.users{
 
 span.oakbay{
     font-size:85px;
-    font-family: 'Amatic SC', cursive;
 }
 p.login{
-    font-family: 'Amatic SC', cursive;
     font-size: 35px;
+    font-family: 'Roboto', sans-serif;
 }
 
+img.globo-logo {
+    margin-top:-35px;
+    margin-bottom:-35px;
+}
 span.facebook, span.google{
     font-family: sans-serif;
     text-shadow: 0px -1px rgba(0, 0, 0, 0.11);
@@ -93,24 +96,28 @@ h1.admin, h1.users{
     font-size: 45px;
     padding-top: 0px;
     margin-top: -10px;
-    font-family: 'Amatic SC', cursive;
+    font-family: 'Roboto', sans-serif;
 }
 
 h1.about{
-    font-family: 'Amatic SC', cursive;
-   font-size: 60px;
+    font-family: 'Roboto', sans-serif;
+    font-size: 60px;
     padding-top: 0px;
     margin-top: -10px; 
 }
-    
-    ul
+
+ul
 {
     list-style-type: none;
 }
 
 
 th{
- font-family: 'Amatic SC', cursive;
-  font-size: 30px;
+    font-family: 'Roboto', sans-serif;
+    font-size: 30px;
     text-align: center;
+}
+
+.change-view {
+    margin-bottom:20px;
 }
