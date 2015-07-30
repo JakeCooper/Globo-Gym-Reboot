@@ -81,35 +81,35 @@ module.controller('calendarController', ['$scope', '$compile', 'uiCalendarConfig
                 for(var i = 0; i < data.length; i++){
                     data[i].color = $scope.colors[data[i].roomName];
                 }
-                var saturday = new Date(end);
-                var sunday = new Date(saturday.setDate(saturday.getDate() - saturday.getDay()));
-
-                // block off sunday
-                // the calendar starts at 8 am
-                // note that this is a very cheap hack and this should all be done on the server
-                var closedTitle = "Facility is Closed"
-                sunday.setHours(8)
-                var startBlock = new Date(sunday);
-                sunday.setHours(10)
-                var endBlock = new Date(sunday);
-
-                data.push({
-                    start: startBlock,
-                    end: endBlock,
-                    color: 'red',
-                    rendering: 'background'
-                })
-
-                sunday.setHours(20)
-                startBlock = new Date(sunday);
-                sunday.setHours(24)
-                endBlock = new Date(sunday);
-                data.push({
-                    start: startBlock,
-                    end: endBlock,
-                    color: 'red',
-                    rendering: 'background'
-                })
+//                var saturday = new Date(end);
+//                var sunday = new Date(saturday.setDate(saturday.getDate() - saturday.getDay()));
+//
+//                // block off sunday
+//                // the calendar starts at 8 am
+//                // note that this is a very cheap hack and this should all be done on the server
+//                var closedTitle = "Facility is Closed"
+//                sunday.setHours(8)
+//                var startBlock = new Date(sunday);
+//                sunday.setHours(10)
+//                var endBlock = new Date(sunday);
+//
+//                data.push({
+//                    start: startBlock,
+//                    end: endBlock,
+//                    color: 'red',
+//                    rendering: 'background'
+//                })
+//
+//                sunday.setHours(20)
+//                startBlock = new Date(sunday);
+//                sunday.setHours(24)
+//                endBlock = new Date(sunday);
+//                data.push({
+//                    start: startBlock,
+//                    end: endBlock,
+//                    color: 'red',
+//                    rendering: 'background'
+//                })
 
                 callback(data);
             });
