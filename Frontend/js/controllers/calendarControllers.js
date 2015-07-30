@@ -9,6 +9,7 @@ module.controller('calendarController', ['$scope', '$compile', 'uiCalendarConfig
        $scope.firstname = $scope.username.split(" ")[0];
        $scope.hideAdminButtons = !data.isadmin;
        $scope.hideBannedText = !data.isbanned;
+       $scope.bannedUntil = data.bannedUntil;
        if(data.isadmin){
            $(".content-container").css("height", "60%").css("max-height", "60%");
        }
