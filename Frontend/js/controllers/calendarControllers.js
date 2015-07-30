@@ -122,6 +122,7 @@ module.controller('calendarController', ['$scope', '$compile', 'uiCalendarConfig
 
     $scope.uiConfig = {
         calendar:{
+            allDaySlot: false,
             minTime: "8:00:00", //starts at 8am
             timezone: "local",
             ignoreTimezone: true,
